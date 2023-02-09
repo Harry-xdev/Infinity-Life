@@ -20,6 +20,9 @@ import Home from './components/screens/Home';
 import SplashScreen from './components/screens/Splash';
 import LearningSreen from './components/screens/LearningScreen'
 import Counter from './components/screens/Counter/Counter';
+import BottomTabBarMain from './components/screens/TabScreen/BottomTabBarMain';
+
+
 const Stack = createNativeStackNavigator();
 
 const App = () => {
@@ -32,6 +35,11 @@ const App = () => {
           <Stack.Screen
             name="Splash Screen"
             component={SplashScreen}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Bottom Tab Main"
+            component={BottomTabBarMain}
             options={{ headerShown: false }}
           />
           <Stack.Screen
@@ -51,10 +59,6 @@ const App = () => {
             options={{ headerShown: false }}
 
           />
-
-
-
-
 
         </Stack.Navigator>
       </NavigationContainer>

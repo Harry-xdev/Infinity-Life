@@ -19,7 +19,6 @@ export default MultipleQuest = ({ props, navigation }) => {
 
   return (
     <View>
-      <Text style={{ color: '#ffff' }}>Hello</Text>
 
       <View style={styles.container}>
 

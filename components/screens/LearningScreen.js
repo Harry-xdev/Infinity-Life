@@ -9,8 +9,12 @@ const height = Dimensions.get('window').height;
 export default LearningScreen = ({ navigation }) => {
   return (
     <View style={styles.grandContainer}>
-      <HeaderTop backTo={() => navigation.navigate('Home')} />
+      <HeaderTop backTo={() => navigation.navigate('Bottom Tab Main')} />
       <Text style={{ color: '#ffff' }}>Learning Page</Text>
+
+      <TouchableOpacity onPress={() => navigation.navigate('Bottom Tab Main')} > 
+        <Text style={{color: '#ffff'}} >Back to main page</Text>
+      </TouchableOpacity>
       
       <MultipleQuest />
 

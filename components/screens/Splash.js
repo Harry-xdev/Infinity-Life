@@ -29,7 +29,7 @@ export default SplashScreen = ({ navigation }) => {
       <View style={{ alignItems: "center", width: width - 30 }}>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.navigate('Home')}
+          onPress={() => navigation.navigate('Bottom Tab Main')}
         >
           <Text style={{ color: 'red', fontFamily: 'IBMPlexMono-Bold', fontSize: 20 }}>
             Start To Explore!

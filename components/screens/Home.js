@@ -4,6 +4,7 @@ import { Text, View, TouchableOpacity, StyleSheet, Dimensions } from "react-nati
 import ItemBar from "../homeComponents/ItemBar";
 import color from "../../colorStore";
 
+
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
@@ -13,35 +14,43 @@ export default Home = ({ navigation }) => {
 
     <View style={styles.grandContainer}>
 
-      <HeaderTop backTo={() => navigation.navigate('Splash Screen')} />
+      <HeaderTop
+        backTo={() => navigation.navigate('Splash Screen')}
+      />
 
       <View>
         <Text style={styles.headerTitle}>INFINITY WORKSPACE</Text>
       </View>
+      <View style={styles.contentContainer}>
 
-      <ItemBar
-        itemContent={'Smart Learning'}
-        navigation={() => navigation.navigate('Learning Screen')}
-      />
 
-      <ItemBar
-        itemContent={'Test Method'}
+        <ItemBar
+          itemContent={'Smart Learning'}
+          navigation={() => navigation.navigate('Learning Screen')}
+        />
 
-      />
-      <ItemBar
-        itemContent={'Achivements'}
+        <ItemBar
+          itemContent={'Test Method'}
 
-      />
-      <ItemBar
-        itemContent={'New Vocabulary Addition Tool'}
+        />
+        <ItemBar
+          itemContent={'Achivements'}
 
-      />
-      <ItemBar
-        itemContent={'Counter Tool'}
-        navigation={() => navigation.navigate('Counter Screen')}
-      />
+        />
+        <ItemBar
+          itemContent={'New Vocabulary Addition Tool'}
+
+        />
+        <ItemBar
+          itemContent={'Counter Tool'}
+          navigation={() => navigation.navigate('Counter Screen')}
+        />
+
+
+      </View>
 
     </View>
+
 
   );
 
@@ -51,6 +60,11 @@ const styles = StyleSheet.create({
   grandContainer: {
     backgroundColor: color.PrimeBackground,
     height: height,
+
+  },
+  contentContainer: {
+    // justifyContent: "center",
+    alignItems: "center"
   },
   headerTitle: {
     color: color.homeHeaderTitle,
