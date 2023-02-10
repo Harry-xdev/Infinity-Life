@@ -6,13 +6,25 @@ import color from "../../colorStore";
 
 export default HeaderTop = (props) => {
   return (
-    <View>
+    <View style={styles.container}>
       <TouchableOpacity
         style={styles.BackBtn}
         onPress={props.backTo}
       >
-        <Text><FontAwesome5 name={'angle-double-left'} size={25} color={color.hackingColor} /></Text>
+        <Text><FontAwesome5 name={'angle-double-left'} size={25} color={color.black} /></Text>
       </TouchableOpacity>
+
+      <View style={[styles.scoreContainer, {borderWidth: props.borderWidth} ]}>
+        <View>
+          <Text style={styles.scoreText}>{props.scoreLabel}</Text>
+        </View>
+        <View>
+          <Text style={{color: 'red', fontSize: 25, fontFamily: 'IBMPlexMono-Bold'}}>{props.score}</Text>
+        </View>
+
+      </View>
+
+
 
 
     </View>
@@ -20,15 +32,48 @@ export default HeaderTop = (props) => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    height: 50,
+    width: color.width,
+    borderWidth: 0,
+    borderBottomColor: '#ffff',
+    backgroundColor: color.white,
+    alignItems: "center",
+    // justifyContent: "center",
+    flexDirection: "row",
+    justifyContent: 'space-between',
+
+
+  },
 
   BackBtn: {
     height: 40,
     width: 60,
     borderWidth: 2,
-    borderColor: color.hackingColor,
+    borderColor: color.black,
     borderRadius: 10,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    marginLeft: 10
+
+  },
+  scoreContainer: {
+    flexDirection: "row",
+    marginRight: 10,
+    // borderWidth: 2,
+    // width: 140,
+    height: 40,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingHorizontal: 10,
+    borderRadius: 10,
+
+
+  },
+  scoreText: {
+    fontFamily: 'IBMPlexMono-Bold',
+    color: '#000000',
+    fontSize: 25
 
   }
 })

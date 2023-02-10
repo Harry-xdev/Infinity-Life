@@ -76,9 +76,7 @@ const styles = StyleSheet.create({
       color: '#ffff',
       fontSize: 20
     },
-    itemDesign: {
 
-    }
   }
 
 });

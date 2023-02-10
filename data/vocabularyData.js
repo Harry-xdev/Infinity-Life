@@ -49,10 +49,10 @@ export default engQuest = {
   6: {
     question: 'Breaking elongation',
     ansA: 'May mắn',
-    ansB: 'Phá vỡ, sự phá vỡ',
+    ansB: 'Sự đứt gãy & đàn hồi',
     ansC: 'Khủng hoảng',
     ansD: 'Quốc tế',
-    correction: 'Phá vỡ, sự phá vỡ'
+    correction: 'Sự đứt gãy & đàn hồi'
   },
 
   7: {
@@ -79,7 +79,7 @@ export default engQuest = {
     ansB: 'Phá vỡ, sự phá vỡ',
     ansC: 'Vừa phải',
     ansD: 'Chất hoá học',
-    correction: 'Phá vỡ, sự phá vỡ'
+    correction: 'Bảo trì'
   },
 
   10: {
@@ -97,16 +97,16 @@ export default engQuest = {
     ansB: 'Phá vỡ, sự phá vỡ',
     ansC: 'Sự dịch chuyển',
     ansD: 'Chất tẩy rửa',
-    correction: 'Phá vỡ, sự phá vỡ'
+    correction: 'Sự dịch chuyển'
   },
 
   12: {
-    question: 'Government',
+    question: 'Goverment',
     ansA: 'Địa điểm',
     ansB: 'Ngày mai',
     ansC: 'Vừa phải',
     ansD: 'Chính Phủ',
-    correction: 'Phá vỡ, sự phá vỡ'
+    correction: 'Chính Phủ',
   },
 
   13: {

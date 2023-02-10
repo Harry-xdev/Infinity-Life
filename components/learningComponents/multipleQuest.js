@@ -1,6 +1,6 @@
-import { NavigationContainer } from "@react-navigation/native";
+
 import React, { useState } from "react";
-import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Alert, Dimensions, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -10,11 +10,43 @@ import engQuest from '../../data/vocabularyData';
 export default MultipleQuest = ({ props, navigation }) => {
 
   const random = Math.floor(Math.random() * Object.keys(engQuest).length) + 1;
-  const [questNum, setquestNum] = useState(random);
+  const [questNum, setQuestNum] = useState(random);
+
+  const [A, setA] = useState(engQuest[questNum].ansA);
+  const [B, setB] = useState(engQuest[questNum].ansB);
+  const [C, setC] = useState(engQuest[questNum].ansC);
+  const [D, setD] = useState(engQuest[questNum].ansD);
 
   const handleRandom = () => {
-    const random2 = Math.floor(Math.random() * Object.keys(engQuest).length) + 1
-    setquestNum(random2);
+    const random2 = Math.floor(Math.random() * Object.keys(engQuest).length) + 1;
+    setQuestNum(random2);
+  };
+  const setAnswer = () => {
+    setA(engQuest[questNum].ansA);
+    setB(engQuest[questNum].ansB);
+    setC(engQuest[questNum].ansC);
+    setD(engQuest[questNum].ansD);
+  };
+
+  const handleCorrectAns = (props) => {
+    props.scoreTest + 1
+  }
+
+  const getValueAnswerA = () => {
+    A === engQuest[questNum].correction ? handleCorrectAns() : Alert.alert('Wrong');
+
+  };
+  const getValueAnswerB = () => {
+    B === engQuest[questNum].correction ? handleCorrectAns() : Alert.alert('Wrong');
+
+  };
+  const getValueAnswerC = () => {
+    C === engQuest[questNum].correction ? handleCorrectAns() : Alert.alert('Wrong');
+
+  };
+  const getValueAnswerD = () => {
+    D === engQuest[questNum].correction ? handleCorrectAns() : Alert.alert('Wrong');
+
   };
 
   return (
@@ -32,23 +64,28 @@ export default MultipleQuest = ({ props, navigation }) => {
           <Text style={styles.questBoxText}>{engQuest[questNum].question} </Text>
         </View>
 
-        <TouchableOpacity style={styles.anwserBox}>
+        <TouchableOpacity
+          style={styles.anwserBox}
+          onPress={getValueAnswerA}
+        >
           <Text style={styles.text}>{"A. " + engQuest[questNum].ansA}</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.anwserBox}>
+
+        <TouchableOpacity onPress={getValueAnswerB} style={styles.anwserBox}>
           <Text style={styles.text}>{"B. " + engQuest[questNum].ansB}</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.anwserBox}>
+        <TouchableOpacity onPress={getValueAnswerC} style={styles.anwserBox}>
           <Text style={styles.text}>{"C. " + engQuest[questNum].ansC}</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.anwserBox}>
+        <TouchableOpacity onPress={getValueAnswerD} style={styles.anwserBox}>
           <Text style={styles.text}>{"D. " + engQuest[questNum].ansD}</Text>
         </TouchableOpacity>
 
         <View>
           <TouchableOpacity
             style={[styles.randomBtn, { backgroundColor: "pink" }]}
-            onPress={handleRandom}
+            onPressOut={setAnswer}
+            onPressIn={handleRandom}
           >
             <Text>
               Show random question
@@ -134,4 +171,5 @@ const styles = StyleSheet.create({
     borderRadius: 10
   },
 
-})
+});
+
