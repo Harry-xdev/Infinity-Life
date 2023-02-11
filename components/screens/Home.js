@@ -29,22 +29,22 @@ export default Home = ({ navigation }) => {
           navigation={() => navigation.navigate('Learning Screen')}
         />
 
-        <ItemBar
+        {/* <ItemBar
           itemContent={'Test Method'}
 
         />
         <ItemBar
           itemContent={'Achivements'}
 
-        />
+        /> */}
         <ItemBar
           itemContent={'New Vocabulary Addition Tool'}
-
+          navigation={() => navigation.navigate('Add New Word')}
         />
-        <ItemBar
+        {/* <ItemBar
           itemContent={'Counter Tool'}
           navigation={() => navigation.navigate('Counter Screen')}
-        />
+        /> */}
 
 
       </View>

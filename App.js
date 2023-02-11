@@ -21,6 +21,7 @@ import SplashScreen from './components/screens/Splash';
 import LearningSreen from './components/screens/LearningScreen'
 import Counter from './components/screens/Counter/Counter';
 import BottomTabBarMain from './components/screens/TabScreen/BottomTabBarMain';
+import AddNewWord from './components/screens/AddNewWord';
 
 
 const Stack = createNativeStackNavigator();
@@ -56,6 +57,12 @@ const App = () => {
           <Stack.Screen
             name="Counter Screen"
             component={Counter}
+            options={{ headerShown: false }}
+
+          />
+          <Stack.Screen
+            name="Add New Word"
+            component={AddNewWord}
             options={{ headerShown: false }}
 
           />

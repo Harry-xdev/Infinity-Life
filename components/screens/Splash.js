@@ -13,10 +13,16 @@ export default SplashScreen = ({ navigation }) => {
     <View style={styles.grandContainer}>
       <View style={styles.headerContainer}>
         <Text style={styles.greetingText}>
-          Hi! Harry!
+          Hi! Đức Khôi!
         </Text>
         <Text style={styles.titleText}>
           Welcome to infinity world!
+        </Text>
+        <Text style={styles.titleText}>
+          Ứng dụng này sẽ giúp em học ghi nhớ từ mới tiếng Anh tốt hơn!
+        </Text>
+        <Text style={styles.titleText}>
+          Là công sức của a Tuấn Anh lập trình nên em phải cố gắng học cho tốt!
         </Text>
 
       </View>
@@ -68,7 +74,7 @@ const styles = StyleSheet.create({
     color: '#ffff',
     fontSize: 25,
     fontWeight: '500',
-    fontFamily: 'IBMPlexMono-Bold',
+    fontFamily: 'IBMPlexMono-Regular',
     paddingBottom: 20
 
   },
