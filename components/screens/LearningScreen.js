@@ -1,5 +1,9 @@
-import React, { useState, useEffect } from "react";
+import { React, useState, useEffect, useContext } from "react";
 import { Text, View, StyleSheet, Dimensions, TouchableOpacity, Alert } from "react-native";
+import { GolobalContext } from '../../Global/globalData';
+
+import Entypo from "react-native-vector-icons/Entypo";
+import FontAwesome from "react-native-vector-icons/FontAwesome";
 import HeaderTop from "../headerTop.js/HeaderTop";
 
 import color from '../../colorStore';
@@ -7,66 +11,80 @@ import color from '../../colorStore';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
-import engQuest from '../../data/vocabularyData';
+import data from '../../data/vocabularyData';
 const scoreStore = {
   totalScore: 0,
   correctCount: 0,
   wrongCount: 0
 };
-import engQuest2 from '../../data/json'
+
+
 
 export default LearningScreen = ({ navigation, props }) => {
+  const { data } = useContext(GolobalContext);
+  // console.log('Screen:',data);
+  // console.log('ansA:', data[0]["1"]["ansA"]);
+
   const [dailyScore, setDailyScore] = useState(0);
+  const [notification, setNotification] = useState('');
+  const [eyeColor, setEyeColor] = useState('grey');
+  const [cameraColor, setCameraColor] = useState('grey');
+  const [statusColor, setStatusColor] = useState('#ffff');
 
-  const random = Math.floor(Math.random() * Object.keys(engQuest).length) + 1;
+
+  const random = Math.floor(Math.random() * data.length);
+  // const random = Math.floor(Math.random() * 3);
+
+  // console.log(data.length);
   const [questNum, setQuestNum] = useState(random);
-
-  const [A, setA] = useState(engQuest[questNum].ansA);
-  const [B, setB] = useState(engQuest[questNum].ansB);
-  const [C, setC] = useState(engQuest[questNum].ansC);
-  const [D, setD] = useState(engQuest[questNum].ansD);
 
   const activeBtnText = 'Hoàn tất và lưu điểm của Khôi';
   const inactiveBtnText = 'Đã lưu điểm bài thi';
 
   const [isSaved, setIsSaved] = useState(false);
 
-  const [isLoading, setLoading] = useState(true);
-  const [data, setData] = useState([]);
+  // const test = data[questNum - 1][questNum.toString()]["ansA"];
+  // console.log('test: ', test);
+  console.log(data)
+  const questNumString = questNum.toString();
+  console.log('questNumString: ', questNumString);
+  console.log('type of questNumString: ', typeof questNumString);
+  // const test = data[questNum - 1][questNumString]["ansA"];
+  // console.log('test: ', test);
+  console.log('questNum - 1: ', questNum - 1);
+  console.log('questNumString: ', questNum.toString());
+  const test = data[0]["ansA"];
+  console.log('test: ', test);
 
-  const getData = async () => {
-    try {
-      const response = await fetch('https://6268162901dab900f1c9969b.mockapi.io/appi/v1/engQuest');
-      const json = await response.json();
-      setData(json);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
-  useEffect(() => {
-    getData();
-  }, []);
-
-  console.log(`quest number:`, questNum);
-  console.log('new:', data["ansA"]);
-  console.log('string:', questNum.toString());
-  // console.log('anA:', engQuest2[questNum].ansA);
-  console.log('quest num', typeof questNum);
+  const [A, setA] = useState(data[questNum]["ansA"]);
+  const [B, setB] = useState(data[questNum]["ansB"]);
+  const [C, setC] = useState(data[questNum]["ansC"]);
+  const [D, setD] = useState(data[questNum]["ansD"]);
 
   const handleRandom = () => {
-    const random2 = Math.floor(Math.random() * Object.keys(engQuest).length) + 1;
+    const random2 = Math.floor(Math.random() * data.length);
+    // const random2 = Math.floor(Math.random() * 3);
+
     setQuestNum(random2);
     setIsSaved(false);
+    setTimeout(() => {
+      setNotification('');
+      setEyeColor('gray');
+      setCameraColor('gray');
+    }, 2000);
+    setTimeout(() => {
+      setNotification('Chọn câu tiếp theo nào Khôi!Không nhớ thì tra từ điển!Làm xong nhớ bấm lưu điểm!');
+      setEyeColor(color.hackingColor);
+      setCameraColor(color.hackingColor);
+    }, 4300);
 
   };
   const setAnswer = () => {
-    setA(engQuest[questNum].ansA);
-    setB(engQuest[questNum].ansB);
-    setC(engQuest[questNum].ansC);
-    setD(engQuest[questNum].ansD);
+    setA(data[questNum].ansA);
+    setB(data[questNum].ansB);
+    setC(data[questNum].ansC);
+    setD(data[questNum].ansD);
 
   };
   const handleCorrectAns = () => {
@@ -80,26 +98,44 @@ export default LearningScreen = ({ navigation, props }) => {
   const saveScore = () => {
     scoreStore.totalScore = scoreStore.totalScore + dailyScore;
     setDailyScore(0);
-    console.log(data);
+    ;
 
-    // Alert.alert(`Saving your score...!`)
-    // console.log(score);
   };
   const handlePressSaving = () => {
     setIsSaved(true);
+    setTimeout(() => {
+      setNotification('Đã lưu điểm!');
+    }, 0);
+    setTimeout(() => {
+      dailyScore < 20 ?
+        setNotification('Mỗi ngày phải đủ 20 điểm nha!Hôm nay em mới làm được ' + dailyScore + ' câu thôi!') :
+        setNotification('Hôm nay Khôi làm được' + dailyScore + ' câu!');
+    }, 1500);
+    setTimeout(() => {
+      navigation.navigate("Splash Screen");
+
+    }, 3000)
   };
 
   const getValueAnswerA = () => {
 
-    if (A === engQuest[questNum].correction) {
+    if (A === data[questNum].correction) {
       // Alert.alert(`You correct! + 1 point`);
+      setNotification('Chọn chính xác! + 1 điểm nha!');
+      setEyeColor('#2ff5d5');
+      setCameraColor('#2ff5d5');
+      // setStatusColor('#2ff5d5');
       handleCorrectAns();
       handleRandom();
       // saveScore();
 
 
     } else {
-      Alert.alert('Chọn đáp án sai -1 điểm! Chọn lại đi Khôi tồ...!');
+      Alert.alert('Không phải đáp án này nha, bấm quài!');
+      setNotification('Chọn đáp án sai -1 điểm! Chọn lại đi Khôi tồ...!');
+      // setStatusColor('red');
+      setEyeColor('red');
+      setCameraColor('red');
       handleWrongAns();
       // saveScore();
       setIsSaved(false);
@@ -108,31 +144,47 @@ export default LearningScreen = ({ navigation, props }) => {
 
   };
   const getValueAnswerB = () => {
-    if (B === engQuest[questNum].correction) {
+    if (B === data[questNum].correction) {
       // Alert.alert(`You correct! + 1 point`);
+      setNotification('Chọn chính xác! + 1 điểm nha!');
+      setStatusColor(color.hackingColor);
+      setEyeColor('#2ff5d5');
+      setCameraColor('#2ff5d5');
       handleCorrectAns();
       handleRandom();
       // saveScore();
 
     } else {
-      Alert.alert('Chọn đáp án sai -1 điểm! Chọn lại đi Khôi tồ...!');
+      Alert.alert('Không phải đáp án này nha, bấm quài!');
+      setNotification('Chọn đáp án sai -1 điểm! Chọn lại đi Khôi tồ...!');
+      // setStatusColor('red');
+      setEyeColor('red');
+      setCameraColor('red');
       handleWrongAns();
       // saveScore();
       setIsSaved(false);
+
 
 
     };
   };
 
   const getValueAnswerC = () => {
-    if (C === engQuest[questNum].correction) {
+    if (C === data[questNum].correction) {
       // Alert.alert(`You correct! + 1 point`);
+      setNotification('Chọn chính xác! + 1 điểm nha!');
+      setCameraColor('#2ff5d5');
+      setEyeColor('#2ff5d5');
       handleCorrectAns();
       handleRandom();
       // saveScore();
 
     } else {
-      Alert.alert('Chọn đáp án sai -1 điểm! Chọn lại đi Khôi tồ...!');
+      Alert.alert('Không phải đáp án này nha, bấm quài!');
+      setNotification('Chọn đáp án sai -1 điểm! Chọn lại đi Khôi tồ...!');
+      // setStatusColor('red');
+      setEyeColor('red');
+      setCameraColor('red');
       handleWrongAns();
       // saveScore();
       setIsSaved(false);
@@ -143,14 +195,20 @@ export default LearningScreen = ({ navigation, props }) => {
 
   };
   const getValueAnswerD = () => {
-    if (D === engQuest[questNum].correction) {
+    if (D === data[questNum].correction) {
       // Alert.alert(`You correct! + 1 point`);
+      setNotification('Chọn chính xác! + 1 điểm nha!');
+      setCameraColor('#2ff5d5');
+      setEyeColor('#2ff5d5');
       handleCorrectAns();
       handleRandom();
       // saveScore();
 
     } else {
-      Alert.alert('Chọn đáp án sai -1 điểm! Chọn lại đi Khôi tồ...!');
+      Alert.alert('Không phải đáp án này nha, bấm quài!');
+      setNotification('Chọn đáp án sai -1 điểm! Chọn lại đi Khôi tồ...!');
+      setEyeColor('red');
+      setCameraColor('red');
       handleWrongAns();
       // saveScore();
       setIsSaved(false);
@@ -158,7 +216,7 @@ export default LearningScreen = ({ navigation, props }) => {
 
     };
   };
-  console.log(scoreStore.totalScore);
+  // console.log(scoreStore.totalScore);
 
   return (
     <View style={styles.grandContainer}>
@@ -174,32 +232,55 @@ export default LearningScreen = ({ navigation, props }) => {
       </View>
       <View style={{ alignItems: "center" }}>
         <View style={styles.dailyStatusBox}>
-          <Text style={styles.dailyStatusText}>Số điểm hôm nay của Khôi: </Text>
-          <Text style={[styles.dailyStatusText, { color: color.hackingColor, fontSize: 40 }]}>
-            {dailyScore}
+          <Text style={styles.dailyStatusText}>Total questions: </Text>
+          <Text style={[styles.dailyStatusText, { color: color.hackingColor, fontSize: 15, fontWeight: 800 }]}>
+            {Object.keys(data).length}
           </Text>
         </View>
         <View style={styles.dailyStatusBox}>
-          <Text style={styles.dailyStatusText}>Total questions: </Text>
-          <Text style={[styles.dailyStatusText, { color: color.hackingColor, fontSize: 40 }]}>
-            {Object.keys(engQuest).length}
+          <Text style={styles.dailyStatusText}>Số điểm hôm nay của Khôi: </Text>
+          <Text style={[styles.dailyStatusText, { color: color.hackingColor, fontSize: 15, fontWeight: 800 }]}>
+            {dailyScore}
           </Text>
         </View>
+
+        <View style={styles.avatarContainer}>
+          <View style={styles.avatar}>
+            <Text style={styles.avatarText}>
+              Anh Tuấn Hacker đẹp trai tài giỏi đang ở đây...!!!_
+            </Text>
+            <View style={{ flexDirection: "row" }}>
+              <FontAwesome name="eye" size={18} color={eyeColor} />
+              <Text style={{ width: 5 }}></Text>
+              <Entypo name="video-camera" size={18} color={cameraColor} />
+            </View>
+          </View>
+
+          <View style={[styles.dailyStatusBox, { width: 310, borderWidth: 0.5, borderRadius: 15, justifyContent: "center" }]}>
+            <Text style={[styles.dailyStatusText, { fontSize: 19, color: statusColor, fontFamily: 'IBMPlexMono-Bold' }]}>
+              {notification}
+            </Text>
+          </View>
+
+        </View>
+
+
+
       </View>
       {/* <TouchableOpacity onPress={() => navigation.navigate('Splash Screen')} >
         <Text style={{ color: '#ffff' }} >Back to main page</Text>
       </TouchableOpacity> */}
 
-      <View style={styles.container}>
+      <View style={styles.questContainer}>
 
         <View style={styles.questNum}>
           <Text style={styles.questNumText}>
-            {'Question ' + questNum + ": "}
+            {'Question ' + data[questNum]["id"] + ": "}
           </Text>
         </View>
 
         <View style={styles.questBox}>
-          <Text style={styles.questBoxText}>{engQuest[questNum].question} </Text>
+          <Text style={styles.questBoxText}>{data[questNum]["question"]} </Text>
         </View>
 
         <TouchableOpacity
@@ -207,7 +288,7 @@ export default LearningScreen = ({ navigation, props }) => {
           onPressOut={getValueAnswerA}
           onPressIn={setAnswer}
         >
-          <Text style={styles.text}>{"A. " + engQuest[questNum].ansA}</Text>
+          <Text style={styles.text}>{"A. " + data[questNum]["ansA"]}</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -215,7 +296,7 @@ export default LearningScreen = ({ navigation, props }) => {
           onPressIn={setAnswer}
           style={styles.anwserBox}
         >
-          <Text style={styles.text}>{"B. " + engQuest[questNum].ansB}</Text>
+          <Text style={styles.text}>{"B. " + data[questNum]["ansB"]}</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -223,7 +304,7 @@ export default LearningScreen = ({ navigation, props }) => {
           onPressIn={setAnswer}
           style={styles.anwserBox}
         >
-          <Text style={styles.text}>{"C. " + engQuest[questNum].ansC}</Text>
+          <Text style={styles.text}>{"C. " + data[questNum]["ansC"]}</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -231,7 +312,7 @@ export default LearningScreen = ({ navigation, props }) => {
           onPressIn={setAnswer}
           onPressOut={getValueAnswerD}
         >
-          <Text style={styles.text}>{"D. " + engQuest[questNum].ansD}</Text>
+          <Text style={styles.text}>{"D. " + data[questNum].ansD}</Text>
         </TouchableOpacity>
 
         <View>
@@ -248,12 +329,7 @@ export default LearningScreen = ({ navigation, props }) => {
 
         </View>
 
-
-
       </View>
-
-
-
 
     </View>
   );
@@ -272,7 +348,7 @@ const styles = StyleSheet.create({
     fontSize: 35,
     fontFamily: 'IBMPlexMono-Bold',
   },
-  container: {
+  questContainer: {
     justifyContent: "center",
     alignItems: "center"
   },
@@ -291,14 +367,14 @@ const styles = StyleSheet.create({
     borderColor: '#ffff',
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 10,
+    borderRadius: 0,
     marginBottom: 12,
-    backgroundColor: 'pink'
+    backgroundColor: color.classicBackground
   },
 
   questBoxText: {
     fontSize: 23,
-    color: '#000000',
+    color: color.white,
     fontFamily: 'IBMPlexMono-Bold'
   },
   anwserBox: {
@@ -306,7 +382,7 @@ const styles = StyleSheet.create({
     borderColor: '#ffff',
     height: 50,
     width: width - 30,
-    borderRadius: 10,
+    borderRadius: 0,
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 5,
@@ -324,7 +400,7 @@ const styles = StyleSheet.create({
     borderColor: '#ffff',
     height: 50,
     width: width - 30,
-    borderRadius: 10,
+    borderRadius: 0,
     justifyContent: "center",
     alignItems: "center",
     marginTop: 30
@@ -336,14 +412,14 @@ const styles = StyleSheet.create({
     height: 60,
     width: 150,
     marginTop: 40,
-    borderRadius: 10
+    borderRadius: 0
   },
   inactiveBtn: {
     borderWidth: 2,
     borderColor: 'gray',
     height: 50,
     width: width - 30,
-    borderRadius: 10,
+    borderRadius: 0,
     justifyContent: "center",
     alignItems: "center",
     marginTop: 30
@@ -360,15 +436,36 @@ const styles = StyleSheet.create({
   },
   dailyStatusBox: {
     width: 400,
-    // borderWidth: 1,
+    borderWidth: 0.5,
     borderColor: '#ffff',
     flexDirection: 'row',
-    justifyContent: "center",
-    alignItems: "center"
+    // justifyContent: "center",
+    alignItems: "center",
+    paddingLeft: 10,
+    // backgroundColor: '#0e19bf'
   },
   dailyStatusText: {
     color: '#ffff',
-    fontSize: 18,
-    fontFamily: 'IBMPlexMono-Bold'
+    fontSize: 15,
+    fontFamily: 'IBMPlexMono-Regular'
+  },
+  avatarContainer: {
+    flexDirection: "row",
+    marginTop: 10,
+    // backgroundColor: '#0e19bf'
+  },
+  avatar: {
+    height: 90,
+    // margin: 8,
+    width: 90,
+    borderWidth: 1,
+    // borderColor: color.hackingColor,
+    padding: 3,
+    // marginTop: 30
+  },
+  avatarText: {
+    color: color.hackingColor,
+    fontSize: 11,
+    fontFamily: 'IBMPlexMono-Regular'
   },
 });

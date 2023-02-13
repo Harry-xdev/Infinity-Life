@@ -1,5 +1,5 @@
-import React from "react";
-import { Text, View, StyleSheet, Dimensions } from "react-native";
+import React, { useState } from "react";
+import { Text, View, StyleSheet, Dimensions, Button } from "react-native";
 import HeaderTop from "../../headerTop.js/HeaderTop";
 import { useSelector } from "react-redux";
 
@@ -11,11 +11,21 @@ const height = Dimensions.get('window').height;
 
 export default LearningScreen = ({navigation}) => {
   const value = useSelector(valueSelector);
+  const [data, setData] = useState(0);
+  const handleRefesh = () => {
+    setData(data + 1);
+  };
+  console.log(data);
+
+
   return (
     
     <View style={styles.grandContainer}>
       <HeaderTop backTo={() => navigation.navigate('Bottom Tab Main')} />
-      <Text style={styles.count}>Counter</Text>
+      <Text style={styles.count}>{data}</Text>
+      <Button title={'Refesh'} onPress={handleRefesh} />
+
+      
     </View>
   );
 };

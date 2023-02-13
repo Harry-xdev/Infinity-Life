@@ -3,8 +3,9 @@
 import * as React from 'react'
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Provider } from 'react-redux';
+// import { Provider } from 'react-redux';
 import store from './store';
+import { ContextProvider } from './Global/globalData';
 
 import {
   SafeAreaView,
@@ -22,6 +23,7 @@ import LearningSreen from './components/screens/LearningScreen'
 import Counter from './components/screens/Counter/Counter';
 import BottomTabBarMain from './components/screens/TabScreen/BottomTabBarMain';
 import AddNewWord from './components/screens/AddNewWord';
+import Base from './components/screens/Base';
 
 
 const Stack = createNativeStackNavigator();
@@ -30,13 +32,14 @@ const App = () => {
 
 
   return (
-    <Provider store={store}>
+    <ContextProvider>
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator initialRouteName='Splash Screen'>
           <Stack.Screen
             name="Splash Screen"
             component={SplashScreen}
             options={{ headerShown: false }}
+
           />
           <Stack.Screen
             name="Bottom Tab Main"
@@ -66,10 +69,15 @@ const App = () => {
             options={{ headerShown: false }}
 
           />
+          <Stack.Screen
+            name="Test"
+            component={Base}
+            options={{headerShown: false}}
+          />
 
         </Stack.Navigator>
       </NavigationContainer>
-    </Provider>
+    </ContextProvider>
   );
 };
 
