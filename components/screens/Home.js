@@ -41,14 +41,14 @@ export default Home = ({ navigation }) => {
           itemContent={'New Vocabulary Addition Tool'}
           navigation={() => navigation.navigate('Add New Word')}
         />
-        <ItemBar
+        {/* <ItemBar
           itemContent={'Counter Tool'}
           navigation={() => navigation.navigate('Counter Screen')}
         />
         <ItemBar
           itemContent={'Test'}
           navigation={() => navigation.navigate('Test')}
-        />
+        /> */}
 
 
       </View>

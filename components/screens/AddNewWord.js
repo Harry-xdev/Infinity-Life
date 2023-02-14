@@ -1,25 +1,19 @@
-import React from "react";
-import { Text, View, StyleSheet, Dimensions, TextInput, Button, Touchable, TouchableOpacity } from "react-native";
+import React, { useContext, useState } from "react";
+import { Text, View, StyleSheet, Dimensions, TextInput, Button, Touchable, TouchableOpacity, Alert } from "react-native";
+import { GolobalContext } from "../../Global/globalData";
 import HeaderTop from "../headerTop.js/HeaderTop";
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
-const vietNamAnswer = [
-  "Máy ảnh chi tiết", "Máy ảnh Sony", "Máy ảnh kỹ thuật số", "Máy quay", "Điện thoại bàn",
-  "Điện thoại rảnh tay",
-  "Điện thoại cổ điển",
-  "Đánh giá", "Tấm",
-  "Máy kỹ thuật số",
-  "Phân tích",
-  "Máy nghe nhạc",
-  "Trợ lý kỹ thuật cá nhân",
-  "Trợ lý ảo",
-  "Trợ lý cá nhân",
-  "Trợ lý chi tiết"
-];
+
 
 export default AddNewWord = ({ navigation }) => {
+  const { vietNamAnswer } = useContext(GolobalContext);
+  const randomABCD = Math.floor(Math.random() * 4) + 1;
+  // console.log('ABCD:', randomABCD);
+  const [countWord, setCount] = useState(0);
+
   const [question, setQuestion] = React.useState("");
   const [ansA, setAnsA] = React.useState("");
   const [ansB, setAnsB] = React.useState("");
@@ -27,27 +21,72 @@ export default AddNewWord = ({ navigation }) => {
   const [ansD, setAnsD] = React.useState("");
   const [correction, setCorrection] = React.useState("");
 
-
+  console.log(`new vietNamAnser`, vietNamAnswer);
   console.log(question);
   console.log(ansA);
   console.log(ansB);
   console.log(ansC);
   console.log(ansD);
   console.log(correction)
-  const randomAnswerA = vietNamAnswer[Math.floor(Math.random() * vietNamAnswer.length)];
-  const randomAnswerB = vietNamAnswer[Math.floor(Math.random() * vietNamAnswer.length)];
-  const randomAnswerC = vietNamAnswer[Math.floor(Math.random() * vietNamAnswer.length)];
-  const randomAnswerD = vietNamAnswer[Math.floor(Math.random() * vietNamAnswer.length)];
+  const randomAnswerA = vietNamAnswer[Math.floor(Math.random() * vietNamAnswer.length)]["answer"];
+  const randomAnswerB = vietNamAnswer[Math.floor(Math.random() * vietNamAnswer.length)]["answer"];
+  const randomAnswerC = vietNamAnswer[Math.floor(Math.random() * vietNamAnswer.length)]["answer"];
+  const randomAnswerD = vietNamAnswer[Math.floor(Math.random() * vietNamAnswer.length)]["answer"];
 
   const handleRandom = () => {
-    setAnsA(randomAnswerA);
-    setAnsB(randomAnswerB);
-    setAnsC(randomAnswerC);
-    setAnsD(randomAnswerD);
+    randomABCD === 1 ?
+      setAnsA(correction) :
+      setAnsA(randomAnswerA);
+    randomABCD === 2 ?
+      setAnsB(correction) :
+      setAnsB(randomAnswerB);
+    randomABCD === 3 ?
+      setAnsC(correction) :
+      setAnsC(randomAnswerC);
+    randomABCD === 4 ?
+      setAnsD(correction) :
+      setAnsD(randomAnswerD);
   };
-  
+  const handleCleaningField = () => {
+    setQuestion("");
+    setCorrection("");
+    setAnsA("");
+    setAnsB("");
+    setAnsC("");
+    setAnsD("");
+  };
+  handleSubmit = () => {
+    if
+      (question !== "" &&
+      ansA !== "" &&
+      ansB !== "" &&
+      ansC !== "" &&
+      ansD !== "" &&
+      correction !== "") {
+      setTimeout(() => {
+        createNewQuestion(question, ansA, ansB, ansC, ansD, correction);
+
+      }, 0);
+      updateNewRanAns(correction);
+      setCount(countWord + 1);
+      setTimeout(() => {
+        handleCleaningField()
+      }, 500);
+      setTimeout(() => {
+        Alert.alert('Đã thêm từ mới:', question + ': ' + correction);
+
+      }, 500);
+
+    } else {
+      Alert.alert(`Do not leave the empty field!`);
+
+    }
+
+  };
 
 
+
+  // console.log('new array pushed: ', vietNamAnswer);
   let createNewQuestion = (question, ansA, ansB, ansC, ansD, correction) => {
     fetch(`https://6268162901dab900f1c9969b.mockapi.io/appi/v1/engQuest`, {
       method: 'POST',
@@ -64,8 +103,27 @@ export default AddNewWord = ({ navigation }) => {
       })
     })
       .then(res => {
-        console.log(res.status);
-        console.log(res.headers)
+        // console.log(res.status);
+        // console.log(res.headers)
+        return res.json();
+      })
+      .then(result => {
+        console.log(result);
+      })
+  };
+  let updateNewRanAns = () => {
+    fetch(`https://6268162901dab900f1c9969b.mockapi.io/appi/v1/userList`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        answer: correction
+      })
+    })
+      .then(res => {
+        // console.log(res.status);
+        // console.log(res.headers)
         return res.json();
       })
       .then(result => {
@@ -79,12 +137,18 @@ export default AddNewWord = ({ navigation }) => {
     <View style={styles.grandContainer}>
       <HeaderTop backTo={() => navigation.navigate('Home')} />
       <Text>Add new Word</Text>
-      <View style={{ flexDirection: "row"}}>
+      <View style={{flexDirection: "row"}}>
+        <Text>Số từ đã thêm:</Text>
+        <Text>{countWord}</Text>
+      </View>
+
+      <View style={{ flexDirection: "row" }}>
         <TextInput
           style={styles.inputBox}
           placeholder={"Từ tiếng Anh cần thêm..."}
           value={question}
           onChangeText={setQuestion}
+          autoCapitalize="sentences"
         />
         <TouchableOpacity
           style={styles.btn}
@@ -93,7 +157,7 @@ export default AddNewWord = ({ navigation }) => {
         </TouchableOpacity>
       </View>
 
-      <View style={{ flexDirection: "row"}}>
+      <View style={{ flexDirection: "row" }}>
         <TextInput
           style={styles.inputBox}
           placeholder={"Nghĩa của từ tiếng Anh bên trên..."}
@@ -108,7 +172,7 @@ export default AddNewWord = ({ navigation }) => {
       <View style={{ flexDirection: "row", }}>
         <TextInput
           style={styles.inputBox}
-          placeholder={"A..."}
+          placeholder={"Viết tiếng Việt có dấu..."}
           value={ansA}
           onChangeText={setAnsA}
         />
@@ -117,11 +181,13 @@ export default AddNewWord = ({ navigation }) => {
           onPress={() => setAnsA(randomAnswerA)}>
           <Text>Thay đổi</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.btn}
-          onPress={() => setAnsA(correction)}>
-          <Text>Cài đáp án ở đây</Text>
-        </TouchableOpacity>
+        {/* {randomABCD === 1 ?
+          <TouchableOpacity
+            style={styles.btn}
+            onPress={() => setAnsA(correction)}>
+            <Text>Cài đáp án ở đây</Text>
+          </TouchableOpacity> :
+          <View></View>} */}
       </View>
 
       {/* Answer B */}
@@ -129,7 +195,7 @@ export default AddNewWord = ({ navigation }) => {
       <View style={{ flexDirection: "row", }}>
         <TextInput
           style={styles.inputBox}
-          placeholder={"B..."}
+          placeholder={"Viết tiếng Việt có dấu..."}
           value={ansB}
           onChangeText={setAnsB}
         />
@@ -138,11 +204,13 @@ export default AddNewWord = ({ navigation }) => {
           onPress={() => setAnsB(randomAnswerB)}>
           <Text>Thay đổi</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.btn}
-          onPress={() => setAnsB(correction)}>
-          <Text>Cài đáp án ở đây</Text>
-        </TouchableOpacity>
+        {/* {randomABCD === 2 ?
+          <TouchableOpacity
+            style={styles.btn}
+            onPress={() => setAnsB(correction)}>
+            <Text>Cài đáp án ở đây</Text>
+          </TouchableOpacity> :
+          <View></View>} */}
       </View>
 
       {/* Answer C */}
@@ -150,7 +218,7 @@ export default AddNewWord = ({ navigation }) => {
       <View style={{ flexDirection: "row", }}>
         <TextInput
           style={styles.inputBox}
-          placeholder={"C..."}
+          placeholder={"Viết tiếng Việt có dấu..."}
           value={ansC}
           onChangeText={setAnsC}
         />
@@ -159,11 +227,13 @@ export default AddNewWord = ({ navigation }) => {
           onPress={() => setAnsC(randomAnswerC)}>
           <Text>Thay đổi</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.btn}
-          onPress={() => setAnsC(correction)}>
-          <Text>Cài đáp án ở đây</Text>
-        </TouchableOpacity>
+        {/* {randomABCD === 3 ?
+          <TouchableOpacity
+            style={styles.btn}
+            onPress={() => setAnsC(correction)}>
+            <Text>Cài đáp án ở đây</Text>
+          </TouchableOpacity> :
+          <View></View>} */}
       </View>
 
       {/* Answer D */}
@@ -171,7 +241,7 @@ export default AddNewWord = ({ navigation }) => {
       <View style={{ flexDirection: "row", }}>
         <TextInput
           style={styles.inputBox}
-          placeholder={"D..."}
+          placeholder={"Viết tiếng Việt có dấu...."}
           value={ansD}
           onChangeText={setAnsD}
         />
@@ -180,18 +250,23 @@ export default AddNewWord = ({ navigation }) => {
           onPress={() => setAnsD(randomAnswerD)}>
           <Text>Thay đổi</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.btn}
-          onPress={() => setAnsD(correction)}>
-          <Text>Cài đáp án ở đây</Text>
-        </TouchableOpacity>
+        {/* {randomABCD === 4 ?
+          <TouchableOpacity
+            style={styles.btn}
+            onPress={() => setAnsD(correction)}>
+            <Text>Cài đáp án ở đây</Text>
+          </TouchableOpacity> :
+          <View></View>} */}
       </View>
 
       <Button
         title="Submit"
-        onPress={() => createNewQuestion(question, ansA, ansB, ansC, ansD, correction)}
+        onPress={handleSubmit}
       />
-
+      {/* <Button
+        title="Update"
+        onPress={handleUpdateAns}
+      /> */}
 
 
     </View>

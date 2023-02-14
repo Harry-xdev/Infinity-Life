@@ -11,7 +11,7 @@ import color from '../../colorStore';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
-import data from '../../data/Khoi-Vocabulary';
+// import data from '../../data/Khoi-Vocabulary';
 const scoreStore = {
   totalScore: 0,
   correctCount: 0,
