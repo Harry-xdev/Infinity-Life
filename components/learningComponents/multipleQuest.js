@@ -5,7 +5,7 @@ import { Alert, Dimensions, StyleSheet, Text, TouchableOpacity, View } from "rea
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
-import engQuest from '../../data/vocabularyData';
+import engQuest from '../../data/Khoi-Vocabulary';
 
 export default MultipleQuest = ({ props, navigation }) => {
 

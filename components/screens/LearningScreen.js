@@ -11,7 +11,7 @@ import color from '../../colorStore';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
-import data from '../../data/vocabularyData';
+import data from '../../data/Khoi-Vocabulary';
 const scoreStore = {
   totalScore: 0,
   correctCount: 0,
@@ -43,18 +43,18 @@ export default LearningScreen = ({ navigation, props }) => {
 
   const [isSaved, setIsSaved] = useState(false);
 
-  // const test = data[questNum - 1][questNum.toString()]["ansA"];
+  // // const test = data[questNum - 1][questNum.toString()]["ansA"];
+  // // console.log('test: ', test);
+  // console.log(data)
+  // const questNumString = questNum.toString();
+  // console.log('questNumString: ', questNumString);
+  // console.log('type of questNumString: ', typeof questNumString);
+  // // const test = data[questNum - 1][questNumString]["ansA"];
+  // // console.log('test: ', test);
+  // console.log('questNum - 1: ', questNum - 1);
+  // console.log('questNumString: ', questNum.toString());
+  // const test = data[0]["ansA"];
   // console.log('test: ', test);
-  console.log(data)
-  const questNumString = questNum.toString();
-  console.log('questNumString: ', questNumString);
-  console.log('type of questNumString: ', typeof questNumString);
-  // const test = data[questNum - 1][questNumString]["ansA"];
-  // console.log('test: ', test);
-  console.log('questNum - 1: ', questNum - 1);
-  console.log('questNumString: ', questNum.toString());
-  const test = data[0]["ansA"];
-  console.log('test: ', test);
 
 
   const [A, setA] = useState(data[questNum]["ansA"]);

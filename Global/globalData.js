@@ -7,6 +7,8 @@ const ContextProvider = ({ children }) => {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
 
+  const test = 'varible test okok';
+
   const getData = async () => {
     try {
       const response = await fetch('https://6268162901dab900f1c9969b.mockapi.io/appi/v1/engQuest');
