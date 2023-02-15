@@ -1,5 +1,5 @@
 import { React, useState, useEffect, useContext } from "react";
-import { Text, View, StyleSheet, Dimensions, TouchableOpacity, Alert } from "react-native";
+import { Text, View, StyleSheet, Dimensions, TouchableOpacity, Alert, ScrollView } from "react-native";
 import { GolobalContext } from '../../Global/globalData';
 
 import Entypo from "react-native-vector-icons/Entypo";
@@ -29,7 +29,7 @@ export default LearningScreen = ({ navigation, props }) => {
   const [notification, setNotification] = useState('');
   const [eyeColor, setEyeColor] = useState('grey');
   const [cameraColor, setCameraColor] = useState('grey');
-  const [statusColor, setStatusColor] = useState('#ffff');
+  const [statusColor, setStatusColor] = useState('#000000');
 
 
   const random = Math.floor(Math.random() * data.length);
@@ -219,6 +219,7 @@ export default LearningScreen = ({ navigation, props }) => {
   // console.log(scoreStore.totalScore);
 
   return (
+    <ScrollView>
     <View style={styles.grandContainer}>
       <HeaderTop
         backTo={() => navigation.navigate('Bottom Tab Main')}
@@ -227,14 +228,14 @@ export default LearningScreen = ({ navigation, props }) => {
         borderWidth={2}
       />
       <View style={{ alignItems: "center", justifyContent: "center", height: 70 }}>
-        <Text style={{ color: color.hackingColor, fontFamily: 'IBMPlexMono-Bold', fontSize: 25 }}>Multiple Choices Question</Text>
+        <Text style={{ color: color.black, fontFamily: 'IBMPlexMono-Bold', fontSize: 23 }}>MULTIPLE CHOICES QUESTION</Text>
 
       </View>
       <View style={{ alignItems: "center" }}>
         <View style={styles.dailyStatusBox}>
           <Text style={styles.dailyStatusText}>Total questions: </Text>
           <Text style={[styles.dailyStatusText, { color: color.hackingColor, fontSize: 15, fontWeight: 800 }]}>
-            {Object.keys(data).length}
+            {data.length}
           </Text>
         </View>
         <View style={styles.dailyStatusBox}>
@@ -245,7 +246,7 @@ export default LearningScreen = ({ navigation, props }) => {
         </View>
 
         <View style={styles.avatarContainer}>
-          <View style={styles.avatar}>
+          <View style={styles.avatarBox}>
             <Text style={styles.avatarText}>
               Anh Tuấn Hacker đẹp trai tài giỏi đang ở đây...!!!_
             </Text>
@@ -317,7 +318,7 @@ export default LearningScreen = ({ navigation, props }) => {
 
         <View>
           <TouchableOpacity
-            style={[isSaved === true ? styles.inactiveBtn : styles.activeBtn, { backgroundColor: "#000000" }]}
+            style={[isSaved === true ? styles.inactiveBtn : styles.activeBtn]}
             onPressOut={saveScore}
             onPressIn={handlePressSaving}
           >
@@ -332,16 +333,14 @@ export default LearningScreen = ({ navigation, props }) => {
       </View>
 
     </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
   grandContainer: {
-    backgroundColor: color.PrimeBackground,
+    backgroundColor: color.SecondBackground,
     height: height,
-  },
-  pageTitle: {
-
   },
   headerTitle: {
     color: color.homeHeaderTitle,
@@ -356,7 +355,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10
   },
   questNumText: {
-    color: '#ffff',
+    color: color.black,
     fontSize: 25,
     fontFamily: 'IBMPlexMono-Bold'
   },
@@ -364,22 +363,22 @@ const styles = StyleSheet.create({
     height: height / 6,
     width: width - 30,
     borderWidth: 4,
-    borderColor: '#ffff',
+    borderColor: color.black,
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 0,
     marginBottom: 12,
-    backgroundColor: color.classicBackground
+    backgroundColor: color.white
   },
 
   questBoxText: {
     fontSize: 23,
-    color: color.white,
+    color: color.black,
     fontFamily: 'IBMPlexMono-Bold'
   },
   anwserBox: {
     borderWidth: 1,
-    borderColor: '#ffff',
+    borderColor: color.black,
     height: 50,
     width: width - 30,
     borderRadius: 0,
@@ -391,19 +390,20 @@ const styles = StyleSheet.create({
 
   text: {
     fontSize: 19,
-    color: '#ffff',
-    fontFamily: 'IBMPlexMono-Regular',
+    color: color.black,
+    fontFamily: 'IBMPlexMono-Bold',
 
   },
   activeBtn: {
     borderWidth: 2,
-    borderColor: '#ffff',
+    borderColor: color.black,
     height: 50,
     width: width - 30,
     borderRadius: 0,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 30
+    marginTop: 30,
+    backgroundColor: color.white,
   },
   nextToPage: {
     borderWidth: 2,
@@ -416,17 +416,19 @@ const styles = StyleSheet.create({
   },
   inactiveBtn: {
     borderWidth: 2,
-    borderColor: 'gray',
+    borderColor: '#393636',
     height: 50,
     width: width - 30,
     borderRadius: 0,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 30
+    marginTop: 30,
+    backgroundColor: '#bcbcbc',
+
   },
   activeText: {
     fontSize: 19,
-    color: color.hackingColor,
+    color: color.black,
     fontFamily: 'IBMPlexMono-Regular',
   },
   inactiveText: {
@@ -437,7 +439,7 @@ const styles = StyleSheet.create({
   dailyStatusBox: {
     width: 400,
     borderWidth: 0.5,
-    borderColor: '#ffff',
+    borderColor: color.black,
     flexDirection: 'row',
     // justifyContent: "center",
     alignItems: "center",
@@ -445,7 +447,7 @@ const styles = StyleSheet.create({
     // backgroundColor: '#0e19bf'
   },
   dailyStatusText: {
-    color: '#ffff',
+    color: color.black,
     fontSize: 15,
     fontFamily: 'IBMPlexMono-Regular'
   },
@@ -454,11 +456,11 @@ const styles = StyleSheet.create({
     marginTop: 10,
     // backgroundColor: '#0e19bf'
   },
-  avatar: {
+  avatarBox: {
     height: 90,
     // margin: 8,
     width: 90,
-    borderWidth: 1,
+    // borderWidth: 1,
     // borderColor: color.hackingColor,
     padding: 3,
     // marginTop: 30

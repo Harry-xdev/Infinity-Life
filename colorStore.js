@@ -3,8 +3,8 @@ import { Dimensions } from "react-native";
 
 export default color = {
   PrimeBackground: '#050c16',
-  // SecondBackground: '#ffff',
-  SecondBackground: 'pink',
+  SecondBackground: '#ffff',
+  // SecondBackground: '#eb6969',
   btnBorder: '#b8bec9',
   hackingColor: '#0fd317',
   classicBackground: '#0e19bf',
