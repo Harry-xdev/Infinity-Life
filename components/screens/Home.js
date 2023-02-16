@@ -18,7 +18,7 @@ export default Home = ({ navigation }) => {
         backTo={() => navigation.navigate('Splash Screen')}
       />
 
-      <View>
+      <View style={{alignItems: "center", marginTop: 50}}>
         <Text style={styles.headerTitle}>INFINITY WORKSPACE</Text>
       </View>
       <View style={styles.contentContainer}>
@@ -64,16 +64,21 @@ const styles = StyleSheet.create({
   grandContainer: {
     backgroundColor: color.PrimeBackground,
     height: height,
+    // justifyContent: "center",
+
 
   },
   contentContainer: {
     // justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    marginTop: 100
   },
   headerTitle: {
     color: color.homeHeaderTitle,
     fontSize: 35,
-    fontFamily: 'IBMPlexMono-Bold'
+    fontFamily: 'IBMPlexMono-Bold',
+    // alignItems: "center"
+    justifyContent: "center"
   },
   item: {
     itemText: {

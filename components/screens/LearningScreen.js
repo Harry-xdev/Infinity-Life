@@ -1,5 +1,5 @@
 import { React, useState, useEffect, useContext } from "react";
-import { Text, View, StyleSheet, Dimensions, TouchableOpacity, Alert, ScrollView } from "react-native";
+import { Text, View, StyleSheet, Dimensions, TouchableOpacity, Alert, ScrollView, ImageBackground } from "react-native";
 import { GolobalContext } from '../../Global/globalData';
 
 import Entypo from "react-native-vector-icons/Entypo";
@@ -14,16 +14,18 @@ const height = Dimensions.get('window').height;
 // import data from '../../data/Khoi-Vocabulary';
 const scoreStore = {
   totalScore: 0,
-  correctCount: 0,
-  wrongCount: 0
+
 };
 
 
 
 export default LearningScreen = ({ navigation, props }) => {
   const { data } = useContext(GolobalContext);
+  const { userData } = useContext(GolobalContext);
+  const oldTotalScore = userData[0]['score'];
   // console.log('Screen:',data);
   // console.log('ansA:', data[0]["1"]["ansA"]);
+  // console.log('user data:',userData);
 
   const [dailyScore, setDailyScore] = useState(0);
   const [notification, setNotification] = useState('');
@@ -95,12 +97,34 @@ export default LearningScreen = ({ navigation, props }) => {
     setDailyScore(dailyScore - 1);
 
   };
+
+  const newScore = oldTotalScore + dailyScore;
   const saveScore = () => {
-    scoreStore.totalScore = scoreStore.totalScore + dailyScore;
+    updateScore("1", newScore);
     setDailyScore(0);
     ;
 
   };
+  const updateScore = (id, score) => {
+    fetch(`https://63eddd2f388920150dd47775.mockapi.io/userAccount/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        score: newScore
+      })
+    })
+      .then(res => {
+        // console.log(res.status);
+        // console.log(res.headers)
+        return res.json();
+      })
+      .then(result => {
+        console.log(result);
+      })
+  };
+
   const handlePressSaving = () => {
     setIsSaved(true);
     setTimeout(() => {
@@ -109,12 +133,13 @@ export default LearningScreen = ({ navigation, props }) => {
     setTimeout(() => {
       dailyScore < 20 ?
         setNotification('Mỗi ngày phải đủ 20 điểm nha!Hôm nay em mới làm được ' + dailyScore + ' câu thôi!') :
-        setNotification('Hôm nay Khôi làm được' + dailyScore + ' câu!');
+        setNotification('Hôm nay Khôi làm được: ' + dailyScore + ' câu!');
     }, 1500);
     setTimeout(() => {
-      navigation.navigate("Splash Screen");
+      Alert.alert(`Hãy xoá ứng dụng chạy ngầm rồi ngày mai mở lại làm điểm sẽ được cập nhật!`)
+    }, 2000);
+    
 
-    }, 3000)
   };
 
   const getValueAnswerA = () => {
@@ -124,7 +149,7 @@ export default LearningScreen = ({ navigation, props }) => {
       setNotification('Chọn chính xác! + 1 điểm nha!');
       setEyeColor('#2ff5d5');
       setCameraColor('#2ff5d5');
-      // setStatusColor('#2ff5d5');
+      setStatusColor(color.black);
       handleCorrectAns();
       handleRandom();
       // saveScore();
@@ -133,7 +158,7 @@ export default LearningScreen = ({ navigation, props }) => {
     } else {
       Alert.alert('Không phải đáp án này nha, bấm quài!');
       setNotification('Chọn đáp án sai -1 điểm! Chọn lại đi Khôi tồ...!');
-      // setStatusColor('red');
+      setStatusColor('red');
       setEyeColor('red');
       setCameraColor('red');
       handleWrongAns();
@@ -147,7 +172,7 @@ export default LearningScreen = ({ navigation, props }) => {
     if (B === data[questNum].correction) {
       // Alert.alert(`You correct! + 1 point`);
       setNotification('Chọn chính xác! + 1 điểm nha!');
-      setStatusColor(color.hackingColor);
+      setStatusColor(color.black);
       setEyeColor('#2ff5d5');
       setCameraColor('#2ff5d5');
       handleCorrectAns();
@@ -157,7 +182,7 @@ export default LearningScreen = ({ navigation, props }) => {
     } else {
       Alert.alert('Không phải đáp án này nha, bấm quài!');
       setNotification('Chọn đáp án sai -1 điểm! Chọn lại đi Khôi tồ...!');
-      // setStatusColor('red');
+      setStatusColor('red');
       setEyeColor('red');
       setCameraColor('red');
       handleWrongAns();
@@ -173,6 +198,7 @@ export default LearningScreen = ({ navigation, props }) => {
     if (C === data[questNum].correction) {
       // Alert.alert(`You correct! + 1 point`);
       setNotification('Chọn chính xác! + 1 điểm nha!');
+      setStatusColor(color.black);
       setCameraColor('#2ff5d5');
       setEyeColor('#2ff5d5');
       handleCorrectAns();
@@ -182,7 +208,7 @@ export default LearningScreen = ({ navigation, props }) => {
     } else {
       Alert.alert('Không phải đáp án này nha, bấm quài!');
       setNotification('Chọn đáp án sai -1 điểm! Chọn lại đi Khôi tồ...!');
-      // setStatusColor('red');
+      setStatusColor('red');
       setEyeColor('red');
       setCameraColor('red');
       handleWrongAns();
@@ -198,6 +224,7 @@ export default LearningScreen = ({ navigation, props }) => {
     if (D === data[questNum].correction) {
       // Alert.alert(`You correct! + 1 point`);
       setNotification('Chọn chính xác! + 1 điểm nha!');
+      setStatusColor(color.black);
       setCameraColor('#2ff5d5');
       setEyeColor('#2ff5d5');
       handleCorrectAns();
@@ -207,6 +234,7 @@ export default LearningScreen = ({ navigation, props }) => {
     } else {
       Alert.alert('Không phải đáp án này nha, bấm quài!');
       setNotification('Chọn đáp án sai -1 điểm! Chọn lại đi Khôi tồ...!');
+      setStatusColor('red');
       setEyeColor('red');
       setCameraColor('red');
       handleWrongAns();
@@ -220,119 +248,136 @@ export default LearningScreen = ({ navigation, props }) => {
 
   return (
     <ScrollView>
-    <View style={styles.grandContainer}>
-      <HeaderTop
-        backTo={() => navigation.navigate('Bottom Tab Main')}
-        score={scoreStore.totalScore}
-        scoreLabel={'Tổng điểm: '}
-        borderWidth={2}
-      />
-      <View style={{ alignItems: "center", justifyContent: "center", height: 70 }}>
-        <Text style={{ color: color.black, fontFamily: 'IBMPlexMono-Bold', fontSize: 23 }}>MULTIPLE CHOICES QUESTION</Text>
+      <View style={styles.grandContainer}>
+        <HeaderTop
+          backTo={() => navigation.navigate('Bottom Tab Main')}
+          // score={scoreStore.totalScore}
+          score={oldTotalScore}
+          scoreLabel={'Tổng điểm: '}
+          borderWidth={2}
+        />
+        <View style={{ alignItems: "center", justifyContent: "center", height: 70 }}>
+          <Text style={{ color: color.black, fontFamily: 'IBMPlexMono-Bold', fontSize: 23 }}>MULTIPLE CHOICES QUESTION</Text>
 
-      </View>
-      <View style={{ alignItems: "center" }}>
-        <View style={styles.dailyStatusBox}>
-          <Text style={styles.dailyStatusText}>Total questions: </Text>
-          <Text style={[styles.dailyStatusText, { color: color.hackingColor, fontSize: 15, fontWeight: 800 }]}>
-            {data.length}
-          </Text>
         </View>
-        <View style={styles.dailyStatusBox}>
-          <Text style={styles.dailyStatusText}>Số điểm hôm nay của Khôi: </Text>
-          <Text style={[styles.dailyStatusText, { color: color.hackingColor, fontSize: 15, fontWeight: 800 }]}>
-            {dailyScore}
-          </Text>
-        </View>
-
-        <View style={styles.avatarContainer}>
-          <View style={styles.avatarBox}>
-            <Text style={styles.avatarText}>
-              Anh Tuấn Hacker đẹp trai tài giỏi đang ở đây...!!!_
+        <View style={{ alignItems: "center" }}>
+          <View style={styles.dailyStatusBox}>
+            <Text style={styles.dailyStatusText}>Total questions: </Text>
+            <Text style={[styles.dailyStatusText, { color: color.hackingColor, fontSize: 15, fontWeight: 800 }]}>
+              {data.length}
             </Text>
-            <View style={{ flexDirection: "row" }}>
-              <FontAwesome name="eye" size={18} color={eyeColor} />
-              <Text style={{ width: 5 }}></Text>
-              <Entypo name="video-camera" size={18} color={cameraColor} />
+          </View>
+          <View style={styles.dailyStatusBox}>
+            <Text style={styles.dailyStatusText}>Số điểm hôm nay của Khôi: </Text>
+            <Text style={[styles.dailyStatusText, { color: color.hackingColor, fontSize: 15, fontWeight: 800 }]}>
+              {dailyScore}
+            </Text>
+          </View>
+
+          <View style={styles.avatarContainer}>
+            <View style={{ borderWidth: 1, borderColor: '#ffff', flexDirection: 'column-reverse' }}>
+              <View style={styles.avatarBox}>
+                {/* <Text style={styles.avatarText}>
+                Anh Tuấn Hacker đẹp trai tài giỏi đang ở đây...!!!_
+              </Text> */}
+                <View>
+                  <ImageBackground
+                    source={require(`../../images/btnIcon/angry.jpg`)}
+                    style={{ height: 60, width: 60 }} />
+                </View>
+                <TouchableOpacity onPress={handleRandom}>
+                  <View style={{ flexDirection: "row" }}>
+                    <FontAwesome name="eye" size={18} color={eyeColor} />
+                    <Text style={{ width: 5 }}></Text>
+                    <Entypo name="video-camera" size={18} color={cameraColor} />
+                  </View>
+                </TouchableOpacity>
+              </View>
             </View>
+
+
+            <View style={[styles.dailyStatusBox, { width: 310, borderWidth: 0.5, borderRadius: 15, justifyContent: "center" }]}>
+              <Text style={[styles.dailyStatusText, { fontSize: 19, color: statusColor, fontFamily: 'IBMPlexMono-Bold' }]}>
+                {notification}
+              </Text>
+            </View>
+
           </View>
 
-          <View style={[styles.dailyStatusBox, { width: 310, borderWidth: 0.5, borderRadius: 15, justifyContent: "center" }]}>
-            <Text style={[styles.dailyStatusText, { fontSize: 19, color: statusColor, fontFamily: 'IBMPlexMono-Bold' }]}>
-              {notification}
-            </Text>
-          </View>
+
 
         </View>
-
-
-
-      </View>
-      {/* <TouchableOpacity onPress={() => navigation.navigate('Splash Screen')} >
+        {/* <TouchableOpacity onPress={() => navigation.navigate('Splash Screen')} >
         <Text style={{ color: '#ffff' }} >Back to main page</Text>
       </TouchableOpacity> */}
 
-      <View style={styles.questContainer}>
+        <View style={styles.questContainer}>
 
-        <View style={styles.questNum}>
-          <Text style={styles.questNumText}>
-            {'Question ' + data[questNum]["id"] + ": "}
-          </Text>
-        </View>
-
-        <View style={styles.questBox}>
-          <Text style={styles.questBoxText}>{data[questNum]["question"]} </Text>
-        </View>
-
-        <TouchableOpacity
-          style={styles.anwserBox}
-          onPressOut={getValueAnswerA}
-          onPressIn={setAnswer}
-        >
-          <Text style={styles.text}>{"A. " + data[questNum]["ansA"]}</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPressOut={getValueAnswerB}
-          onPressIn={setAnswer}
-          style={styles.anwserBox}
-        >
-          <Text style={styles.text}>{"B. " + data[questNum]["ansB"]}</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          onPressOut={getValueAnswerC}
-          onPressIn={setAnswer}
-          style={styles.anwserBox}
-        >
-          <Text style={styles.text}>{"C. " + data[questNum]["ansC"]}</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.anwserBox}
-          onPressIn={setAnswer}
-          onPressOut={getValueAnswerD}
-        >
-          <Text style={styles.text}>{"D. " + data[questNum].ansD}</Text>
-        </TouchableOpacity>
-
-        <View>
-          <TouchableOpacity
-            style={[isSaved === true ? styles.inactiveBtn : styles.activeBtn]}
-            onPressOut={saveScore}
-            onPressIn={handlePressSaving}
-          >
-            <Text style={isSaved === true ? styles.inactiveText : styles.activeText} >
-              {isSaved === false ? activeBtnText : inactiveBtnText}
+          <View style={styles.questNum}>
+            <Text style={styles.questNumText}>
+              {'Question ' + data[questNum]["id"] + ": "}
             </Text>
+          </View>
+
+          <View style={styles.questBox}>
+            <Text style={styles.questBoxText}>{data[questNum]["question"]} </Text>
+          </View>
+
+          <TouchableOpacity
+            style={styles.anwserBox}
+            onPressOut={getValueAnswerA}
+            onPressIn={setAnswer}
+          >
+            <Text style={styles.answserText}>{"A. " + data[questNum]["ansA"]}</Text>
           </TouchableOpacity>
 
+          <TouchableOpacity
+            onPressOut={getValueAnswerB}
+            onPressIn={setAnswer}
+            style={styles.anwserBox}
+          >
+            <Text style={styles.answserText}>{"B. " + data[questNum]["ansB"]}</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPressOut={getValueAnswerC}
+            onPressIn={setAnswer}
+            style={styles.anwserBox}
+          >
+            <Text style={styles.answserText}>{"C. " + data[questNum]["ansC"]}</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={styles.anwserBox}
+            onPressIn={setAnswer}
+            onPressOut={getValueAnswerD}
+          >
+            <Text style={styles.answserText}>{"D. " + data[questNum].ansD}</Text>
+          </TouchableOpacity>
+
+          <View style={{ paddingHorizontal: 18 }}>
+            {
+              dailyScore >= 15 ?
+                <TouchableOpacity
+                  style={[isSaved === true ? styles.inactiveBtn : styles.activeBtn]}
+                  onPressOut={saveScore}
+                  onPressIn={handlePressSaving}
+                >
+                  <Text style={isSaved === true ? styles.inactiveText : styles.activeText} >
+                    {isSaved === false ? activeBtnText : inactiveBtnText}
+                  </Text>
+                </TouchableOpacity> :
+                <TouchableOpacity>
+                  <Text style={[styles.activeText, { fontSize: 15, color: 'red' }]}>
+                    Phải làm đủ trên 20 điểm mới hiện nút lưu điểm, nếu không lưu sẽ bị mất kết quả vừa làm!!!</Text>
+                </TouchableOpacity>
+            }
+
+          </View>
 
         </View>
 
       </View>
-
-    </View>
     </ScrollView>
   );
 };
@@ -343,13 +388,13 @@ const styles = StyleSheet.create({
     height: height,
   },
   headerTitle: {
-    color: color.homeHeaderTitle,
+    color: 'color.homeHeaderTitle',
     fontSize: 35,
     fontFamily: 'IBMPlexMono-Bold',
   },
   questContainer: {
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   questNum: {
     paddingVertical: 10
@@ -362,34 +407,36 @@ const styles = StyleSheet.create({
   questBox: {
     height: height / 6,
     width: width - 30,
-    borderWidth: 4,
-    borderColor: color.black,
+    borderWidth: 2,
+    borderColor: 'grey',
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 0,
+    borderRadius: 8,
     marginBottom: 12,
     backgroundColor: color.white
   },
 
   questBoxText: {
-    fontSize: 23,
+    fontSize: 30,
     color: color.black,
     fontFamily: 'IBMPlexMono-Bold'
   },
   anwserBox: {
-    borderWidth: 1,
-    borderColor: color.black,
+    borderWidth: 2,
+    borderColor: 'grey',
     height: 50,
-    width: width - 30,
-    borderRadius: 0,
+    width: width - 150,
+    borderRadius: 8,
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 5,
+    backgroundColor: color.white
+
 
   },
 
-  text: {
-    fontSize: 19,
+  answserText: {
+    fontSize: 17,
     color: color.black,
     fontFamily: 'IBMPlexMono-Bold',
 
@@ -438,6 +485,7 @@ const styles = StyleSheet.create({
   },
   dailyStatusBox: {
     width: 400,
+    // height: 90,
     borderWidth: 0.5,
     borderColor: color.black,
     flexDirection: 'row',
@@ -454,7 +502,9 @@ const styles = StyleSheet.create({
   avatarContainer: {
     flexDirection: "row",
     marginTop: 10,
-    // backgroundColor: '#0e19bf'
+    height: 100,
+    borderRadius: 15,
+    backgroundColor: color.white
   },
   avatarBox: {
     height: 90,
