@@ -10,7 +10,7 @@ const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 export default AddNewWord = ({ navigation, props }) => {
-  const { vietNamAnswer, data } = useContext(GolobalContext);
+  const { vietNamAnswer, data, vietNamAnswerB, dataB } = useContext(GolobalContext);
   // const [dataCallBack, setDataBack] = useState([]);
   // // const [vietNamAnsBack, setVietNamAnsBack] = useState([]);
 
@@ -31,6 +31,38 @@ export default AddNewWord = ({ navigation, props }) => {
   //   }, []
   // );
   // console.log(`New data:`, dataCallBack);
+  const [isA, setIsA] = useState(true);
+
+  const questionEndPointA = 'https://6268162901dab900f1c9969b.mockapi.io/appi/v1/engQuest';
+  const ansEndPointA = 'https://6268162901dab900f1c9969b.mockapi.io/appi/v1/userList';
+
+  const questionEndPointB = 'https://63eddd2f388920150dd47775.mockapi.io/newQuest';
+  const ansEndPointB = 'https://63eedb395e9f1583bdc850f3.mockapi.io/api/v1/userList';
+
+  const [questEndPoint, setQuestEndPoint] = useState(questionEndPointA);
+  const [ansEndPoint, setAnsEndPoint] = useState(ansEndPointA);
+
+  const switchToA = () => {
+    setQuestEndPoint(questionEndPointA);
+    setAnsEndPoint(ansEndPointA);
+    setIsA(true);
+  };
+  const switchToB = () => {
+    setQuestEndPoint(questionEndPointB);
+    setAnsEndPoint(ansEndPointB);
+    setIsA(false);
+  };
+  const checkLimitation = () => {
+    if (data.length > 99) {
+      switchToB();
+    };
+  };
+  setTimeout(() => {
+    checkLimitation();
+  }, 0);
+
+  console.log('question endpoint:', questEndPoint);
+  console.log('answer endpoint:', ansEndPoint);
 
   const randomABCD = Math.floor(Math.random() * 4) + 1;
   // console.log('ABCD:', randomABCD);
@@ -44,7 +76,6 @@ export default AddNewWord = ({ navigation, props }) => {
   const [correction, setCorrection] = React.useState("");
   const [inputBoxNotify, setBoxNotify] = useState('');
 
-  console.log(`new vietNamAnser`, vietNamAnswer);
   console.log(question);
   console.log(ansA);
   console.log(ansB);
@@ -58,7 +89,7 @@ export default AddNewWord = ({ navigation, props }) => {
 
   const handleRandom = () => {
     if (question === "" || correction === "") {
-      setBoxNotify('* Hãy điền từ ở đây rồi tạo đáp án sau!')
+      setBoxNotify('* Hãy điền từ ở đây rồi tạo đáp án sau!');
       // setTimeout(() => { Alert.alert(`Điền từ mới vào ô trước!`); }, 300);
     } else {
       randomABCD === 1 ?
@@ -87,7 +118,7 @@ export default AddNewWord = ({ navigation, props }) => {
   };
 
 
-  handleSubmit = () => {
+  const handleSubmit = () => {
     if
       (question !== "" &&
       ansA !== "" &&
@@ -117,7 +148,7 @@ export default AddNewWord = ({ navigation, props }) => {
 
   // console.log('new array pushed: ', vietNamAnswer);
   let createNewQuestion = (question, ansA, ansB, ansC, ansD, correction) => {
-    fetch(`https://6268162901dab900f1c9969b.mockapi.io/appi/v1/engQuest`, {
+    fetch(questEndPoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -141,7 +172,7 @@ export default AddNewWord = ({ navigation, props }) => {
       })
   };
   let updateNewRanAns = () => {
-    fetch(`https://6268162901dab900f1c9969b.mockapi.io/appi/v1/userList`, {
+    fetch(ansEndPoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -172,23 +203,24 @@ export default AddNewWord = ({ navigation, props }) => {
 
         <View>
           <View style={{ flexDirection: "row" }}>
-            <Text style={{ fontFamily: 'IBMPlexMono-Bold' }}>Tổng số câu hỏi đã có: </Text>
-            <Text style={{ fontFamily: 'IBMPlexMono-Bold' }}>{data.length}</Text>
+            <Text style={{ fontFamily: 'IBMPlexMono-Bold', fontSize: 16, color: 'black' }}>Tổng số câu hỏi đã có: </Text>
+            <Text style={{ fontFamily: 'IBMPlexMono-Bold', fontSize: 16, color: 'black' }}>{isA === true ? data.length : dataB.length}</Text>
           </View>
           <View style={{ flexDirection: "row" }}>
-            <Text style={{ fontFamily: 'IBMPlexMono-Bold' }}>Số từ đã thêm: </Text>
-            <Text style={{ fontFamily: 'IBMPlexMono-Bold' }}>{countWord}</Text>
+            <Text style={{ fontFamily: 'IBMPlexMono-Bold', fontSize: 16 , fontSize: 16, color: 'black' }}>Số từ đã thêm: </Text>
+            <Text style={{ fontFamily: 'IBMPlexMono-Bold', fontSize: 16 , fontSize: 16, color: 'black' }}>{countWord}</Text>
           </View>
 
           <View style={{ flexDirection: "row" }}>
             <View>
+              {/* <Text style={{ color: 'black' }}>Nhập từ tiếng Anh cần thêm...</Text> */}
               <TextInput
                 style={question ? styles.mainInput : styles.mainInputPlaceholder}
                 placeholder={"Nhập từ tiếng Anh cần thêm..."}
                 value={question}
                 onChangeText={setQuestion}
                 autoCapitalize="sentences"
-              // placeholderTextColor={'gray'}
+                placeholderTextColor={'gray'}
               />
               <View><Text style={styles.boxNotify}>
                 {inputBoxNotify}
@@ -205,6 +237,8 @@ export default AddNewWord = ({ navigation, props }) => {
                 placeholder={"Nhập nghĩa tiếng Việt..."}
                 value={correction}
                 onChangeText={setCorrection}
+                placeholderTextColor={'gray'}
+
               />
               <View><Text style={styles.boxNotify}>
                 {inputBoxNotify}
@@ -253,6 +287,8 @@ export default AddNewWord = ({ navigation, props }) => {
               placeholder={"Đáp án ngẫu nhiên..."}
               value={ansC}
               onChangeText={setAnsC}
+              placeholderTextColor={'gray'}
+
             />
             <TouchableOpacity
               style={styles.btn}
@@ -270,6 +306,8 @@ export default AddNewWord = ({ navigation, props }) => {
               placeholder={"Đáp án ngẫu nhiên..."}
               value={ansA}
               onChangeText={setAnsA}
+              placeholderTextColor={'gray'}
+
             />
             <TouchableOpacity
               style={styles.btn}
@@ -287,6 +325,8 @@ export default AddNewWord = ({ navigation, props }) => {
               placeholder={"Đáp án ngẫu nhiên.."}
               value={ansD}
               onChangeText={setAnsD}
+              placeholderTextColor={'gray'}
+
             />
             <TouchableOpacity
               style={styles.btn}
@@ -304,6 +344,8 @@ export default AddNewWord = ({ navigation, props }) => {
               placeholder={"Đáp án ngẫu nhiên..."}
               value={ansB}
               onChangeText={setAnsB}
+              placeholderTextColor={'gray'}
+
             />
             <TouchableOpacity
               style={styles.btn}
@@ -327,6 +369,20 @@ export default AddNewWord = ({ navigation, props }) => {
             style={styles.uploadBtn}
           />
         </View>
+        {/* <View style={styles.uploadBtn}>
+          <Button
+            title="Switch to API A"
+            onPress={switchToA}
+            style={styles.uploadBtn}
+          />
+        </View>
+        <View style={styles.uploadBtn}>
+          <Button
+            title="Switch to API B"
+            onPress={switchToB}
+            style={styles.uploadBtn}
+          />
+        </View> */}
 
 
       </View>

@@ -25,12 +25,13 @@ const styles = StyleSheet.create({
     design: {
       borderWidth: 2,
       borderColor: '#ffff',
-      height: 50,
+      // height: 50,
       width: 380,
       borderRadius: 10,
       justifyContent: "center",
       alignItems: "center",
-      marginBottom: 5
+      marginBottom: 5,
+      paddingVertical: 10
     }
   }
 

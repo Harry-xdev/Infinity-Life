@@ -9,13 +9,18 @@ const height = Dimensions.get('window').height;
 
 export default SplashScreen = ({ navigation }) => {
 
+  const [btnVisible, setBtnVisible] = useState(false);
+  setTimeout(() => {
+    setBtnVisible(true);
+  }, 1500);
+
   return (
     <View style={styles.grandContainer}>
       <ImageBackground
         style={{ height: 600, width: '100%', justifyContent: "center" }}
         source={require('../../images/games_subnav_dungeona-300x465.jpg')}
       >
-        <View style={{ marginTop: 240 }}>
+        <View style={{ marginTop: 180 }}>
           <View style={styles.headerContainer}>
             <Text style={styles.greetingText}>
               HI! KHÔI!
@@ -36,17 +41,20 @@ export default SplashScreen = ({ navigation }) => {
             This magical application would summarize your whole beautiful life where can explore surprises!
           </Text>
         </View>
+        {
+          btnVisible === true ?
+            <View style={{ alignItems: "center", width: width - 30 }}>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={() => navigation.navigate('Bottom Tab Main')}
+              >
+                <Text style={{ color: 'red', fontFamily: 'IBMPlexMono-Bold', fontSize: 20 }}>
+                  Start To Explore!
+                </Text>
+              </TouchableOpacity>
+            </View> : <TouchableOpacity style={styles.blankButton}></TouchableOpacity>
+        }
 
-        <View style={{ alignItems: "center", width: width - 30 }}>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => navigation.navigate('Bottom Tab Main')}
-          >
-            <Text style={{ color: 'red', fontFamily: 'IBMPlexMono-Bold', fontSize: 20 }}>
-              Start To Explore!
-            </Text>
-          </TouchableOpacity>
-        </View>
       </ImageBackground>
 
     </View>
@@ -92,6 +100,17 @@ const styles = StyleSheet.create({
     fontFamily: 'IBMPlexMono-Regular',
     marginBottom: 15,
   },
+  blankButton: {
+    height: 50,
+    width: 250,
+    borderWidth: 2,
+    // borderColor: color.btnBorder,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: "center",
+    marginVertical: 20
+
+  },
   button: {
     height: 50,
     width: 250,
@@ -102,7 +121,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginVertical: 20
 
+  },
 
-  }
 
 });

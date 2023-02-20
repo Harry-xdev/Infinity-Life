@@ -18,14 +18,18 @@ export default Home = ({ navigation }) => {
         backTo={() => navigation.navigate('Splash Screen')}
       />
 
-      <View style={{alignItems: "center", marginTop: 50}}>
+      <View style={{ alignItems: "center", marginTop: 50 }}>
         <Text style={styles.headerTitle}>INFINITY WORKSPACE</Text>
       </View>
       <View style={styles.contentContainer}>
 
 
         <ItemBar
-          itemContent={'Smart Learning'}
+          itemContent={'English to Vietnamese'}
+          navigation={() => navigation.navigate('Learning Screen')}
+        />
+        <ItemBar
+          itemContent={'Transplate from Vietnamese to English'}
           navigation={() => navigation.navigate('Learning Screen')}
         />
 

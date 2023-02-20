@@ -19,13 +19,11 @@ const scoreStore = {
 
 
 
-export default LearningScreen = ({ navigation, props }) => {
-  const { data } = useContext(GolobalContext);
+export default LearningScreen = ({ navigation }) => {
+
+  const { data, dataB } = useContext(GolobalContext);
   const { userData } = useContext(GolobalContext);
   const oldTotalScore = userData[0]['score'];
-  // console.log('Screen:',data);
-  // console.log('ansA:', data[0]["1"]["ansA"]);
-  // console.log('user data:',userData);
 
   const [dailyScore, setDailyScore] = useState(0);
   const [notification, setNotification] = useState('');
@@ -35,29 +33,12 @@ export default LearningScreen = ({ navigation, props }) => {
 
 
   const random = Math.floor(Math.random() * data.length);
-  // const random = Math.floor(Math.random() * 3);
 
-  // console.log(data.length);
   const [questNum, setQuestNum] = useState(random);
-
   const activeBtnText = 'Hoàn tất và lưu điểm của Khôi';
   const inactiveBtnText = 'Đã lưu điểm bài thi';
 
   const [isSaved, setIsSaved] = useState(false);
-
-  // // const test = data[questNum - 1][questNum.toString()]["ansA"];
-  // // console.log('test: ', test);
-  // console.log(data)
-  // const questNumString = questNum.toString();
-  // console.log('questNumString: ', questNumString);
-  // console.log('type of questNumString: ', typeof questNumString);
-  // // const test = data[questNum - 1][questNumString]["ansA"];
-  // // console.log('test: ', test);
-  // console.log('questNum - 1: ', questNum - 1);
-  // console.log('questNumString: ', questNum.toString());
-  // const test = data[0]["ansA"];
-  // console.log('test: ', test);
-
 
   const [A, setA] = useState(data[questNum]["ansA"]);
   const [B, setB] = useState(data[questNum]["ansB"]);
@@ -136,9 +117,10 @@ export default LearningScreen = ({ navigation, props }) => {
         setNotification('Hôm nay Khôi làm được: ' + dailyScore + ' câu!');
     }, 1500);
     setTimeout(() => {
-      Alert.alert(`Hãy xoá ứng dụng chạy ngầm rồi ngày mai mở lại làm điểm sẽ được cập nhật!`)
+      Alert.alert(`Hãy xoá ứng dụng chạy ngầm rồi ngày mai mở lại làm điểm sẽ được cập nhật!`);
+      () => navigation.navigate('Splash Screen');
     }, 2000);
-    
+
 
   };
 
