@@ -1,6 +1,6 @@
 import React, {useContext} from "react";
 import { Text, View, StyleSheet, Dimensions, Button } from "react-native";
-import HeaderTop from "../headerTop.js/HeaderTop";
+import HeaderTop from "../headerTop/HeaderTop";
 import { GolobalContext } from "../../Global/globalData";
 
 const width = Dimensions.get('window').width;

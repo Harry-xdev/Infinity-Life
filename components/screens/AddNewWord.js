@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState, DevSettings } from "react";
-import { Text, View, StyleSheet, ImageBackground, Dimensions, TextInput, Button, Touchable, TouchableOpacity, Alert, StatusBar, ScrollView } from "react-native";
+import { Text, View, StyleSheet, ImageBackground, Dimensions, TextInput, Button, Touchable, TouchableOpacity, Alert, StatusBar, ScrollView, FlatList } from "react-native";
 import { GolobalContext } from "../../Global/globalData";
-import HeaderTop from "../headerTop.js/HeaderTop";
+import HeaderTop from "../headerTop/HeaderTop";
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
@@ -11,27 +11,11 @@ const height = Dimensions.get('window').height;
 
 export default AddNewWord = ({ navigation, props }) => {
   const { vietNamAnswer, data, vietNamAnswerB, dataB } = useContext(GolobalContext);
-  // const [dataCallBack, setDataBack] = useState([]);
-  // // const [vietNamAnsBack, setVietNamAnsBack] = useState([]);
-
-  // const updateNewData = async () => {
-  //   try {
-  //     const response = await fetch(`https://6268162901dab900f1c9969b.mockapi.io/appi/v1/engQuest`);
-  //     const json = await response.json();
-  //     setDataBack(json);
-  //   }
-  //   catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // useEffect(
-  //   () => {
-  //     updateNewData();
-  //   }, []
-  // );
-  // console.log(`New data:`, dataCallBack);
   const [isA, setIsA] = useState(true);
+  const [count, setCountDaily] = useState(1);
+  const [recentlyAdded, setRecentlyAdded] = useState([
+    { "ansA": "Khoảng thời gian", "ansB": "Cấu trúc", "ansC": "Phân tích", "ansD": "Rõ ràng", "correction": "Khoảng thời gian", "id": "1", "question": "Intervals" }, { "ansA": "Tấm", "ansB": "Rõ ràng", "ansC": "Phân tích", "ansD": "Đánh giá", "correction": "Đánh giá", "id": "2", "question": "Evaluate" }, { "ansA": "Tấm", "ansB": "Cấu trúc", "ansC": "Phân tích", "ansD": "Xơ vải đáng kể", "correction": "Xơ vải đáng kể", "id": "3", "question": "Substantial lint" }, { "ansA": "Địa điểm", "ansB": "Phá vỡ, sự phá vỡ", "ansC": "Vừa phải", "ansD": "Chất tẩy rửa", "correction": "Phá vỡ, sự phá vỡ", "id": "4", "question": "Rupture" }, { "ansA": "May mắn", "ansB": "Sự đứt gãy & đàn hồi", "ansC": "Khủng hoảng", "ansD": "Quốc tế", "correction": "Sự đứt gãy & đàn hồi", "id": "5", "question": "Breaking elongation" }, { "ansA": "Đồ uống", "ansB": "Sát khuẩn", "ansC": "Kiểm tra độ bền khi kéo", "ansD": "Chất tẩy rửa", "correction": "Kiểm tra độ bền khi kéo", "id": "6", "question": "Tougue tear test" }, { "ansA": "Thiên tài", "ansB": "Độ bền màu", "ansC": "Keo ép", "ansD": "Thuỷ phân", "correction": "Độ bền màu", "id": "7", "question": "Migration fastness" }
+  ]);
 
   const questionEndPointA = 'https://6268162901dab900f1c9969b.mockapi.io/appi/v1/engQuest';
   const ansEndPointA = 'https://6268162901dab900f1c9969b.mockapi.io/appi/v1/userList';
@@ -88,9 +72,9 @@ export default AddNewWord = ({ navigation, props }) => {
   const randomAnswerD = vietNamAnswer[Math.floor(Math.random() * vietNamAnswer.length)]["answer"];
 
   const handleRandom = () => {
-    if (question === "" || correction === "") {
+    if (question === "" && correction === "") {
       setBoxNotify('* Hãy điền từ ở đây rồi tạo đáp án sau!');
-      // setTimeout(() => { Alert.alert(`Điền từ mới vào ô trước!`); }, 300);
+
     } else {
       randomABCD === 1 ?
         setAnsA(correction) :
@@ -108,6 +92,27 @@ export default AddNewWord = ({ navigation, props }) => {
     };
 
   };
+  const handleOnChangeQuestInput = () => {
+    setAnsA('')
+    setAnsB('')
+    setAnsC('')
+    setAnsD('')
+
+  };
+  const handleOnChangeCorrectInput = () => {
+    setAnsA('')
+    setAnsB('')
+    setAnsC('')
+    setAnsD('')
+  };
+
+  const checkDoubleThenSubmit = () => {
+    const doubleWordArray = data.filter(item => item.question === question);
+    doubleWordArray.length === 0 ? handleSubmit() : Alert.alert('Từ này đã học rồi! Đổi từ tiếng Anh mới khác!');
+    console.log('double array:', doubleWordArray);
+    console.log('question:', question);
+
+  };
   const handleCleaningField = () => {
     setQuestion("");
     setCorrection("");
@@ -116,7 +121,17 @@ export default AddNewWord = ({ navigation, props }) => {
     setAnsC("");
     setAnsD("");
   };
+  const updateScreenList = () => {
+    setRecentlyAdded([
+      {
+        id: count,
+        question: question,
+        correction: correction
+      },
+      ...recentlyAdded
 
+    ])
+  };
 
   const handleSubmit = () => {
     if
@@ -126,18 +141,13 @@ export default AddNewWord = ({ navigation, props }) => {
       ansC !== "" &&
       ansD !== "" &&
       correction !== "") {
-      setTimeout(() => {
-        createNewQuestion(question, ansA, ansB, ansC, ansD, correction);
-      }, 0);
+      createNewQuestion(question, ansA, ansB, ansC, ansD, correction);
       updateNewRanAns(correction);
+      setCountDaily(count + 1);
+      updateScreenList();
       setCount(countWord + 1);
-      setTimeout(() => {
-        handleCleaningField()
-      }, 500);
-      setTimeout(() => {
-        Alert.alert('Đã thêm từ mới:', question + ': ' + correction);
-
-      }, 500);
+      handleCleaningField()
+      Alert.alert('Đã thêm từ mới:', question + ': ' + correction);
 
     } else {
       Alert.alert(`Do not leave the empty field!`);
@@ -193,183 +203,188 @@ export default AddNewWord = ({ navigation, props }) => {
 
 
   return (
-    <ScrollView>
-      <View style={styles.grandContainer}>
+    <View>
+      <HeaderTop headerTitle={'ADDING FORM'} backTo={() => navigation.navigate('Home')} />
 
-        <HeaderTop backTo={() => navigation.navigate('Home')} />
-        <View style={{ alignItems: "center" }}>
-          <Text style={styles.headerTitle}>ADDING FORM</Text>
-        </View>
+      <View>
+        <View style={styles.grandContainer}>
 
-        <View>
-          <View style={{ flexDirection: "row" }}>
-            <Text style={{ fontFamily: 'IBMPlexMono-Bold', fontSize: 16, color: 'black' }}>Tổng số câu hỏi đã có: </Text>
-            <Text style={{ fontFamily: 'IBMPlexMono-Bold', fontSize: 16, color: 'black' }}>{isA === true ? data.length : dataB.length}</Text>
-          </View>
-          <View style={{ flexDirection: "row" }}>
-            <Text style={{ fontFamily: 'IBMPlexMono-Bold', fontSize: 16 , fontSize: 16, color: 'black' }}>Số từ đã thêm: </Text>
-            <Text style={{ fontFamily: 'IBMPlexMono-Bold', fontSize: 16 , fontSize: 16, color: 'black' }}>{countWord}</Text>
-          </View>
 
-          <View style={{ flexDirection: "row" }}>
-            <View>
-              {/* <Text style={{ color: 'black' }}>Nhập từ tiếng Anh cần thêm...</Text> */}
-              <TextInput
-                style={question ? styles.mainInput : styles.mainInputPlaceholder}
-                placeholder={"Nhập từ tiếng Anh cần thêm..."}
-                value={question}
-                onChangeText={setQuestion}
-                autoCapitalize="sentences"
-                placeholderTextColor={'gray'}
-              />
-              <View><Text style={styles.boxNotify}>
-                {inputBoxNotify}
-              </Text></View>
+          <View>
+            <View style={{ flexDirection: "row" }}>
+              <Text style={{ fontFamily: 'IBMPlexMono-Bold', fontSize: 16, color: 'black' }}>Tổng số câu hỏi đã có: </Text>
+              <Text style={{ fontFamily: 'IBMPlexMono-Bold', fontSize: 16, color: 'black' }}>{isA === true ? data.length : dataB.length}</Text>
+            </View>
+            <View style={{ flexDirection: "row" }}>
+              <Text style={{ fontFamily: 'IBMPlexMono-Bold', fontSize: 16, fontSize: 16, color: 'black' }}>Số từ đã thêm: </Text>
+              <Text style={{ fontFamily: 'IBMPlexMono-Bold', fontSize: 16, fontSize: 16, color: 'black' }}>{countWord}</Text>
+            </View>
+            <View style={styles.screenContainer}>
+              <ScrollView style={styles.listText}>
+                {data.map(item => <View key={item.id}><Text >{item.id}. {item.question} : {item.correction}</Text></View>)}
+              </ScrollView>
+            </View>
+            <View style={{ flexDirection: "row" }}>
+              <View>
+                {/* <Text style={{ color: 'black' }}>Nhập từ tiếng Anh cần thêm...</Text> */}
+                <TextInput
+                  style={question ? styles.mainInput : styles.mainInputPlaceholder}
+                  placeholder={"Nhập từ tiếng Anh cần thêm..."}
+                  value={question}
+                  onChange={handleOnChangeQuestInput}
+                  onChangeText={setQuestion}
+                  autoCapitalize="sentences"
+                  placeholderTextColor={'gray'}
+                />
+                <View><Text style={styles.boxNotify}>
+                  {inputBoxNotify}
+                </Text></View>
+
+              </View>
 
             </View>
 
-          </View>
+            <View style={{ flexDirection: "row" }}>
+              <View>
+                <TextInput
+                  style={correction ? styles.mainInput : styles.mainInputPlaceholder}
+                  placeholder={"Nhập nghĩa tiếng Việt..."}
+                  value={correction}
+                  onChange={handleOnChangeCorrectInput}
+                  onChangeText={setCorrection}
+                  placeholderTextColor={'gray'}
 
-          <View style={{ flexDirection: "row" }}>
-            <View>
-              <TextInput
-                style={correction ? styles.mainInput : styles.mainInputPlaceholder}
-                placeholder={"Nhập nghĩa tiếng Việt..."}
-                value={correction}
-                onChangeText={setCorrection}
-                placeholderTextColor={'gray'}
-
-              />
-              <View><Text style={styles.boxNotify}>
-                {inputBoxNotify}
-              </Text></View>
+                />
+                <View><Text style={styles.boxNotify}>
+                  {inputBoxNotify}
+                </Text></View>
+              </View>
             </View>
           </View>
-        </View>
-        <View style={{ alignItems: "center" }}>
-          <View style={{ flexDirection: "row" }}>
+          <View style={{ alignItems: "center" }}>
+            <View style={{ flexDirection: "row" }}>
 
-            <View style={styles.descriptionTextBox}>
-              {
-                correction ?
-                  <View style={{ flexDirection: "row" }}>
-                    <View style={{ marginRight: 15 }}>
-                      <Text style={{ fontSize: 15, color: 'red', fontWeight: '600' }}>
-                        Bấm vào nút bên cạnh để tạo
-                      </Text>
-                      <Text style={{ fontSize: 15, color: 'red', fontWeight: '600' }}>
-                        tự động đáp án bên dưới...
-                      </Text>
-                    </View>
-                    <Ionicons name={'md-arrow-redo-sharp'} size={38} color={'red'} />
-                  </View> : <View></View>
-              }
-            </View>
-            <TouchableOpacity
-              style={styles.randomBtn}
-              onPressIn={handleRandom}
-              activeOpacity={0.5}
-            >
-
-              <ImageBackground
-                style={styles.btnIconSize}
-                source={require(`../../images/btnIcon/icon.jpeg`)}
+              <View style={styles.descriptionTextBox}>
+                {
+                  correction ?
+                    <View style={{ flexDirection: "row" }}>
+                      <View style={{ marginRight: 15 }}>
+                        <Text style={{ fontSize: 15, color: 'red', fontWeight: '600' }}>
+                          Bấm vào nút bên cạnh để tạo
+                        </Text>
+                        <Text style={{ fontSize: 15, color: 'red', fontWeight: '600' }}>
+                          tự động đáp án bên dưới...
+                        </Text>
+                      </View>
+                      <Ionicons name={'md-arrow-redo-sharp'} size={38} color={'red'} />
+                    </View> : <View></View>
+                }
+              </View>
+              <TouchableOpacity
+                style={styles.randomBtn}
+                onPressIn={handleRandom}
+                activeOpacity={0.5}
               >
-              </ImageBackground>
-            </TouchableOpacity>
+
+                <ImageBackground
+                  style={styles.btnIconSize}
+                  source={require(`../../images/btnIcon/icon.jpeg`)}
+                >
+                </ImageBackground>
+              </TouchableOpacity>
+            </View>
+
+            {/* Answer C */}
+
+            <View style={styles.itemContainer}>
+              <TextInput
+                style={ansC ? styles.inputBox : styles.placeholder}
+                placeholder={"Đáp án ngẫu nhiên..."}
+                value={ansC}
+                onChangeText={setAnsC}
+                placeholderTextColor={'gray'}
+
+              />
+              <TouchableOpacity
+                style={styles.btn}
+                onPress={() => setAnsC(randomAnswerC)}>
+                <Text><FontAwesome5 name={'sync'} size={25} color={'green'} /></Text>
+              </TouchableOpacity>
+
+            </View>
+
+            {/* Answer A */}
+
+            <View style={styles.itemContainer}>
+              <TextInput
+                style={ansA ? styles.inputBox : styles.placeholder}
+                placeholder={"Đáp án ngẫu nhiên..."}
+                value={ansA}
+                onChangeText={setAnsA}
+                placeholderTextColor={'gray'}
+
+              />
+              <TouchableOpacity
+                style={styles.btn}
+                onPress={() => setAnsA(randomAnswerA)}>
+                <Text><FontAwesome5 name={'sync'} size={25} color={'green'} /></Text>
+              </TouchableOpacity>
+
+            </View>
+
+            {/* Answer D */}
+
+            <View style={styles.itemContainer}>
+              <TextInput
+                style={ansD ? styles.inputBox : styles.placeholder}
+                placeholder={"Đáp án ngẫu nhiên.."}
+                value={ansD}
+                onChangeText={setAnsD}
+                placeholderTextColor={'gray'}
+
+              />
+              <TouchableOpacity
+                style={styles.btn}
+                onPress={() => setAnsD(randomAnswerD)}>
+                <Text><FontAwesome5 name={'sync'} size={25} color={'green'} /></Text>
+              </TouchableOpacity>
+
+            </View>
+
+            {/* Answer B */}
+
+            <View style={styles.itemContainer}>
+              <TextInput
+                style={ansB ? styles.inputBox : styles.placeholder}
+                placeholder={"Đáp án ngẫu nhiên..."}
+                value={ansB}
+                onChangeText={setAnsB}
+                placeholderTextColor={'gray'}
+
+              />
+              <TouchableOpacity
+                style={styles.btn}
+                onPress={() => setAnsB(randomAnswerB)}>
+                <Text><FontAwesome5 name={'sync'} size={25} color={'green'} /></Text>
+              </TouchableOpacity>
+
+            </View>
+
           </View>
-
-          {/* Answer C */}
-
-          <View style={styles.itemContainer}>
-            <TextInput
-              style={ansC ? styles.inputBox : styles.placeholder}
-              placeholder={"Đáp án ngẫu nhiên..."}
-              value={ansC}
-              onChangeText={setAnsC}
-              placeholderTextColor={'gray'}
-
-            />
-            <TouchableOpacity
-              style={styles.btn}
-              onPress={() => setAnsC(randomAnswerC)}>
-              <Text><FontAwesome5 name={'sync'} size={25} color={'green'} /></Text>
-            </TouchableOpacity>
-
-          </View>
-
-          {/* Answer A */}
-
-          <View style={styles.itemContainer}>
-            <TextInput
-              style={ansA ? styles.inputBox : styles.placeholder}
-              placeholder={"Đáp án ngẫu nhiên..."}
-              value={ansA}
-              onChangeText={setAnsA}
-              placeholderTextColor={'gray'}
-
-            />
-            <TouchableOpacity
-              style={styles.btn}
-              onPress={() => setAnsA(randomAnswerA)}>
-              <Text><FontAwesome5 name={'sync'} size={25} color={'green'} /></Text>
-            </TouchableOpacity>
-
-          </View>
-
-          {/* Answer D */}
-
-          <View style={styles.itemContainer}>
-            <TextInput
-              style={ansD ? styles.inputBox : styles.placeholder}
-              placeholder={"Đáp án ngẫu nhiên.."}
-              value={ansD}
-              onChangeText={setAnsD}
-              placeholderTextColor={'gray'}
-
-            />
-            <TouchableOpacity
-              style={styles.btn}
-              onPress={() => setAnsD(randomAnswerD)}>
-              <Text><FontAwesome5 name={'sync'} size={25} color={'green'} /></Text>
-            </TouchableOpacity>
-
-          </View>
-
-          {/* Answer B */}
-
-          <View style={styles.itemContainer}>
-            <TextInput
-              style={ansB ? styles.inputBox : styles.placeholder}
-              placeholder={"Đáp án ngẫu nhiên..."}
-              value={ansB}
-              onChangeText={setAnsB}
-              placeholderTextColor={'gray'}
-
-            />
-            <TouchableOpacity
-              style={styles.btn}
-              onPress={() => setAnsB(randomAnswerB)}>
-              <Text><FontAwesome5 name={'sync'} size={25} color={'green'} /></Text>
-            </TouchableOpacity>
-
-          </View>
-
-        </View>
-        {/* <TouchableOpacity
+          {/* <TouchableOpacity
           onPress={handleSubmit}
           style={styles.uploadBtn}>
             <Text style={{fontSize: 18, color: 'blue' }}>Submit</Text>
 
         </TouchableOpacity> */}
-        <View style={styles.uploadBtn}>
-          <Button
-            title="Upload"
-            onPress={handleSubmit}
-            style={styles.uploadBtn}
-          />
-        </View>
-        {/* <View style={styles.uploadBtn}>
+          <View style={styles.uploadBtn}>
+            <Button
+              title="Upload"
+              onPress={checkDoubleThenSubmit}
+              style={styles.uploadBtn}
+            />
+          </View>
+          {/* <View style={styles.uploadBtn}>
           <Button
             title="Switch to API A"
             onPress={switchToA}
@@ -385,8 +400,9 @@ export default AddNewWord = ({ navigation, props }) => {
         </View> */}
 
 
+        </View>
       </View>
-    </ScrollView>
+    </View>
   );
 };
 
@@ -406,7 +422,7 @@ const styles = StyleSheet.create({
     height: 50,
     width: width - 70,
     borderWidth: 0.5,
-    fontSize: 18,
+    fontSize: 16,
     // bordertBottomWidth: 0.5,
     // marginTop: 5,
     borderColor: 'grey',
@@ -421,20 +437,22 @@ const styles = StyleSheet.create({
     height: 50,
     width: width - 70,
     borderWidth: 0.5,
-    fontSize: 18,
+    fontSize: 16,
     // borderBottomWidth: 0.5,
     borderColor: 'grey',
     // borderStyle: "dotted",
     // borderRadius: 10,
     // marginTop: 5,
-    color: color.hackingColor,
+    // color: color.hackingColor,
+    color: color.classicBackground,
+
   },
   inputBox: {
     fontFamily: 'IBMPlexMono-Bold',
     height: 50,
     width: width - 150,
     borderWidth: 0.5,
-    fontSize: 18,
+    fontSize: 16,
     // bordertBottomWidth: 0.5,
     // marginTop: 5,
     borderColor: 'grey',
@@ -449,13 +467,10 @@ const styles = StyleSheet.create({
     height: 50,
     width: width - 150,
     borderWidth: 0.5,
-    fontSize: 18,
+    fontSize: 16,
     // borderBottomWidth: 0.5,
     borderColor: 'grey',
-    // borderStyle: "dotted",
-    // borderRadius: 10,
-    // marginTop: 5,
-    color: color.hackingColor,
+
   },
   descriptionTextBox: {
     height: 60,
@@ -474,6 +489,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     backgroundColor: 'black',
     // borderRadius: 10,
+    marginBottom: 4
 
   },
   btn: {
@@ -481,7 +497,7 @@ const styles = StyleSheet.create({
     width: 60,
     borderWidth: 0.5,
     borderBottomTop: 0,
-    // borderColor: 'black',
+    borderColor: 'gray',
     marginLeft: 20,
     justifyContent: "center",
     alignItems: "center"
@@ -490,13 +506,16 @@ const styles = StyleSheet.create({
     height: 56,
     width: 56,
     // borderWidth: 2,
+    marginBottom: 0
+
 
   },
   itemContainer: {
     // alignItems: "center",
     flexDirection: "row",
     // borderWidth: 1,
-    borderColor: 'black',
+    borderColor: 'grey',
+    marginBottom: 4
 
   },
   boxNotify: {
@@ -507,6 +526,23 @@ const styles = StyleSheet.create({
     marginTop: 20,
     // height: 30,
     // width: 80
+  },
+  screenContainer: {
+    height: 200,
+    borderWidth: 0.5,
+    borderColor: 'gray',
+    marginBottom: 10,
+    flexDirection: 'column',
+    width: width - 70,
+    backgroundColor: '#000000'
+    ,
+    listText: {
+      color: color.hackingColor,
+      fontSize: 30
+    }
+
+
+
   }
 
 

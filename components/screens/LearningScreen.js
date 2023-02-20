@@ -4,7 +4,7 @@ import { GolobalContext } from '../../Global/globalData';
 
 import Entypo from "react-native-vector-icons/Entypo";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
-import HeaderTop from "../headerTop.js/HeaderTop";
+import HeaderTop from "../headerTop/HeaderTop";
 
 import color from '../../colorStore';
 
@@ -407,7 +407,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: 'grey',
     height: 50,
-    width: width - 150,
+    width: width - 120,
     borderRadius: 8,
     justifyContent: "center",
     alignItems: "center",

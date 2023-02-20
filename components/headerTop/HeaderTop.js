@@ -13,6 +13,7 @@ export default HeaderTop = (props) => {
       >
         <Text><FontAwesome5 name={'angle-double-left'} size={25} color={color.black} /></Text>
       </TouchableOpacity>
+      <View><Text style={styles.headerTitle}>{props.headerTitle}</Text></View>
 
       <View style={[styles.scoreContainer, {borderWidth: props.borderWidth} ]}>
         <View>
@@ -24,9 +25,6 @@ export default HeaderTop = (props) => {
 
       </View>
 
-
-
-
     </View>
   )
 };
@@ -36,12 +34,13 @@ const styles = StyleSheet.create({
     height: 50,
     width: color.width,
     borderWidth: 0,
-    borderBottomColor: '#ffff',
+    // borderBottomColor: '#ffff',
     backgroundColor: color.white,
     alignItems: "center",
     // justifyContent: "center",
     flexDirection: "row",
     justifyContent: 'space-between',
+    // marginBottom: 5
 
 
   },
@@ -75,5 +74,10 @@ const styles = StyleSheet.create({
     color: '#000000',
     fontSize: 25
 
-  }
+  },
+  headerTitle: {
+    fontSize: 30,
+    fontFamily: 'IBMPlexMono-Bold',
+    color: 'gray'
+  },
 })

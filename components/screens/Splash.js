@@ -103,9 +103,9 @@ const styles = StyleSheet.create({
   blankButton: {
     height: 50,
     width: 250,
-    borderWidth: 2,
+    // borderWidth: 2,
     // borderColor: color.btnBorder,
-    borderRadius: 10,
+    // borderRadius: 10,
     justifyContent: 'center',
     alignItems: "center",
     marginVertical: 20

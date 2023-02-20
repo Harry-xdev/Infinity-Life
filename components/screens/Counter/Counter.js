@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Text, View, StyleSheet, Dimensions, Button } from "react-native";
-import HeaderTop from "../../headerTop.js/HeaderTop";
+import HeaderTop from "../../headerTop/HeaderTop";
 import { useSelector } from "react-redux";
 
 import { valueSelector } from "./CounterSlice";
