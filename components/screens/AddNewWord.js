@@ -13,26 +13,31 @@ export default AddNewWord = ({ navigation, props }) => {
   const { vietNamAnswer, data, vietNamAnswerB, dataB } = useContext(GolobalContext);
   const [isA, setIsA] = useState(true);
   const [count, setCountDaily] = useState(1);
-  const [recentlyAdded, setRecentlyAdded] = useState([
-    { "ansA": "Khoảng thời gian", "ansB": "Cấu trúc", "ansC": "Phân tích", "ansD": "Rõ ràng", "correction": "Khoảng thời gian", "id": "1", "question": "Intervals" }, { "ansA": "Tấm", "ansB": "Rõ ràng", "ansC": "Phân tích", "ansD": "Đánh giá", "correction": "Đánh giá", "id": "2", "question": "Evaluate" }, { "ansA": "Tấm", "ansB": "Cấu trúc", "ansC": "Phân tích", "ansD": "Xơ vải đáng kể", "correction": "Xơ vải đáng kể", "id": "3", "question": "Substantial lint" }, { "ansA": "Địa điểm", "ansB": "Phá vỡ, sự phá vỡ", "ansC": "Vừa phải", "ansD": "Chất tẩy rửa", "correction": "Phá vỡ, sự phá vỡ", "id": "4", "question": "Rupture" }, { "ansA": "May mắn", "ansB": "Sự đứt gãy & đàn hồi", "ansC": "Khủng hoảng", "ansD": "Quốc tế", "correction": "Sự đứt gãy & đàn hồi", "id": "5", "question": "Breaking elongation" }, { "ansA": "Đồ uống", "ansB": "Sát khuẩn", "ansC": "Kiểm tra độ bền khi kéo", "ansD": "Chất tẩy rửa", "correction": "Kiểm tra độ bền khi kéo", "id": "6", "question": "Tougue tear test" }, { "ansA": "Thiên tài", "ansB": "Độ bền màu", "ansC": "Keo ép", "ansD": "Thuỷ phân", "correction": "Độ bền màu", "id": "7", "question": "Migration fastness" }
+  const [recentlyAdded, setRecentlyAdded] = useState([  
+
   ]);
 
-  const questionEndPointA = 'https://6268162901dab900f1c9969b.mockapi.io/appi/v1/engQuest';
+
+  const questEndPointA = 'https://6268162901dab900f1c9969b.mockapi.io/appi/v1/engQuest';
   const ansEndPointA = 'https://6268162901dab900f1c9969b.mockapi.io/appi/v1/userList';
 
-  const questionEndPointB = 'https://63eddd2f388920150dd47775.mockapi.io/newQuest';
+  const questEndPointB = 'https://63eddd2f388920150dd47775.mockapi.io/newQuest';
   const ansEndPointB = 'https://63eedb395e9f1583bdc850f3.mockapi.io/api/v1/userList';
 
-  const [questEndPoint, setQuestEndPoint] = useState(questionEndPointA);
+  const questEndpointLocal = 'http://192.168.2.7:4000/engQuest';
+  const ansEndPointLocal = 'http://192.168.2.7:4000/vnAnswerList';
+
+
+  const [questEndPoint, setQuestEndPoint] = useState(questEndPointA);
   const [ansEndPoint, setAnsEndPoint] = useState(ansEndPointA);
 
   const switchToA = () => {
-    setQuestEndPoint(questionEndPointA);
+    setQuestEndPoint(questEndPointA);
     setAnsEndPoint(ansEndPointA);
     setIsA(true);
   };
   const switchToB = () => {
-    setQuestEndPoint(questionEndPointB);
+    setQuestEndPoint(questEndPointB);
     setAnsEndPoint(ansEndPointB);
     setIsA(false);
   };
@@ -60,12 +65,12 @@ export default AddNewWord = ({ navigation, props }) => {
   const [correction, setCorrection] = React.useState("");
   const [inputBoxNotify, setBoxNotify] = useState('');
 
-  console.log(question);
-  console.log(ansA);
-  console.log(ansB);
-  console.log(ansC);
-  console.log(ansD);
-  console.log(correction)
+  // console.log(question);
+  // console.log(ansA);
+  // console.log(ansB);
+  // console.log(ansC);
+  // console.log(ansD);
+  // console.log(correction)
   const randomAnswerA = vietNamAnswer[Math.floor(Math.random() * vietNamAnswer.length)]["answer"];
   const randomAnswerB = vietNamAnswer[Math.floor(Math.random() * vietNamAnswer.length)]["answer"];
   const randomAnswerC = vietNamAnswer[Math.floor(Math.random() * vietNamAnswer.length)]["answer"];
@@ -123,12 +128,12 @@ export default AddNewWord = ({ navigation, props }) => {
   };
   const updateScreenList = () => {
     setRecentlyAdded([
+      ...recentlyAdded,
       {
         id: count,
         question: question,
         correction: correction
-      },
-      ...recentlyAdded
+      }
 
     ])
   };
@@ -146,8 +151,9 @@ export default AddNewWord = ({ navigation, props }) => {
       setCountDaily(count + 1);
       updateScreenList();
       setCount(countWord + 1);
-      handleCleaningField()
-      Alert.alert('Đã thêm từ mới:', question + ': ' + correction);
+      handleCleaningField();
+
+      // Alert.alert('Đã thêm từ mới:', question + ': ' + correction);
 
     } else {
       Alert.alert(`Do not leave the empty field!`);
@@ -209,7 +215,7 @@ export default AddNewWord = ({ navigation, props }) => {
       <View>
         <View style={styles.grandContainer}>
 
-
+          {/* Status Box */}
           <View>
             <View style={{ flexDirection: "row" }}>
               <Text style={{ fontFamily: 'IBMPlexMono-Bold', fontSize: 16, color: 'black' }}>Tổng số câu hỏi đã có: </Text>
@@ -219,12 +225,18 @@ export default AddNewWord = ({ navigation, props }) => {
               <Text style={{ fontFamily: 'IBMPlexMono-Bold', fontSize: 16, fontSize: 16, color: 'black' }}>Số từ đã thêm: </Text>
               <Text style={{ fontFamily: 'IBMPlexMono-Bold', fontSize: 16, fontSize: 16, color: 'black' }}>{countWord}</Text>
             </View>
+
+
+            {/* Black Screen  */}
             <View style={styles.screenContainer}>
-              <ScrollView style={styles.listText}>
-                {data.map(item => <View key={item.id}><Text >{item.id}. {item.question} : {item.correction}</Text></View>)}
+              <ScrollView style={{ flexDirection: 'column-reverse' }}>
+                {recentlyAdded.map(item => <View key={item.id}><Text style={styles.listText}>{item.id}. {item.question} : {item.correction}</Text></View>)}
               </ScrollView>
+
             </View>
             <View style={{ flexDirection: "row" }}>
+
+
               <View>
                 {/* <Text style={{ color: 'black' }}>Nhập từ tiếng Anh cần thêm...</Text> */}
                 <TextInput
@@ -532,18 +544,27 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderColor: 'gray',
     marginBottom: 10,
-    flexDirection: 'column',
+    // flexDirection: 'column-reverse',
     width: width - 70,
-    backgroundColor: '#000000'
-    ,
-    listText: {
-      color: color.hackingColor,
-      fontSize: 30
-    }
-
-
-
+    backgroundColor: '#000000',
+    flexDirection: "row",
+  },
+  listText: {
+    color: color.hackingColor,
+    fontSize: 15,
+    fontFamily: 'IBMPlexMono-Bold'
+  },
+  rocketArea: {
+    marginTop: 15,
+    height: 200,
+    width: 40,
+    // borderWidth: 1,
+    borderColor: '#ffff'
   }
 
 
-});
+
+}
+
+
+);

@@ -47,8 +47,8 @@ export default LearningScreen = ({ navigation }) => {
 
   const handleRandom = () => {
     const random2 = Math.floor(Math.random() * data.length);
-    // const random2 = Math.floor(Math.random() * 3);
 
+    // const random2 = Math.floor(Math.random() * 3);
     setQuestNum(random2);
     setIsSaved(false);
     setTimeout(() => {
@@ -279,7 +279,7 @@ export default LearningScreen = ({ navigation }) => {
 
 
             <View style={[styles.dailyStatusBox, { width: 310, borderWidth: 0.5, borderRadius: 15, justifyContent: "center" }]}>
-              <Text style={[styles.dailyStatusText, { fontSize: 19, color: statusColor, fontFamily: 'IBMPlexMono-Bold' }]}>
+              <Text style={[styles.dailyStatusText, { fontSize: 16, color: statusColor, fontFamily: 'IBMPlexMono-Bold' }]}>
                 {notification}
               </Text>
             </View>

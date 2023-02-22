@@ -19,11 +19,11 @@ import {
 
 import Home from './components/screens/Home';
 import SplashScreen from './components/screens/Splash';
-import LearningSreen from './components/screens/LearningScreen'
+import LearningSreen from './components/screens/EnglishVietnamese'
 import Counter from './components/screens/Counter/Counter';
 import BottomTabBarMain from './components/screens/TabScreen/BottomTabBarMain';
 import AddNewWord from './components/screens/AddNewWord';
-import Base from './components/screens/Base';
+import VietnameseToEnglish from './components/screens/VietnameseEnglish';
 
 
 const Stack = createNativeStackNavigator();
@@ -52,6 +52,13 @@ const App = () => {
             options={{ headerShown: false }}
           />
           <Stack.Screen
+            name="Vietnamese To English"
+            component={VietnameseToEnglish}
+            options={{ headerShown: false }}
+
+          />
+
+          <Stack.Screen
             name="Learning Screen"
             component={LearningSreen}
             options={{ headerShown: false }}
@@ -69,11 +76,7 @@ const App = () => {
             options={{ headerShown: false }}
 
           />
-          <Stack.Screen
-            name="Test"
-            component={Base}
-            options={{headerShown: false}}
-          />
+
 
         </Stack.Navigator>
       </NavigationContainer>

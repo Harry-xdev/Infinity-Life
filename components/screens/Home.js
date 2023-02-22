@@ -29,8 +29,8 @@ export default Home = ({ navigation }) => {
           navigation={() => navigation.navigate('Learning Screen')}
         />
         <ItemBar
-          itemContent={'Transplate from Vietnamese to English'}
-          navigation={() => navigation.navigate('Learning Screen')}
+          itemContent={'Vietnamese to English'}
+          navigation={() => navigation.navigate('Vietnamese To English')}
         />
 
         {/* <ItemBar
