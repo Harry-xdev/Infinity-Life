@@ -17,10 +17,15 @@ export default WordPicker = (props) => {
 
 const styles = StyleSheet.create({
   letterBtn: {
-    height: 38,
-    width: 120,
-    borderWidth: 1,
-    borderColor: color.white
+    height: 45,
+    width: 90,
+    // borderWidth: 0.5,
+    borderColor: color.white,
+    borderRadius: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    marginHorizontal: 4,
+    marginVertical: 4
     
 
   },

@@ -32,7 +32,7 @@ export default LearningScreen = ({ navigation }) => {
   const [statusColor, setStatusColor] = useState(color.white);
 
 
-  const random = Math.floor(Math.random() * data.length);
+  const random = Math.floor(Math.random() * data.length) + 1;
 
   const [questNum, setQuestNum] = useState(random);
   const activeBtnText = 'Hoàn tất và lưu điểm của Khôi';
@@ -46,7 +46,7 @@ export default LearningScreen = ({ navigation }) => {
   const [D, setD] = useState(data[questNum]["ansD"]);
 
   const handleRandom = () => {
-    const random2 = Math.floor(Math.random() * data.length);
+    const random2 = Math.floor(Math.random() * data.length) + 1;
 
     // const random2 = Math.floor(Math.random() * 3);
     setQuestNum(random2);
