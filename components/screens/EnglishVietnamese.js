@@ -29,7 +29,7 @@ export default LearningScreen = ({ navigation }) => {
   const [notification, setNotification] = useState('');
   const [eyeColor, setEyeColor] = useState('grey');
   const [cameraColor, setCameraColor] = useState('grey');
-  const [statusColor, setStatusColor] = useState('#000000');
+  const [statusColor, setStatusColor] = useState(color.white);
 
 
   const random = Math.floor(Math.random() * data.length);
@@ -131,7 +131,7 @@ export default LearningScreen = ({ navigation }) => {
       setNotification('Chọn chính xác! + 1 điểm nha!');
       setEyeColor('#2ff5d5');
       setCameraColor('#2ff5d5');
-      setStatusColor(color.black);
+      setStatusColor(color.white);
       handleCorrectAns();
       handleRandom();
       // saveScore();
@@ -154,7 +154,7 @@ export default LearningScreen = ({ navigation }) => {
     if (B === data[questNum].correction) {
       // Alert.alert(`You correct! + 1 point`);
       setNotification('Chọn chính xác! + 1 điểm nha!');
-      setStatusColor(color.black);
+      setStatusColor(color.white);
       setEyeColor('#2ff5d5');
       setCameraColor('#2ff5d5');
       handleCorrectAns();
@@ -180,7 +180,7 @@ export default LearningScreen = ({ navigation }) => {
     if (C === data[questNum].correction) {
       // Alert.alert(`You correct! + 1 point`);
       setNotification('Chọn chính xác! + 1 điểm nha!');
-      setStatusColor(color.black);
+      setStatusColor(color.white);
       setCameraColor('#2ff5d5');
       setEyeColor('#2ff5d5');
       handleCorrectAns();
@@ -206,7 +206,7 @@ export default LearningScreen = ({ navigation }) => {
     if (D === data[questNum].correction) {
       // Alert.alert(`You correct! + 1 point`);
       setNotification('Chọn chính xác! + 1 điểm nha!');
-      setStatusColor(color.black);
+      setStatusColor(color.white);
       setCameraColor('#2ff5d5');
       setEyeColor('#2ff5d5');
       handleCorrectAns();
@@ -239,7 +239,7 @@ export default LearningScreen = ({ navigation }) => {
           borderWidth={2}
         />
         <View style={{ alignItems: "center", justifyContent: "center", height: 70 }}>
-          <Text style={{ color: color.black, fontFamily: 'IBMPlexMono-Bold', fontSize: 23 }}>MULTIPLE CHOICES QUESTION</Text>
+          <Text style={{ color: color.white, fontFamily: 'IBMPlexMono-Bold', fontSize: 23 }}>MULTIPLE CHOICES QUESTION</Text>
 
         </View>
         <View style={{ alignItems: "center" }}>
@@ -257,7 +257,7 @@ export default LearningScreen = ({ navigation }) => {
           </View>
 
           <View style={styles.avatarContainer}>
-            <View style={{ borderWidth: 1, borderColor: '#ffff', flexDirection: 'column-reverse' }}>
+            <View style={{ borderWidth: 1, borderColor: '#000000', flexDirection: 'column-reverse' }}>
               <View style={styles.avatarBox}>
                 {/* <Text style={styles.avatarText}>
                 Anh Tuấn Hacker đẹp trai tài giỏi đang ở đây...!!!_
@@ -366,11 +366,11 @@ export default LearningScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   grandContainer: {
-    backgroundColor: color.SecondBackground,
+    backgroundColor: color.PrimeBackground,
     height: height,
   },
   headerTitle: {
-    color: 'color.homeHeaderTitle',
+    color: color.white,
     fontSize: 35,
     fontFamily: 'IBMPlexMono-Bold',
   },
@@ -382,7 +382,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10
   },
   questNumText: {
-    color: color.black,
+    color: color.white,
     fontSize: 25,
     fontFamily: 'IBMPlexMono-Bold'
   },
@@ -395,12 +395,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderRadius: 8,
     marginBottom: 12,
-    backgroundColor: color.white
+    backgroundColor: color.black
   },
 
   questBoxText: {
     fontSize: 30,
-    color: color.black,
+    color: color.white,
     fontFamily: 'IBMPlexMono-Bold'
   },
   anwserBox: {
@@ -412,27 +412,27 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 5,
-    backgroundColor: color.white
+    backgroundColor: color.black
 
 
   },
 
   answserText: {
     fontSize: 17,
-    color: color.black,
+    color: color.white,
     fontFamily: 'IBMPlexMono-Bold',
 
   },
   activeBtn: {
     borderWidth: 2,
-    borderColor: color.black,
+    borderColor: color.white,
     height: 50,
     width: width - 30,
     borderRadius: 0,
     justifyContent: "center",
     alignItems: "center",
     marginTop: 30,
-    backgroundColor: color.white,
+    backgroundColor: color.black,
   },
   nextToPage: {
     borderWidth: 2,
@@ -457,7 +457,7 @@ const styles = StyleSheet.create({
   },
   activeText: {
     fontSize: 19,
-    color: color.black,
+    color: color.white,
     fontFamily: 'IBMPlexMono-Regular',
   },
   inactiveText: {
@@ -469,7 +469,7 @@ const styles = StyleSheet.create({
     width: 400,
     // height: 90,
     borderWidth: 0.5,
-    borderColor: color.black,
+    borderColor: color.hackingColor,
     flexDirection: 'row',
     // justifyContent: "center",
     alignItems: "center",
@@ -477,7 +477,7 @@ const styles = StyleSheet.create({
     // backgroundColor: '#0e19bf'
   },
   dailyStatusText: {
-    color: color.black,
+    color: color.white,
     fontSize: 15,
     fontFamily: 'IBMPlexMono-Regular'
   },
@@ -486,7 +486,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     height: 100,
     borderRadius: 15,
-    backgroundColor: color.white
+    // backgroundColor: color.black
   },
   avatarBox: {
     height: 90,

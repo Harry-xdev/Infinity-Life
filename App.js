@@ -34,7 +34,7 @@ const App = () => {
   return (
     <ContextProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName='Slash Screen'>
+        <Stack.Navigator initialRouteName='Vietnamese To English'>
           <Stack.Screen
             name="Splash Screen"
             component={SplashScreen}

@@ -42,7 +42,7 @@ export default Home = ({ navigation }) => {
 
         /> */}
         <ItemBar
-          itemContent={'New Vocabulary Addition Tool'}
+          itemContent={'Add New Vocabulary'}
           navigation={() => navigation.navigate('Add New Word')}
         />
         {/* <ItemBar

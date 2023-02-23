@@ -1,1 +1,0 @@
-export default score = 20000;

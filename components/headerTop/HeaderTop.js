@@ -53,8 +53,8 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",
-    marginLeft: 10
-
+    marginLeft: 10,
+    backgroundColor: color.hackingColor
   },
   scoreContainer: {
     flexDirection: "row",
