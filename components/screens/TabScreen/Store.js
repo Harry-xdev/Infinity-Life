@@ -6,11 +6,11 @@ const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 
-export default Tab2 = () => {
+export default Strore = () => {
   return (
     <View style={styles.grandContainer}>
 
-      <Text>Earth</Text>
+      <Text>STORE</Text>
     </View>
   );
 };
@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
   grandContainer: {
     backgroundColor: color.PrimerBackground,
     height: height,
+    flex : 1
   },
   headerTitle: {
     color: color.homeHeaderTitle,

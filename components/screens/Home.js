@@ -1,21 +1,24 @@
-import React from "react";
+import React, {useContext} from "react";
 import { Text, View, TouchableOpacity, StyleSheet, Dimensions } from "react-native";
 
 import ItemBar from "../homeComponents/ItemBar";
 import color from "../../colorStore";
-
+import { GolobalContext } from "../../Global/globalData";
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 export default Home = ({ navigation }) => {
-
+  const { userData } = useContext(GolobalContext);
+  const oldTotalScore = userData[0]['score'];
   return (
 
     <View style={styles.grandContainer}>
 
       <HeaderTop
         backTo={() => navigation.navigate('Splash Screen')}
+        score={oldTotalScore}
+        borderWidth={2}
       />
 
       <View style={{ alignItems: "center", marginTop: 50 }}>

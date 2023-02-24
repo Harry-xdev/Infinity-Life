@@ -6,7 +6,7 @@ const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 
-export default Tab3 = () => {
+export default Setting = () => {
   return (
     <View style={styles.grandContainer}>
       <Text>Settings</Text>

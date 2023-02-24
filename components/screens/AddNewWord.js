@@ -10,12 +10,11 @@ const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 export default AddNewWord = ({ navigation, props }) => {
-  const { vietNamAnswer, data, vietNamAnswerB, dataB } = useContext(GolobalContext);
+  const { vietNamAnswer, data, vietNamAnswerB, dataB, userData } = useContext(GolobalContext);
+  const oldTotalScore = userData[0]['score'];
   const [isA, setIsA] = useState(true);
   const [count, setCountDaily] = useState(1);
-  const [recentlyAdded, setRecentlyAdded] = useState([  
-
-  ]);
+  const [recentlyAdded, setRecentlyAdded] = useState([]);
 
 
   const questEndPointA = 'https://6268162901dab900f1c9969b.mockapi.io/appi/v1/engQuest';
@@ -210,7 +209,11 @@ export default AddNewWord = ({ navigation, props }) => {
 
   return (
     <View>
-      <HeaderTop headerTitle={'ADDING FORM'} backTo={() => navigation.navigate('Home')} />
+      <HeaderTop
+        headerTitle={'ADDING FORM'} backTo={() => navigation.navigate('Bottom Tab Main')}
+        score={oldTotalScore}
+        borderWidth={2}
+      />
 
       <View>
         <View style={styles.grandContainer}>

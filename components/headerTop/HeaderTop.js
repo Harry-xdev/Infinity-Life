@@ -1,5 +1,5 @@
 import React from "react";
-import { TouchableOpacity, View, Text, StyleSheet } from "react-native";
+import { TouchableOpacity, View, Text, StyleSheet, ImageBackground } from "react-native";
 
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import color from "../../colorStore";
@@ -15,15 +15,16 @@ export default HeaderTop = (props) => {
       </TouchableOpacity>
       <View><Text style={styles.headerTitle}>{props.headerTitle}</Text></View>
 
-      <View style={[styles.scoreContainer, {borderWidth: props.borderWidth} ]}>
+      <TouchableOpacity style={[styles.scoreContainer, { borderWidth: props.borderWidth }]}>
+        <ImageBackground
+          style={{ height: 30, width: 30,marginRight:5, justifyContent: "center" }}
+          source={require('../../images/item/stock-vector-one-coin-white-background.png')}>
+        </ImageBackground>
         <View>
-          <Text style={styles.scoreText}>{props.scoreLabel}</Text>
-        </View>
-        <View>
-          <Text style={{color: 'red', fontSize: 25, fontFamily: 'IBMPlexMono-Bold'}}>{props.score}</Text>
+          <Text style={{ color: 'red', fontSize: 21, fontFamily: 'IBMPlexMono-Bold' }}>{props.score}</Text>
         </View>
 
-      </View>
+      </TouchableOpacity>
 
     </View>
   )

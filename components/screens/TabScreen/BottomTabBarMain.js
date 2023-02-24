@@ -1,12 +1,12 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Tab1 from "./Home";
-import Tab2 from "./Earth";
-import Tab3 from "./Settings";
+import Store from "./Store";
+import Setting from "./Settings";
 import Home from "../Home";
 
 
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import IonIcons from 'react-native-vector-icons/Ionicons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 
 const Tab = createBottomTabNavigator();
@@ -26,17 +26,17 @@ export default BottomTabBarMain = () => {
         }}
       />
       <Tab.Screen
-        name="Earth"
-        component={Tab2}
+        name="Store Center"
+        component={Store}
         options={{
           tabBarIcon: () => (
-            <IonIcons name='earth-sharp' color={'black'} size={30} />
+            <MaterialIcons name='local-grocery-store' color={'black'} size={30} />
           )
         }}
       />
       <Tab.Screen
         name="Settings"
-        component={Tab3}
+        component={Setting}
         options={{
           tabBarIcon: () => (
             <IonIcons name='md-settings' color={'black'} size={30}/>

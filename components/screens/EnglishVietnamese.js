@@ -35,8 +35,8 @@ export default LearningScreen = ({ navigation }) => {
   const random = Math.floor(Math.random() * data.length) + 1;
 
   const [questNum, setQuestNum] = useState(random);
-  const activeBtnText = 'Hoàn tất và lưu điểm của Khôi';
-  const inactiveBtnText = 'Đã lưu điểm bài thi';
+  const activeBtnText = 'Hoàn tất và nhận';
+  const inactiveBtnText = 'Đã bỏ vàng vào túi';
 
   const [isSaved, setIsSaved] = useState(false);
 
@@ -57,7 +57,7 @@ export default LearningScreen = ({ navigation }) => {
       setCameraColor('gray');
     }, 2000);
     setTimeout(() => {
-      setNotification('Chọn câu tiếp theo nào Khôi!Không nhớ thì tra từ điển!Làm xong nhớ bấm lưu điểm!');
+      setNotification('Chọn câu tiếp theo nào Khôi!Không nhớ thì tra từ điển!Làm xong nhớ bấm lưu!');
       setEyeColor(color.hackingColor);
       setCameraColor(color.hackingColor);
     }, 4300);
@@ -109,15 +109,15 @@ export default LearningScreen = ({ navigation }) => {
   const handlePressSaving = () => {
     setIsSaved(true);
     setTimeout(() => {
-      setNotification('Đã lưu điểm!');
+      setNotification('Đã lưu!');
     }, 0);
     setTimeout(() => {
       dailyScore < 20 ?
-        setNotification('Mỗi ngày phải đủ 20 điểm nha!Hôm nay em mới làm được ' + dailyScore + ' câu thôi!') :
+        setNotification('Mỗi ngày phải đủ 20 vàng nha!Hôm nay em mới làm được ' + dailyScore + ' câu thôi!') :
         setNotification('Hôm nay Khôi làm được: ' + dailyScore + ' câu!');
     }, 1500);
     setTimeout(() => {
-      Alert.alert(`Hãy xoá ứng dụng chạy ngầm rồi ngày mai mở lại làm điểm sẽ được cập nhật!`);
+      Alert.alert(`Hãy xoá ứng dụng chạy ngầm rồi ngày mai mở lại làm vàng sẽ được chuyển về!`);
       () => navigation.navigate('Splash Screen');
     }, 2000);
 
@@ -128,7 +128,7 @@ export default LearningScreen = ({ navigation }) => {
 
     if (A === data[questNum].correction) {
       // Alert.alert(`You correct! + 1 point`);
-      setNotification('Chọn chính xác! + 1 điểm nha!');
+      setNotification('Chọn chính xác! + 1 vàng nha!');
       setEyeColor('#2ff5d5');
       setCameraColor('#2ff5d5');
       setStatusColor(color.white);
@@ -139,7 +139,7 @@ export default LearningScreen = ({ navigation }) => {
 
     } else {
       Alert.alert('Không phải đáp án này nha, bấm quài!');
-      setNotification('Chọn đáp án sai -1 điểm! Chọn lại đi Khôi tồ...!');
+      setNotification('Chọn đáp án sai -1 vàng! Chọn lại đi...!');
       setStatusColor('red');
       setEyeColor('red');
       setCameraColor('red');
@@ -153,7 +153,7 @@ export default LearningScreen = ({ navigation }) => {
   const getValueAnswerB = () => {
     if (B === data[questNum].correction) {
       // Alert.alert(`You correct! + 1 point`);
-      setNotification('Chọn chính xác! + 1 điểm nha!');
+      setNotification('Chọn chính xác! + 1 vàng nha!');
       setStatusColor(color.white);
       setEyeColor('#2ff5d5');
       setCameraColor('#2ff5d5');
@@ -163,7 +163,7 @@ export default LearningScreen = ({ navigation }) => {
 
     } else {
       Alert.alert('Không phải đáp án này nha, bấm quài!');
-      setNotification('Chọn đáp án sai -1 điểm! Chọn lại đi Khôi tồ...!');
+      setNotification('Chọn đáp án sai -1 vàng! Chọn lại đi Khôi tồ...!');
       setStatusColor('red');
       setEyeColor('red');
       setCameraColor('red');
@@ -179,7 +179,7 @@ export default LearningScreen = ({ navigation }) => {
   const getValueAnswerC = () => {
     if (C === data[questNum].correction) {
       // Alert.alert(`You correct! + 1 point`);
-      setNotification('Chọn chính xác! + 1 điểm nha!');
+      setNotification('Chọn chính xác! + 1 vàng nha!');
       setStatusColor(color.white);
       setCameraColor('#2ff5d5');
       setEyeColor('#2ff5d5');
@@ -189,7 +189,7 @@ export default LearningScreen = ({ navigation }) => {
 
     } else {
       Alert.alert('Không phải đáp án này nha, bấm quài!');
-      setNotification('Chọn đáp án sai -1 điểm! Chọn lại đi Khôi tồ...!');
+      setNotification('Chọn đáp án sai -1 vàng! Chọn lại đi Khôi tồ...!');
       setStatusColor('red');
       setEyeColor('red');
       setCameraColor('red');
@@ -205,7 +205,7 @@ export default LearningScreen = ({ navigation }) => {
   const getValueAnswerD = () => {
     if (D === data[questNum].correction) {
       // Alert.alert(`You correct! + 1 point`);
-      setNotification('Chọn chính xác! + 1 điểm nha!');
+      setNotification('Chọn chính xác! + 1 vàng nha!');
       setStatusColor(color.white);
       setCameraColor('#2ff5d5');
       setEyeColor('#2ff5d5');
@@ -215,7 +215,7 @@ export default LearningScreen = ({ navigation }) => {
 
     } else {
       Alert.alert('Không phải đáp án này nha, bấm quài!');
-      setNotification('Chọn đáp án sai -1 điểm! Chọn lại đi Khôi tồ...!');
+      setNotification('Chọn đáp án sai -1 vàng! Chọn lại đi!');
       setStatusColor('red');
       setEyeColor('red');
       setCameraColor('red');
@@ -233,9 +233,7 @@ export default LearningScreen = ({ navigation }) => {
       <View style={styles.grandContainer}>
         <HeaderTop
           backTo={() => navigation.navigate('Bottom Tab Main')}
-          // score={scoreStore.totalScore}
           score={oldTotalScore}
-          scoreLabel={'Tổng điểm: '}
           borderWidth={2}
         />
         <View style={{ alignItems: "center", justifyContent: "center", height: 70 }}>
@@ -250,14 +248,14 @@ export default LearningScreen = ({ navigation }) => {
             </Text>
           </View>
           <View style={styles.dailyStatusBox}>
-            <Text style={styles.dailyStatusText}>Số điểm hôm nay của Khôi: </Text>
+            <Text style={styles.dailyStatusText}>Số vàng hôm nay nhận: </Text>
             <Text style={[styles.dailyStatusText, { color: color.hackingColor, fontSize: 15, fontWeight: 800 }]}>
               {dailyScore}
             </Text>
           </View>
 
           <View style={styles.avatarContainer}>
-            <View style={{ borderWidth: 1, borderColor: '#000000', flexDirection: 'column-reverse' }}>
+            <View style={{ borderWidth: 0, borderColor: '#000000', flexDirection: 'column-reverse' }}>
               <View style={styles.avatarBox}>
                 {/* <Text style={styles.avatarText}>
                 Anh Tuấn Hacker đẹp trai tài giỏi đang ở đây...!!!_
@@ -339,19 +337,26 @@ export default LearningScreen = ({ navigation }) => {
 
           <View style={{ paddingHorizontal: 18 }}>
             {
-              dailyScore >= 15 ?
+              dailyScore >= 20 ?
                 <TouchableOpacity
                   style={[isSaved === true ? styles.inactiveBtn : styles.activeBtn]}
                   onPressOut={saveScore}
                   onPressIn={handlePressSaving}
                 >
-                  <Text style={isSaved === true ? styles.inactiveText : styles.activeText} >
-                    {isSaved === false ? activeBtnText : inactiveBtnText}
-                  </Text>
+                  <View style={{flexDirection: "row"}}>
+
+                    <Text style={isSaved === true ? styles.inactiveText : styles.activeText} >
+                      {isSaved === false ? (activeBtnText + ' ' + dailyScore) : inactiveBtnText}
+                    </Text>
+                    <ImageBackground
+                      style={{ height: 33, width: 33, marginLeft: 10, justifyContent: "center" }}
+                      source={require('../../images/item/stock-vector-one-coin-white-background.png')}>
+                    </ImageBackground>
+                  </View>
                 </TouchableOpacity> :
                 <TouchableOpacity>
                   <Text style={[styles.activeText, { fontSize: 15, color: 'red' }]}>
-                    Phải làm đủ trên 20 điểm mới hiện nút lưu điểm, nếu không lưu sẽ bị mất kết quả vừa làm!!!</Text>
+                    Phải làm đủ trên 20 vàng mới hiện nút lưu, nếu không lưu sẽ bị mất vàng vừa nhận!!!</Text>
                 </TouchableOpacity>
             }
 
@@ -389,13 +394,13 @@ const styles = StyleSheet.create({
   questBox: {
     height: height / 6,
     width: width - 30,
-    borderWidth: 2,
-    borderColor: 'grey',
+    borderWidth: 0.5,
+    borderColor: color.hackingColor,
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 8,
+    // borderRadius: 8,
     marginBottom: 12,
-    backgroundColor: color.black
+    backgroundColor: color.PrimeBackground
   },
 
   questBoxText: {
@@ -404,15 +409,15 @@ const styles = StyleSheet.create({
     fontFamily: 'IBMPlexMono-Bold'
   },
   anwserBox: {
-    borderWidth: 2,
-    borderColor: 'grey',
+    borderWidth: 0.5,
+    borderColor: color.hackingColor,
     height: 50,
-    width: width - 120,
-    borderRadius: 8,
+    width: width - 30,
+    // borderRadius: 8,
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 5,
-    backgroundColor: color.black
+    backgroundColor: color.PrimeBackground
 
 
   },
@@ -424,7 +429,7 @@ const styles = StyleSheet.create({
 
   },
   activeBtn: {
-    borderWidth: 2,
+    borderWidth: 1,
     borderColor: color.white,
     height: 50,
     width: width - 30,
@@ -432,7 +437,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginTop: 30,
-    backgroundColor: color.black,
+    backgroundColor: color.white,
   },
   nextToPage: {
     borderWidth: 2,
@@ -457,7 +462,7 @@ const styles = StyleSheet.create({
   },
   activeText: {
     fontSize: 19,
-    color: color.white,
+    color: color.black,
     fontFamily: 'IBMPlexMono-Regular',
   },
   inactiveText: {

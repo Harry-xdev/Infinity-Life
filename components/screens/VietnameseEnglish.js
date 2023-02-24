@@ -1,15 +1,19 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Text, View, StyleSheet, Dimensions, Button, TouchableOpacity, Alert } from "react-native";
+import { Text, View, StyleSheet, Dimensions, Button, TouchableOpacity, Alert, Modal, Pressable } from "react-native";
 import HeaderTop from "../headerTop/HeaderTop";
 import { GolobalContext } from "../../Global/globalData";
 import WordPicker from "./wordPicker";
+import ItemBar from "../homeComponents/ItemBar";
+
+import Feather from 'react-native-vector-icons/Feather';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 export default VietnameseToEnglish = ({ navigation }) => {
 
-  const { data } = useContext(GolobalContext);
+  const { data, userData } = useContext(GolobalContext);
+  const oldTotalScore = userData[0]['score'];
   const random = Math.floor(Math.random() * data.length) + 1;
   const [randomNumQuest, setRandomNumQuest] = useState(random);
 
@@ -21,6 +25,23 @@ export default VietnameseToEnglish = ({ navigation }) => {
 
   const [answer, setAnswer] = useState([]);
   const [mixedAns, setMixedAns] = useState([]);
+
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalNotify, setModalNotify] = useState('');
+
+
+  const [part0BtnActive, setPart0BtnActive] = useState(true);
+  const [part1BtnActive, setPart1BtnActive] = useState(true);
+  const [part2BtnActive, setPart2BtnActive] = useState(true);
+  const [part3BtnActive, setPart3BtnActive] = useState(true);
+  const [part4BtnActive, setPart4BtnActive] = useState(true);
+  const [part5BtnActive, setPart5BtnActive] = useState(true);
+  const [part6BtnActive, setPart6BtnActive] = useState(true);
+  const [part7BtnActive, setPart7BtnActive] = useState(true);
+  const [part8BtnActive, setPart8BtnActive] = useState(true);
+  const [part9BtnActive, setPart9BtnActive] = useState(true);
+
+
 
   const handleRandomQuest = () => {
     const random2 = Math.floor(Math.random() * data.length) + 1;
@@ -73,15 +94,14 @@ export default VietnameseToEnglish = ({ navigation }) => {
       ...answer,
       mixedAns[0]
     ]);
-    // setLastPart(mixedAns[0]);
+    setPart0BtnActive(!part0BtnActive);
   };
   const handlePushPart1 = () => {
     setAnswer([
       ...answer,
       mixedAns[1]
     ]);
-    // setLastPart(mixedAns[1]);
-
+    setPart1BtnActive(!part1BtnActive);
 
   };
   const handlePushPart2 = () => {
@@ -89,7 +109,7 @@ export default VietnameseToEnglish = ({ navigation }) => {
       ...answer,
       mixedAns[2]
     ]);
-    // setLastPart(mixedAns[2]);
+    setPart2BtnActive(!part2BtnActive);
 
   };
   const handlePushPart3 = () => {
@@ -97,16 +117,14 @@ export default VietnameseToEnglish = ({ navigation }) => {
       ...answer,
       mixedAns[3]
     ]);
-    // setLastPart(mixedAns[3]);
-
-
+    setPart3BtnActive(!part3BtnActive);
   };
   const handlePushPart4 = () => {
     setAnswer([
       ...answer,
       mixedAns[4]
     ]);
-    // setLastPart(mixedAns[4]);
+    setPart4BtnActive(!part4BtnActive);
 
 
   };
@@ -115,15 +133,14 @@ export default VietnameseToEnglish = ({ navigation }) => {
       ...answer,
       mixedAns[5]
     ]);
-    // setLastPart(mixedAns[5]);
-
+    setPart5BtnActive(!part5BtnActive);
   };
   const handlePushPart6 = () => {
     setAnswer([
       ...answer,
       mixedAns[6]
     ]);
-    // setLastPart(mixedAns[6]);
+    setPart6BtnActive(!part6BtnActive);
 
   };
   const handlePushPart7 = () => {
@@ -131,7 +148,7 @@ export default VietnameseToEnglish = ({ navigation }) => {
       ...answer,
       mixedAns[7]
     ]);
-    // setLastPart(mixedAns[7]);
+    setPart7BtnActive(!part7BtnActive);
 
 
   };
@@ -140,7 +157,7 @@ export default VietnameseToEnglish = ({ navigation }) => {
       ...answer,
       mixedAns[8]
     ]);
-    // setLastPart(mixedAns[8]);
+    setPart8BtnActive(!part8BtnActive);
 
   };
   const handlePushPart9 = () => {
@@ -148,7 +165,8 @@ export default VietnameseToEnglish = ({ navigation }) => {
       ...answer,
       mixedAns[9]
     ]);
-    // setLastPart(mixedAns[9]);
+    setPart9BtnActive(!part9BtnActive);
+
 
 
   };
@@ -163,25 +181,51 @@ export default VietnameseToEnglish = ({ navigation }) => {
     // };
     // const newAnswer = answer.filter(deleteL1astPart);
     setAnswer([]);
+    setPart0BtnActive(true);
+    setPart1BtnActive(true);
+    setPart2BtnActive(true);
+    setPart3BtnActive(true);
+    setPart4BtnActive(true);
+    setPart5BtnActive(true);
+    setPart6BtnActive(true);
+    setPart7BtnActive(true);
+    setPart8BtnActive(true);
+    setPart9BtnActive(true);
   };
 
   const handleSubmitAns = () => {
     if (showAns === answerEng) {
-      Alert.alert('Congrats! You are correct!')
+      setModalNotify('Congrats! You are correct!');
       handleDelete();
-      handleRandomQuest();
       setMixedAns(['']);
+      setPart0BtnActive(true);
+      setPart1BtnActive(true);
+      setPart2BtnActive(true);
+      setPart3BtnActive(true);
+      setPart4BtnActive(true);
+      setPart5BtnActive(true);
+      setPart6BtnActive(true);
+      setPart7BtnActive(true);
+      setPart8BtnActive(true);
+      setPart9BtnActive(true);
 
     } else {
-      Alert.alert('You are wrong!');
-
+      setModalNotify('You are wrong!');
     };
+  };
+  const handleModal = () => {
+    setModalVisible(true);
+    handleSubmitAns();
   };
 
 
   return (
     <View style={styles.grandContainer}>
-      <HeaderTop backTo={() => navigation.navigate("Home")} />
+      <HeaderTop
+        backTo={() => navigation.navigate("Bottom Tab Main")}
+        score={oldTotalScore}
+        borderWidth={2}
+      />
       <View>
         <Text style={styles.headerTitle}>Please translate to English:</Text>
       </View>
@@ -192,50 +236,99 @@ export default VietnameseToEnglish = ({ navigation }) => {
         </View>
       </View>
 
-      <View style={styles.answerSection}>
-        <Text style={styles.answerText}>{showAns}</Text>
+      <View style={{ flexDirection: "row" }}>
+        <View style={styles.answerSection}>
+          <Text style={styles.answerText}>{showAns}</Text>
 
+        </View>
+        <View>
+          <TouchableOpacity
+            style={styles.deleteBtn}
+            onPress={handleDelete}
+          >
+            <Text style={styles.deleteText}><Feather name='delete' size={25} color={color.black} /></Text>
+          </TouchableOpacity>
+        </View>
       </View>
+
 
       <View style={styles.letterContainer}>
         {/* <Text>Mixup words Section</Text> */}
         {/* <Text>{answer}</Text> */}
         <View style={styles.colmn1}>
-          <WordPicker value={mixedAns[0]} pushValue={handlePushPart0} />
-          <WordPicker value={mixedAns[1]} pushValue={handlePushPart1} />
-          <WordPicker value={mixedAns[2]} pushValue={handlePushPart2} />
+          <WordPicker value={mixedAns[0]} pushValue={handlePushPart0} status={part0BtnActive} />
+          <WordPicker value={mixedAns[1]} pushValue={handlePushPart1} status={part1BtnActive} />
+          <WordPicker value={mixedAns[2]} pushValue={handlePushPart2} status={part2BtnActive} />
         </View>
 
         <View>
-          <WordPicker value={mixedAns[3]} pushValue={handlePushPart3} />
-          <WordPicker value={mixedAns[4]} pushValue={handlePushPart4} />
+          <WordPicker value={mixedAns[3]} pushValue={handlePushPart3} status={part3BtnActive} />
+          <WordPicker value={mixedAns[4]} pushValue={handlePushPart4} status={part4BtnActive} />
         </View>
 
         <View>
-          <WordPicker value={mixedAns[5]} pushValue={handlePushPart5} />
-          <WordPicker value={mixedAns[6]} pushValue={handlePushPart6} />
-          <WordPicker value={mixedAns[7]} pushValue={handlePushPart7} />
+          <WordPicker value={mixedAns[5]} pushValue={handlePushPart5} status={part5BtnActive} />
+          <WordPicker value={mixedAns[6]} pushValue={handlePushPart6} status={part6BtnActive} />
+          <WordPicker value={mixedAns[7]} pushValue={handlePushPart7} status={part7BtnActive} />
         </View>
 
         <View>
-          <WordPicker value={mixedAns[8]} pushValue={handlePushPart8} />
-          <WordPicker value={mixedAns[9]} pushValue={handlePushPart9} />
+          <WordPicker value={mixedAns[8]} pushValue={handlePushPart8} status={part8BtnActive} />
+          <WordPicker value={mixedAns[9]} pushValue={handlePushPart9} status={part9BtnActive} />
         </View>
 
 
       </View>
 
-      <Button
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert('Modal has been closed.');
+          setModalVisible(!modalVisible);
+        }}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>{modalNotify}</Text>
+            <TouchableOpacity
+              style={[styles.button, styles.buttonClose]}
+              onPressOut={() => setModalVisible(!modalVisible)}
+              onPressIn={handleRandomQuest}
+            >
+              <Text style={styles.textStyle}>Next</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal >
+
+      {/* <Button
         title="Generate answer"
         onPress={handleMixup}
+      /> */}
+      {/* <TouchableOpacity
+        style={[styles.button, styles.buttonOpen]}
+        onPress={handleModal}>
+        <Text style={styles.textStyle}>Check result</Text>
+      </TouchableOpacity> */}
+
+      {/* <Button title="Random" onPress={handleRandomQuest} /> */}
+      {/* <Button title="Check result" onPress={handleSubmitAns} /> */}
+      <ItemBar
+        itemContent={'Generate answer'}
+        navigation={handleMixup}
+        borderColor={'#eeeeee'}
       />
-      <Button title="Submit" onPress={handleSubmitAns} />
-      <Button title="Delete" onPress={handleDelete} />
-      <Button title="Random" onPress={handleRandomQuest} />
+      <ItemBar
+        itemContent={'Check result'}
+        navigation={handleModal}
+        borderColor={'#eeeeee'}
 
 
+      />
 
-    </View>
+
+    </View >
   );
 };
 
@@ -244,30 +337,46 @@ const styles = StyleSheet.create({
     // backgroundColor: color.PrimeBackground,
     backgroundColor: color.PrimeBackground,
     height: height,
+    alignItems: "center",
+
   },
   headerTitle: {
     color: color.white,
-    fontSize: 28,
+    fontSize: 23,
     fontFamily: 'IBMPlexMono-Bold',
+    marginVertical: 20
   },
   questionSection: {
-    height: 90,
-    width: width - 20,
-    borderWidth: 1,
-    borderColor: color.white
-
+    height: 100,
+    width: width - 45,
+    borderWidth: 2,
+    borderColor: 'grey',
+    borderRadius: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 50,
+    // backgroundColor: '#0086ff',
+    // backgroundColor: '#eeeeee'
   },
   questionText: {
     color: color.white,
     fontFamily: 'IBMPlexMono-Bold',
-    fontSize: 25
+    fontSize: 26
   },
   answerSection: {
-    height: 90,
-    width: width - 20,
-    borderWidth: 1,
-    borderColor: color.white,
-    color: color.white
+    flexDirection: "row",
+    height: 100,
+    width: width - 84,
+    borderWidth: 2,
+    borderColor: 'grey',
+    color: color.white,
+    borderRadius: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    // backgroundColor: '#F194FF',
+    // backgroundColor: '#eeeeee',
+
+
   },
   answerText: {
     color: color.white,
@@ -277,7 +386,7 @@ const styles = StyleSheet.create({
   letterContainer: {
     height: 220,
     width: width - 20,
-    borderWidth: 1,
+    // borderWidth: 1,
     borderColor: color.white,
     color: color.white,
     flexDirection: "row",
@@ -287,7 +396,59 @@ const styles = StyleSheet.create({
   },
   colmn1: {
     marginBottom: 40
+  },
+  modalView: {
+    marginTop: 380,
+    marginHorizontal: 60,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  button: {
+    borderRadius: 20,
+    padding: 10,
+    elevation: 2,
+  },
+  buttonOpen: {
+    backgroundColor: '#F194FF',
+  },
+  buttonClose: {
+    backgroundColor: '#2196F3',
+  },
+  textStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
+  },
+  deleteBtn: {
+    height: 100,
+    width: 35,
+    borderWidth: 1,
+    borderColor: '#ffff',
+    borderRadius: 10,
+    marginLeft: 3,
+    backgroundColor: '#eeeeee',
+    justifyContent: 'center',
+    alignItems: 'center'
+
+  },
+  deleteText: {
+    color: 'black'
   }
+
 
 
 });

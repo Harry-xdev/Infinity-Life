@@ -20,10 +20,10 @@ export default SplashScreen = ({ navigation }) => {
         style={{ height: 600, width: '100%', justifyContent: "center" }}
         source={require('../../images/games_subnav_dungeona-300x465.jpg')}
       >
-        <View style={{ marginTop: 180 }}>
+        <View style={{ marginTop: 150 }}>
           <View style={styles.headerContainer}>
             <Text style={styles.greetingText}>
-              HI! KHÔI!
+              HI!!!
             </Text>
             <Text style={styles.titleText}>
               Welcome to infinity world!
