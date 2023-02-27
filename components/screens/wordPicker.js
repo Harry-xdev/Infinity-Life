@@ -1,17 +1,17 @@
 import React from "react";
-import { TouchableOpacity, StyleSheet, Text } from "react-native";
+import { TouchableOpacity, StyleSheet, Text, Pressable } from "react-native";
 
 export default WordPicker = (props) => {
 
   return (
-    <TouchableOpacity
+    <Pressable
       style={props.status === true ? styles.letterBtn : styles.letterBtnOff}
       onPress={props.pushValue}
     >
       <Text style={props.status === true ? styles.btnText : styles.btnTextOff}>
         {props.value} 
       </Text>
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 

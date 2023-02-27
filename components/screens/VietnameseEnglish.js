@@ -29,6 +29,10 @@ export default VietnameseToEnglish = ({ navigation }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalNotify, setModalNotify] = useState('');
 
+  const [goldModalVisible, setGoldModalVisible] = useState(false);
+
+  const [dailyScore, setDailyScore] = useState(0);
+
 
   const [part0BtnActive, setPart0BtnActive] = useState(true);
   const [part1BtnActive, setPart1BtnActive] = useState(true);
@@ -41,13 +45,14 @@ export default VietnameseToEnglish = ({ navigation }) => {
   const [part8BtnActive, setPart8BtnActive] = useState(true);
   const [part9BtnActive, setPart9BtnActive] = useState(true);
 
-
-
   const handleRandomQuest = () => {
     const random2 = Math.floor(Math.random() * data.length) + 1;
     setRandomNumQuest(random2);
     setQuestVN(data[randomNumQuest - 1]['correction']);
     setAnsEng(data[randomNumQuest - 1]['question']);
+    handleDelete();
+    setModalVisible(!modalVisible);
+
 
   };
   // const index = ['0', '1', '2', '3'];
@@ -195,8 +200,8 @@ export default VietnameseToEnglish = ({ navigation }) => {
 
   const handleSubmitAns = () => {
     if (showAns === answerEng) {
+      handleCorrectAns();
       setModalNotify('Congrats! You are correct!');
-      handleDelete();
       setMixedAns(['']);
       setPart0BtnActive(true);
       setPart1BtnActive(true);
@@ -210,7 +215,19 @@ export default VietnameseToEnglish = ({ navigation }) => {
       setPart9BtnActive(true);
 
     } else {
+      handleWrongAns();
       setModalNotify('You are wrong!');
+      setMixedAns(['']);
+      setPart0BtnActive(true);
+      setPart1BtnActive(true);
+      setPart2BtnActive(true);
+      setPart3BtnActive(true);
+      setPart4BtnActive(true);
+      setPart5BtnActive(true);
+      setPart6BtnActive(true);
+      setPart7BtnActive(true);
+      setPart8BtnActive(true);
+      setPart9BtnActive(true);
     };
   };
   const handleModal = () => {
@@ -218,16 +235,64 @@ export default VietnameseToEnglish = ({ navigation }) => {
     handleSubmitAns();
   };
 
+  const handleCorrectAns = () => {
+    setDailyScore(dailyScore + 2);
+
+  };
+  const handleWrongAns = () => {
+    setDailyScore(dailyScore - 2);
+
+  };
+
+
+  const newScore = oldTotalScore + dailyScore;
+
+  const updateScore = () => {
+    handlePOST("1", newScore)
+    setDailyScore(0);
+  }
+  const handlePOST = (id) => {
+    fetch(`https://63eddd2f388920150dd47775.mockapi.io/userAccount/${id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ score: newScore })
+    })
+      .then(res => {
+        // console.log(res.status);
+        // console.log(res.headers)
+        return res.json();
+      })
+      .then(result => {
+        console.log(result);
+      })
+  };
 
   return (
     <View style={styles.grandContainer}>
       <HeaderTop
         backTo={() => navigation.navigate("Bottom Tab Main")}
+        goldBtn={() => setGoldModalVisible(!goldModalVisible)}
         score={oldTotalScore}
         borderWidth={2}
       />
       <View>
         <Text style={styles.headerTitle}>Please translate to English:</Text>
+      </View>
+      <View>
+        <View style={styles.dailyStatusBox}>
+          <Text style={styles.dailyStatusText}>Total questions: </Text>
+          <Text style={[styles.dailyStatusText, { color: 'red', fontSize: 15, fontWeight: 800 }]}>
+            {data.length}
+          </Text>
+        </View>
+        <View style={styles.dailyStatusBox}>
+          <Text style={styles.dailyStatusText}>Số vàng hôm nay nhận: </Text>
+          <Text style={[styles.dailyStatusText, { color: '#FFD700', fontSize: 15, fontWeight: 800 }]}>
+            {dailyScore}
+          </Text>
+        </View>
       </View>
 
       <View style={styles.questionSection}>
@@ -251,6 +316,11 @@ export default VietnameseToEnglish = ({ navigation }) => {
         </View>
       </View>
 
+      <ItemBar
+        itemContent={'Step 1: Generate answer'}
+        navigation={handleMixup}
+        borderColor={'#eeeeee'}
+      />
 
       <View style={styles.letterContainer}>
         {/* <Text>Mixup words Section</Text> */}
@@ -281,7 +351,7 @@ export default VietnameseToEnglish = ({ navigation }) => {
       </View>
 
       <Modal
-        animationType="fade"
+        animationType="slide"
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
@@ -291,20 +361,54 @@ export default VietnameseToEnglish = ({ navigation }) => {
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <Text style={styles.modalText}>{modalNotify}</Text>
-            <TouchableOpacity
-              style={[styles.button, styles.buttonClose]}
-              onPressOut={() => setModalVisible(!modalVisible)}
-              onPressIn={handleRandomQuest}
-            >
-              <Text style={styles.textStyle}>Next</Text>
-            </TouchableOpacity>
+            {
+              showAns === answerEng ?
+                <TouchableOpacity
+                  style={[styles.button, styles.buttonClose]}
+                  onPressIn={handleRandomQuest}
+                >
+                  <Text style={styles.textStyle}>Next</Text>
+                </TouchableOpacity> :
+
+                <TouchableOpacity
+                  style={[styles.button, styles.buttonClose]}
+                  onPress={() => setModalVisible(!modalVisible)}
+                  onPressOut={() => setMixedAns([""])}
+                >
+                  <Text style={styles.textStyle}>Try again</Text>
+                </TouchableOpacity>
+            }
+
           </View>
         </View>
       </Modal >
 
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={goldModalVisible}
+        onRequestClose={() => {
+          Alert.alert('Modal has been closed.');
+          setModalVisible(!modalVisible);
+        }}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>{modalNotify}</Text>
+
+            <TouchableOpacity
+              style={[styles.button, styles.buttonClose]}
+              onPress={() => setGoldModalVisible(!goldModalVisible)}
+            >
+              <Text style={styles.textStyle}>Cancel</Text>
+            </TouchableOpacity>
+
+
+          </View>
+        </View>
+      </Modal >
       {/* <Button
-        title="Generate answer"
-        onPress={handleMixup}
+        title="UPDATE"
+        onPress={updateScore}
       /> */}
       {/* <TouchableOpacity
         style={[styles.button, styles.buttonOpen]}
@@ -314,18 +418,24 @@ export default VietnameseToEnglish = ({ navigation }) => {
 
       {/* <Button title="Random" onPress={handleRandomQuest} /> */}
       {/* <Button title="Check result" onPress={handleSubmitAns} /> */}
+
       <ItemBar
-        itemContent={'Generate answer'}
-        navigation={handleMixup}
-        borderColor={'#eeeeee'}
-      />
-      <ItemBar
-        itemContent={'Check result'}
+        itemContent={'Step 2: Check result'}
         navigation={handleModal}
         borderColor={'#eeeeee'}
 
-
       />
+      {
+        dailyScore >= 2 ?
+          <ItemBar
+            itemContent={'Step 3: Save Golds'}
+            navigation={updateScore}
+            borderColor={'#eeeeee'}
+
+          /> :
+          <View></View>
+      }
+
 
 
     </View >
@@ -344,17 +454,17 @@ const styles = StyleSheet.create({
     color: color.white,
     fontSize: 23,
     fontFamily: 'IBMPlexMono-Bold',
-    marginVertical: 20
+    marginVertical: 5
   },
   questionSection: {
     height: 100,
-    width: width - 45,
+    width: width - 30,
     borderWidth: 2,
     borderColor: 'grey',
     borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 50,
+    marginBottom: 2,
     // backgroundColor: '#0086ff',
     // backgroundColor: '#eeeeee'
   },
@@ -366,7 +476,7 @@ const styles = StyleSheet.create({
   answerSection: {
     flexDirection: "row",
     height: 100,
-    width: width - 84,
+    width: width - 68,
     borderWidth: 2,
     borderColor: 'grey',
     color: color.white,
@@ -375,6 +485,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     // backgroundColor: '#F194FF',
     // backgroundColor: '#eeeeee',
+    marginBottom: 10
 
 
   },
@@ -398,7 +509,7 @@ const styles = StyleSheet.create({
     marginBottom: 40
   },
   modalView: {
-    marginTop: 380,
+    marginTop: 390,
     marginHorizontal: 60,
     backgroundColor: 'white',
     borderRadius: 20,
@@ -428,10 +539,16 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     textAlign: 'center',
+    fontSize: 20,
+    fontFamily: 'IBMPlexMono-Bold',
+
   },
   modalText: {
     marginBottom: 15,
     textAlign: 'center',
+    fontFamily: 'IBMPlexMono-Bold',
+    fontSize: 22,
+    color: color.black
   },
   deleteBtn: {
     height: 100,
@@ -447,7 +564,25 @@ const styles = StyleSheet.create({
   },
   deleteText: {
     color: 'black'
-  }
+  },
+  dailyStatusBox: {
+    width: 400,
+    // height: 90,
+    borderWidth: 1,
+    borderColor: color.white,
+    flexDirection: 'row',
+    // justifyContent: "center",
+    alignItems: "center",
+    paddingLeft: 10,
+    // backgroundColor: '#0e19bf',
+    borderRadius: 10,
+    marginBottom: 5
+  },
+  dailyStatusText: {
+    color: color.white,
+    fontSize: 15,
+    fontFamily: 'IBMPlexMono-Regular'
+  },
 
 
 

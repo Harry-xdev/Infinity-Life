@@ -1,5 +1,7 @@
 import React from "react";
-import { Text, TouchableOpacity, View, StyleSheet } from "react-native";
+import { Text, TouchableOpacity, View, StyleSheet, Dimensions } from "react-native";
+
+const width = Dimensions.get('window').width;
 
 export default ItemBar = (props) => {
   return (
@@ -26,11 +28,11 @@ const styles = StyleSheet.create({
       borderWidth: 2,
       borderColor: '#ffff',
       // height: 50,
-      width: 380,
+      width: width - 30,
       borderRadius: 10,
       justifyContent: "center",
       alignItems: "center",
-      marginBottom: 5,
+      marginBottom: 3,
       paddingVertical: 10
     }
   }

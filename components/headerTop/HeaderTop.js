@@ -15,9 +15,12 @@ export default HeaderTop = (props) => {
       </TouchableOpacity>
       <View><Text style={styles.headerTitle}>{props.headerTitle}</Text></View>
 
-      <TouchableOpacity style={[styles.scoreContainer, { borderWidth: props.borderWidth }]}>
+      <TouchableOpacity
+        style={[styles.scoreContainer, { borderWidth: props.borderWidth }]}
+        onPress={props.goldBtn}
+      >
         <ImageBackground
-          style={{ height: 30, width: 30,marginRight:5, justifyContent: "center" }}
+          style={{ height: 30, width: 30, marginRight: 5, justifyContent: "center" }}
           source={require('../../images/item/stock-vector-one-coin-white-background.png')}>
         </ImageBackground>
         <View>
