@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from "react";
-import { Dimensions, ImageBackground, StyleSheet, Text, Touchable, TouchableOpacity, View } from "react-native";
+import { Dimensions, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 import color from "../../colorStore";
 
@@ -12,7 +12,7 @@ export default SplashScreen = ({ navigation }) => {
   const [btnVisible, setBtnVisible] = useState(false);
   setTimeout(() => {
     setBtnVisible(true);
-  }, 1500);
+  }, 2500);
 
   return (
     <View style={styles.grandContainer}>

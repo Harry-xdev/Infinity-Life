@@ -13,41 +13,44 @@ export default AddNewWord = ({ navigation, props }) => {
   const { vietNamAnswer, data, vietNamAnswerB, dataB, userData } = useContext(GolobalContext);
   const oldTotalScore = userData[0]['score'];
   const [isA, setIsA] = useState(true);
-  const [count, setCountDaily] = useState(1);
+  const [count, setCountDaily] = useState(0);
   const [recentlyAdded, setRecentlyAdded] = useState([]);
 
-
-  const questEndPointA = 'https://6268162901dab900f1c9969b.mockapi.io/appi/v1/engQuest';
-  const ansEndPointA = 'https://6268162901dab900f1c9969b.mockapi.io/appi/v1/userList';
-
-  const questEndPointB = 'https://63eddd2f388920150dd47775.mockapi.io/newQuest';
-  const ansEndPointB = 'https://63eedb395e9f1583bdc850f3.mockapi.io/api/v1/userList';
-
-  const questEndpointLocal = 'http://192.168.2.7:4000/engQuest';
-  const ansEndPointLocal = 'http://192.168.2.7:4000/vnAnswerList';
+  
 
 
-  const [questEndPoint, setQuestEndPoint] = useState(questEndPointA);
-  const [ansEndPoint, setAnsEndPoint] = useState(ansEndPointA);
+  const questEndPointA = 'https://awsome-project-backend2.onrender.com/engQuest';
+  const ansEndPointA = 'https://awsome-project-backend2.onrender.com/vnAnswerList';
 
-  const switchToA = () => {
-    setQuestEndPoint(questEndPointA);
-    setAnsEndPoint(ansEndPointA);
-    setIsA(true);
-  };
-  const switchToB = () => {
-    setQuestEndPoint(questEndPointB);
-    setAnsEndPoint(ansEndPointB);
-    setIsA(false);
-  };
-  const checkLimitation = () => {
-    if (data.length > 99) {
-      switchToB();
-    };
-  };
-  setTimeout(() => {
-    checkLimitation();
-  }, 0);
+  // const questEndPointB = 'https://63eddd2f388920150dd47775.mockapi.io/newQuest';
+  // const ansEndPointB = 'https://63eedb395e9f1583bdc850f3.mockapi.io/api/v1/userList';
+
+  const questEndpointLocal = 'http://172.18.10.231:4000/engQuest';
+  const ansEndPointLocal = 'http://172.18.10.231:4000/vnAnswerList';
+
+
+  const [questEndPoint, setQuestEndPoint] = useState(questEndpointLocal);
+  const [ansEndPoint, setAnsEndPoint] = useState(ansEndPointLocal);
+  console.log(`new data:`, data);
+  console.log(`user point: `, userData);
+  // const switchToA = () => {
+  //   setQuestEndPoint(questEndPointA);
+  //   setAnsEndPoint(ansEndPointA);
+  //   setIsA(true);
+  // };
+  // const switchToB = () => {
+  //   setQuestEndPoint(questEndPointB);
+  //   setAnsEndPoint(ansEndPointB);
+  //   setIsA(false);
+  // };
+  // const checkLimitation = () => {
+  //   if (data.length > 99) {
+  //     switchToB();
+  //   };
+  // };
+  // setTimeout(() => {
+  //   checkLimitation();
+  // }, 0);
 
   console.log('question endpoint:', questEndPoint);
   console.log('answer endpoint:', ansEndPoint);
@@ -56,20 +59,33 @@ export default AddNewWord = ({ navigation, props }) => {
   // console.log('ABCD:', randomABCD);
   const [countWord, setCount] = useState(0);
 
+  const [idState, setIdState] = useState(1);
+  const [idState2, setIdState2] = useState(1);
+
+  console.log(`id Data: `, data.length);
+  console.log(`id vnAnswerList length:`, vietNamAnswer.length);
+
   const [question, setQuestion] = React.useState("");
   const [ansA, setAnsA] = React.useState("");
   const [ansB, setAnsB] = React.useState("");
   const [ansC, setAnsC] = React.useState("");
   const [ansD, setAnsD] = React.useState("");
   const [correction, setCorrection] = React.useState("");
-  const [inputBoxNotify, setBoxNotify] = useState('');
+  const [inputBoxNotify, setBoxNotify] = useState("");
+  const [deleteId, setDeleteId] = React.useState("");
 
-  // console.log(question);
-  // console.log(ansA);
-  // console.log(ansB);
-  // console.log(ansC);
-  // console.log(ansD);
-  // console.log(correction)
+  // console.log(`type of id: `, typeof id);
+  // const toString = id.toString();
+  // console.log(`type of toString: `, typeof toString);
+
+
+
+  console.log(question);
+  console.log(ansA);
+  console.log(ansB);
+  console.log(ansC);
+  console.log(ansD);
+  console.log(correction)
   const randomAnswerA = vietNamAnswer[Math.floor(Math.random() * vietNamAnswer.length)]["answer"];
   const randomAnswerB = vietNamAnswer[Math.floor(Math.random() * vietNamAnswer.length)]["answer"];
   const randomAnswerC = vietNamAnswer[Math.floor(Math.random() * vietNamAnswer.length)]["answer"];
@@ -163,12 +179,14 @@ export default AddNewWord = ({ navigation, props }) => {
 
   // console.log('new array pushed: ', vietNamAnswer);
   let createNewQuestion = (question, ansA, ansB, ansC, ansD, correction) => {
+    setIdState(idState + 1);
     fetch(questEndPoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
+        id: (data.length + idState).toString(),
         question: question,
         ansA: ansA,
         ansB: ansB,
@@ -180,30 +198,51 @@ export default AddNewWord = ({ navigation, props }) => {
       .then(res => {
         // console.log(res.status);
         // console.log(res.headers)
-        return res.json();
+        // return res.json();
       })
       .then(result => {
         console.log(result);
       })
   };
-  let updateNewRanAns = () => {
+  let updateNewRanAns = (correction) => {
+    setIdState2(idState2 + 1);
     fetch(ansEndPoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
+        id: (vietNamAnswer.length + idState2).toString(),
         answer: correction
       })
     })
       .then(res => {
         // console.log(res.status);
         // console.log(res.headers)
-        return res.json();
+        // return res.json();
       })
       .then(result => {
         console.log(result);
       })
+  };
+  const deleteById = (id) => {
+    fetch(`https://awsome-project-backend2.onrender.com/engquest/${id}`, {
+      method: "DELETE"
+    })
+      .then(res => {
+        console.log(res.status);
+        console.log(res.headers);
+        // return res.json();
+      })
+      .then(
+        (result) => {
+          console.log(result);
+        },
+        (error) => {
+          console.log(error);
+
+        }
+      )
   };
 
 
@@ -233,7 +272,7 @@ export default AddNewWord = ({ navigation, props }) => {
             {/* Black Screen  */}
             <View style={styles.screenContainer}>
               <ScrollView style={{ flexDirection: 'column-reverse' }}>
-                {recentlyAdded.map(item => <View key={item.id}><Text style={styles.listText}>{item.id}. {item.question} : {item.correction}</Text></View>)}
+                {recentlyAdded.map(item => <View key={item.id}><Text style={styles.listText}>{item.id + 1}. {item.question} : {item.correction}</Text></View>)}
               </ScrollView>
 
             </View>
@@ -399,14 +438,28 @@ export default AddNewWord = ({ navigation, props }) => {
               style={styles.uploadBtn}
             />
           </View>
+          {/* <View>
+            <TextInput
+
+              placeholder="Delete ID"
+              value={deleteId}
+              style={{ borderWidth: 1, height: 40, width: 100, color: color.black }}
+              onChangeText={setDeleteId}
+              placeholderTextColor={'gray'}
+
+            />
+            <Button title="Delete" onPress={() => deleteById(deleteId)} />
+
+          </View> */}
+
           {/* <View style={styles.uploadBtn}>
-          <Button
-            title="Switch to API A"
-            onPress={switchToA}
-            style={styles.uploadBtn}
-          />
-        </View>
-        <View style={styles.uploadBtn}>
+            <Button
+              title="Switch to API A"
+              onPress={switchToA}
+              style={styles.uploadBtn}
+            />
+          </View> */}
+          {/* <View style={styles.uploadBtn}>
           <Button
             title="Switch to API B"
             onPress={switchToB}
@@ -543,13 +596,13 @@ const styles = StyleSheet.create({
     // width: 80
   },
   screenContainer: {
-    height: 200,
+    height: 100,
     borderWidth: 0.5,
     borderColor: 'gray',
     marginBottom: 10,
     // flexDirection: 'column-reverse',
     width: width - 70,
-    backgroundColor: '#000000',
+    backgroundColor: '#000000', 
     flexDirection: "row",
   },
   listText: {

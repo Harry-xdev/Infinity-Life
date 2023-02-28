@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   letterBtn: {
     height: 45,
     width: 90,
-    borderWidth: 2,
+    // borderWidth: 2,
     borderColor: color.white,
     borderRadius: 10,
     justifyContent: "center",
@@ -37,8 +37,8 @@ const styles = StyleSheet.create({
   letterBtnOff: {
     height: 45,
     width: 90,
-    borderWidth: 2,
-    borderColor: 'grey',
+    // borderWidth: 2,
+    // borderColor: 'grey',
     borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",

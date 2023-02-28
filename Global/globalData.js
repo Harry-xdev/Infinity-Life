@@ -3,30 +3,41 @@ import React, { createContext, useState, useEffect } from "react";
 const GolobalContext = createContext();
 
 const ContextProvider = ({ children }) => {
-  const questionEndPointA = 'https://6268162901dab900f1c9969b.mockapi.io/appi/v1/engQuest';
-  const ansEndPointA = 'https://6268162901dab900f1c9969b.mockapi.io/appi/v1/userList';
-  const questionEndPointB = 'https://63eddd2f388920150dd47775.mockapi.io/newQuest';
-  const ansEndPointB = 'https://63eedb395e9f1583bdc850f3.mockapi.io/api/v1/userList';
+  const questRender = 'https://awsome-project-backend2.onrender.com/engQuest';
+  const ansRender = 'https://awsome-project-backend2.onrender.com/vnAnswerList';
+  const userRender = 'https://awsome-project-backend2.onrender.com/userAccount';
 
-  const [questEndPoint, setQuestEndPoint] = useState(questionEndPointA);
-  const [ansEndPoint, setAnsEndPoint] = useState(ansEndPointA);
+  const userMockApi = 'https://63eddd2f388920150dd47775.mockapi.io/userAccount';
+
+  const questLocal = 'http://172.18.10.231:4000/engQuest';
+  const ansLocal = 'http://172.18.10.231:4000/vnAnswerlist';
+  const userLocal = 'http://172.18.10.231:4000/userAccount';
+
+  // const [questEndPoint, setQuestEndPoint] = useState(questRender);
+  // const [ansEndPoint, setAnsEndPoint] = useState(ansRender);
+  // const [userEndPoint, setUserEndPoint] = useState(userRender);
+
+  const [questEndPoint, setQuestEndPoint] = useState(questLocal);
+  const [ansEndPoint, setAnsEndPoint] = useState(ansLocal);
+  const [userEndPoint, setUserEndPoint] = useState(userMockApi);
+
 
   // const switchToA = () => {
-  //   setQuestEndPoint(questionEndPointA);
-  //   setAnsEndPoint(ansEndPointA);
+  //   setQuestEndPoint(questRender);
+  //   setAnsEndPoint(ansRender);
   // };
-  const switchToB = () => {
-    setQuestEndPoint(questionEndPointB);
-    setAnsEndPoint(ansEndPointB);
-  };
-  const checkLimitation = () => {
-    if(data.length > 99) {
-      switchToB();
-    };
-  };
-  setTimeout(() => {
-    checkLimitation();
-  }, 0);
+  // const switchToB = () => {
+  //   setQuestEndPoint(questLocal);
+  //   setAnsEndPoint(ansLocal);
+  // };
+  // const checkLimitation = () => {
+  //   if(data.length > 99) {
+  //     switchToB();
+  //   };
+  // };
+  // setTimeout(() => {
+  //   checkLimitation();
+  // }, 0);
 
   const [data, setData] = useState([]);
   const [dataB, setDataB] = useState([]);
@@ -38,7 +49,7 @@ const ContextProvider = ({ children }) => {
 
   const getData = async () => {
     try {
-      const response = await fetch('https://6268162901dab900f1c9969b.mockapi.io/appi/v1/engQuest');
+      const response = await fetch(questEndPoint);
       const json = await response.json();
       setData(json);
     } catch (error) {
@@ -51,7 +62,7 @@ const ContextProvider = ({ children }) => {
 
   const getRandomAnswerData = async () => {
     try {
-      const response = await fetch('https://6268162901dab900f1c9969b.mockapi.io/appi/v1/userList');
+      const response = await fetch(ansEndPoint);
       const json = await response.json();
       setVietNamAnswer(json);
     } catch (error) {
@@ -61,36 +72,36 @@ const ContextProvider = ({ children }) => {
     }
   };
 
-  const getDataB = async () => {
-    try {
-      const response = await fetch('https://63eddd2f388920150dd47775.mockapi.io/newQuest');
-      const json = await response.json();
-      setDataB(json);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  // const getDataB = async () => {
+  //   try {
+  //     const response = await fetch('https://63eddd2f388920150dd47775.mockapi.io/newQuest');
+  //     const json = await response.json();
+  //     setDataB(json);
+  //   } catch (error) {
+  //     console.error(error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
 
-  const getRandomAnswerDataB = async () => {
-    try {
-      const response = await fetch('https://63eedb395e9f1583bdc850f3.mockapi.io/api/v1/userList');
-      const json = await response.json();
-      setVietNamAnswerB(json);
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  // const getRandomAnswerDataB = async () => {
+  //   try {
+  //     const response = await fetch('https://63eedb395e9f1583bdc850f3.mockapi.io/api/v1/userList');
+  //     const json = await response.json();
+  //     setVietNamAnswerB(json);
+  //   } catch (error) {
+  //     console.error(error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
 
 
   const getUserData = async () => {
     try {
-      const response = await fetch('https://63eddd2f388920150dd47775.mockapi.io/userAccount');
+      const response = await fetch(userEndPoint);
       const json = await response.json();
       setUserData(json);
     } catch (error) {
@@ -103,25 +114,20 @@ const ContextProvider = ({ children }) => {
   useEffect(() => {
     setLoading(true);
     getData();
-    getDataB();
     getRandomAnswerData();
-    getRandomAnswerDataB();
     getUserData();
 
   }, []);
 
 
   console.log('Data A:', data);
-  console.log('Data B:', dataB);
   console.log('Random answer A:', vietNamAnswer);
-  console.log('Random answer B:', vietNamAnswerB);
-  console.log('User Data:', userData);
+  // console.log('User Data NEW :', userData);
 
   return (
 
-    <GolobalContext.Provider value={{
-      data,dataB, vietNamAnswer, vietNamAnswerB, userData
-    }}>
+    <GolobalContext.Provider
+      value={{ data, vietNamAnswer, userData, questEndPoint, ansEndPoint, userData, userEndPoint }}>
       {children}
     </GolobalContext.Provider>
   );

@@ -12,7 +12,7 @@ const height = Dimensions.get('window').height;
 
 export default VietnameseToEnglish = ({ navigation }) => {
 
-  const { data, userData } = useContext(GolobalContext);
+  const { data, userData, userEndPoint } = useContext(GolobalContext);
   const oldTotalScore = userData[0]['score'];
   const random = Math.floor(Math.random() * data.length) + 1;
   const [randomNumQuest, setRandomNumQuest] = useState(random);
@@ -22,13 +22,14 @@ export default VietnameseToEnglish = ({ navigation }) => {
 
   console.log('random question number:', randomNumQuest);
   console.log('questVN: ', questVN);
+  console.log(`user data new:`, userData);
+  console.log(`user end point:`, userEndPoint);
 
   const [answer, setAnswer] = useState([]);
   const [mixedAns, setMixedAns] = useState([]);
 
   const [modalVisible, setModalVisible] = useState(false);
   const [modalNotify, setModalNotify] = useState('');
-
   const [goldModalVisible, setGoldModalVisible] = useState(false);
 
   const [dailyScore, setDailyScore] = useState(0);
@@ -246,13 +247,14 @@ export default VietnameseToEnglish = ({ navigation }) => {
 
 
   const newScore = oldTotalScore + dailyScore;
+  console.log(`new score:`, newScore);
 
   const updateScore = () => {
-    handlePOST("1", newScore)
+    handlePUT("1", newScore);
     setDailyScore(0);
   }
-  const handlePOST = (id) => {
-    fetch(`https://63eddd2f388920150dd47775.mockapi.io/userAccount/${id}`, {
+  const handlePUT = (id) => {
+    fetch(`${userEndPoint}/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -260,7 +262,7 @@ export default VietnameseToEnglish = ({ navigation }) => {
       body: JSON.stringify({ score: newScore })
     })
       .then(res => {
-        // console.log(res.status);
+        console.log(res.status);
         // console.log(res.headers)
         return res.json();
       })
