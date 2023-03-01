@@ -24,7 +24,7 @@ import Counter from './components/screens/Counter/Counter';
 import BottomTabBarMain from './components/screens/TabScreen/BottomTabBarMain';
 import AddNewWord from './components/screens/AddNewWord';
 import VietnameseToEnglish from './components/screens/VietnameseEnglish';
-import WorkingDayCounter from './components/screens/WorkingDayCounter';
+import WorkingDayCounter from './components/screens/Calendal/WorkingDayCounter';
 
 
 const Stack = createNativeStackNavigator();
