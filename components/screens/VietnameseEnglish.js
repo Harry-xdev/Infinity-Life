@@ -34,6 +34,8 @@ export default VietnameseToEnglish = ({ navigation }) => {
 
   const [dailyScore, setDailyScore] = useState(0);
 
+  const [step1Active, setStep1Active] = useState(true);
+
 
   const [part0BtnActive, setPart0BtnActive] = useState(true);
   const [part1BtnActive, setPart1BtnActive] = useState(true);
@@ -80,6 +82,7 @@ export default VietnameseToEnglish = ({ navigation }) => {
 
   const handleMixup = () => {
     setMixedAns(correctArr.sort(() => Math.random() - 0.5));
+    setStep1Active(false);
   };
 
   // correctArr.sort(() => Math.random() - 0.5);
@@ -204,6 +207,7 @@ export default VietnameseToEnglish = ({ navigation }) => {
       handleCorrectAns();
       setModalNotify('Congrats! You are correct!');
       setMixedAns(['']);
+      setStep1Active(true);
       setPart0BtnActive(true);
       setPart1BtnActive(true);
       setPart2BtnActive(true);
@@ -218,7 +222,9 @@ export default VietnameseToEnglish = ({ navigation }) => {
     } else {
       handleWrongAns();
       setModalNotify('You are wrong!');
-      setMixedAns(['']);
+      setAnswer([]);
+      // setMixedAns(['']);
+      setStep1Active(true);
       setPart0BtnActive(true);
       setPart1BtnActive(true);
       setPart2BtnActive(true);
@@ -318,39 +324,54 @@ export default VietnameseToEnglish = ({ navigation }) => {
         </View>
       </View>
 
-      <ItemBar
-        itemContent={'Step 1: Generate answer'}
-        navigation={handleMixup}
-        borderColor={'#eeeeee'}
-      />
+      {
+        step1Active === true ?
+          <TouchableOpacity
+            activeOpacity={9}
+            onPress={handleMixup}
+            style={styles.step1Active}>
+            <Text style={styles.step1Text}>
+              Step 1: Generate answer</Text>
+          </TouchableOpacity> :
+          <TouchableOpacity
+            activeOpacity={9}
+            style={styles.step1InActive}>
+            <Text style={styles.step1TextOff}>
+              Step 1: Generate answer</Text>
+          </TouchableOpacity>
+      }
+      {
+        step1Active === false ?
+          <View style={styles.letterContainer}>
+            {/* <Text>Mixup words Section</Text> */}
+            {/* <Text>{answer}</Text> */}
+            <View style={styles.colmn1}>
+              <WordPicker value={mixedAns[0]} pushValue={handlePushPart0} status={part0BtnActive} />
+              <WordPicker value={mixedAns[1]} pushValue={handlePushPart1} status={part1BtnActive} />
+              <WordPicker value={mixedAns[2]} pushValue={handlePushPart2} status={part2BtnActive} />
+            </View>
 
-      <View style={styles.letterContainer}>
-        {/* <Text>Mixup words Section</Text> */}
-        {/* <Text>{answer}</Text> */}
-        <View style={styles.colmn1}>
-          <WordPicker value={mixedAns[0]} pushValue={handlePushPart0} status={part0BtnActive} />
-          <WordPicker value={mixedAns[1]} pushValue={handlePushPart1} status={part1BtnActive} />
-          <WordPicker value={mixedAns[2]} pushValue={handlePushPart2} status={part2BtnActive} />
-        </View>
+            <View>
+              <WordPicker value={mixedAns[3]} pushValue={handlePushPart3} status={part3BtnActive} />
+              <WordPicker value={mixedAns[4]} pushValue={handlePushPart4} status={part4BtnActive} />
+            </View>
 
-        <View>
-          <WordPicker value={mixedAns[3]} pushValue={handlePushPart3} status={part3BtnActive} />
-          <WordPicker value={mixedAns[4]} pushValue={handlePushPart4} status={part4BtnActive} />
-        </View>
+            <View>
+              <WordPicker value={mixedAns[5]} pushValue={handlePushPart5} status={part5BtnActive} />
+              <WordPicker value={mixedAns[6]} pushValue={handlePushPart6} status={part6BtnActive} />
+              <WordPicker value={mixedAns[7]} pushValue={handlePushPart7} status={part7BtnActive} />
+            </View>
 
-        <View>
-          <WordPicker value={mixedAns[5]} pushValue={handlePushPart5} status={part5BtnActive} />
-          <WordPicker value={mixedAns[6]} pushValue={handlePushPart6} status={part6BtnActive} />
-          <WordPicker value={mixedAns[7]} pushValue={handlePushPart7} status={part7BtnActive} />
-        </View>
-
-        <View>
-          <WordPicker value={mixedAns[8]} pushValue={handlePushPart8} status={part8BtnActive} />
-          <WordPicker value={mixedAns[9]} pushValue={handlePushPart9} status={part9BtnActive} />
-        </View>
+            <View>
+              <WordPicker value={mixedAns[8]} pushValue={handlePushPart8} status={part8BtnActive} />
+              <WordPicker value={mixedAns[9]} pushValue={handlePushPart9} status={part9BtnActive} />
+            </View>
 
 
-      </View>
+          </View> :
+
+          <View style={styles.letterContainer}></View >
+      }
 
       <Modal
         animationType="slide"
@@ -428,7 +449,7 @@ export default VietnameseToEnglish = ({ navigation }) => {
 
       />
       {
-        dailyScore >= 2 ?
+        dailyScore >= 20 ?
           <ItemBar
             itemContent={'Step 3: Save Golds'}
             navigation={updateScore}
@@ -585,7 +606,38 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontFamily: 'IBMPlexMono-Regular'
   },
-
+  step1Active: {
+    borderWidth: 2,
+    borderColor: '#ffff',
+    // height: 50,
+    width: width - 30,
+    borderRadius: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 3,
+    paddingVertical: 10
+  },
+  step1Text: {
+    color: '#ffff',
+    fontSize: 20,
+    fontFamily: "IBMPlexMono-Regular",
+  },
+  step1InActive: {
+    borderWidth: 2,
+    borderColor: '#3f3f3f',
+    // height: 50,
+    width: width - 30,
+    borderRadius: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 3,
+    paddingVertical: 10
+  },
+  step1TextOff: {
+    color: '#3f3f3f',
+    fontSize: 20,
+    fontFamily: "IBMPlexMono-Regular",
+  },
 
 
 });

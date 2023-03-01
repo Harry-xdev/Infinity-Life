@@ -48,11 +48,11 @@ export default Home = ({ navigation }) => {
           itemContent={'Add New Vocabulary'}
           navigation={() => navigation.navigate('Add New Word')}
         />
-        {/* <ItemBar
-          itemContent={'Counter Tool'}
-          navigation={() => navigation.navigate('Counter Screen')}
-        />
         <ItemBar
+          itemContent={'Working Day Counter'}
+          navigation={() => navigation.navigate('Working Day Counter')}
+        />
+        {/* <ItemBar
           itemContent={'Test'}
           navigation={() => navigation.navigate('Test')}
         /> */}

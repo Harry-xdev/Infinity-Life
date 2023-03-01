@@ -18,7 +18,7 @@ export default SplashScreen = ({ navigation }) => {
     <View style={styles.grandContainer}>
       <ImageBackground
         style={{ height: 600, width: '100%', justifyContent: "center" }}
-        source={require('../../images/games_subnav_dungeona-300x465.jpg')}
+        // source={require('../../images/games_subnav_dungeona-300x465.jpg')}
       >
         <View style={{ marginTop: 150 }}>
           <View style={styles.headerContainer}>

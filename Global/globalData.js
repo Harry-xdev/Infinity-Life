@@ -17,8 +17,8 @@ const ContextProvider = ({ children }) => {
   // const [ansEndPoint, setAnsEndPoint] = useState(ansRender);
   // const [userEndPoint, setUserEndPoint] = useState(userRender);
 
-  const [questEndPoint, setQuestEndPoint] = useState(questLocal);
-  const [ansEndPoint, setAnsEndPoint] = useState(ansLocal);
+  const [questEndPoint, setQuestEndPoint] = useState(questRender);
+  const [ansEndPoint, setAnsEndPoint] = useState(ansRender);
   const [userEndPoint, setUserEndPoint] = useState(userMockApi);
 
 
