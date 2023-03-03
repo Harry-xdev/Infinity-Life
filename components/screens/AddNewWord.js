@@ -15,8 +15,9 @@ export default AddNewWord = ({ navigation, props }) => {
   const [isA, setIsA] = useState(true);
   const [count, setCountDaily] = useState(0);
   const [recentlyAdded, setRecentlyAdded] = useState([]);
+  const [endpointStatus, setEndpointStatus] = useState('Render.com')
 
-  
+
 
 
   const questEndPointA = 'https://awsome-project-backend2.onrender.com/engQuest';
@@ -25,35 +26,31 @@ export default AddNewWord = ({ navigation, props }) => {
   // const questEndPointB = 'https://63eddd2f388920150dd47775.mockapi.io/newQuest';
   // const ansEndPointB = 'https://63eedb395e9f1583bdc850f3.mockapi.io/api/v1/userList';
 
-  const questEndpointLocal = 'http://172.18.10.231:4000/engQuest';
-  const ansEndPointLocal = 'http://172.18.10.231:4000/vnAnswerList';
+  const questEndpointLocal = 'http://192.168.168.192:4000/engQuest';
+  const ansEndPointLocal = 'http://192.168.168.192:4000/vnAnswerList';
 
 
-  const [questEndPoint, setQuestEndPoint] = useState(questEndpointLocal);
-  const [ansEndPoint, setAnsEndPoint] = useState(ansEndPointLocal);
-  console.log(`new data:`, data);
-  console.log(`user point: `, userData);
-  // const switchToA = () => {
-  //   setQuestEndPoint(questEndPointA);
-  //   setAnsEndPoint(ansEndPointA);
-  //   setIsA(true);
-  // };
-  // const switchToB = () => {
-  //   setQuestEndPoint(questEndPointB);
-  //   setAnsEndPoint(ansEndPointB);
-  //   setIsA(false);
-  // };
-  // const checkLimitation = () => {
-  //   if (data.length > 99) {
-  //     switchToB();
-  //   };
-  // };
-  // setTimeout(() => {
-  //   checkLimitation();
-  // }, 0);
+  const [questEndPoint, setQuestEndPoint] = useState(questEndPointA);
+  const [ansEndPoint, setAnsEndPoint] = useState(ansEndPointA);
+  // console.log(`new data:`, data);
+  // console.log(`user point: `, userData);
 
-  console.log('question endpoint:', questEndPoint);
-  console.log('answer endpoint:', ansEndPoint);
+  const switchToRender = () => {
+    setQuestEndPoint(questEndPointA);
+    setAnsEndPoint(ansEndPointA);
+    setEndpointStatus('Render.com');
+    Alert.alert(`Switched to Render.com`);
+  };
+  const switchToLocal = () => {
+    setQuestEndPoint(questEndpointLocal);
+    setAnsEndPoint(ansEndPointLocal);
+    Alert.alert(`Switched to localhost`);
+    setEndpointStatus('Localhost');
+
+  };
+
+  // console.log('question endpoint:', questEndPoint);
+  // console.log('answer endpoint:', ansEndPoint);
 
   const randomABCD = Math.floor(Math.random() * 4) + 1;
   // console.log('ABCD:', randomABCD);
@@ -62,8 +59,8 @@ export default AddNewWord = ({ navigation, props }) => {
   const [idState, setIdState] = useState(1);
   const [idState2, setIdState2] = useState(1);
 
-  console.log(`id Data: `, data.length);
-  console.log(`id vnAnswerList length:`, vietNamAnswer.length);
+  // console.log(`id Data: `, data.length);
+  // console.log(`id vnAnswerList length:`, vietNamAnswer.length);
 
   const [question, setQuestion] = React.useState("");
   const [ansA, setAnsA] = React.useState("");
@@ -80,12 +77,12 @@ export default AddNewWord = ({ navigation, props }) => {
 
 
 
-  console.log(question);
-  console.log(ansA);
-  console.log(ansB);
-  console.log(ansC);
-  console.log(ansD);
-  console.log(correction)
+  // console.log(question);
+  // console.log(ansA);
+  // console.log(ansB);
+  // console.log(ansC);
+  // console.log(ansD);
+  // console.log(correction)
   const randomAnswerA = vietNamAnswer[Math.floor(Math.random() * vietNamAnswer.length)]["answer"];
   const randomAnswerB = vietNamAnswer[Math.floor(Math.random() * vietNamAnswer.length)]["answer"];
   const randomAnswerC = vietNamAnswer[Math.floor(Math.random() * vietNamAnswer.length)]["answer"];
@@ -128,9 +125,10 @@ export default AddNewWord = ({ navigation, props }) => {
 
   const checkDoubleThenSubmit = () => {
     const doubleWordArray = data.filter(item => item.question === question);
+    
     doubleWordArray.length === 0 ? handleSubmit() : Alert.alert('Từ này đã học rồi! Đổi từ tiếng Anh mới khác!');
-    console.log('double array:', doubleWordArray);
-    console.log('question:', question);
+    // console.log('double array:', doubleWordArray);
+    // console.log('question:', question);
 
   };
   const handleCleaningField = () => {
@@ -196,12 +194,12 @@ export default AddNewWord = ({ navigation, props }) => {
       })
     })
       .then(res => {
-        // console.log(res.status);
-        // console.log(res.headers)
+        console.log(res.status);
+        console.log(res.headers)
         // return res.json();
       })
       .then(result => {
-        console.log(result);
+        // console.log(result);
       })
   };
   let updateNewRanAns = (correction) => {
@@ -217,12 +215,12 @@ export default AddNewWord = ({ navigation, props }) => {
       })
     })
       .then(res => {
-        // console.log(res.status);
-        // console.log(res.headers)
+        console.log(res.status);
+        console.log(res.headers)
         // return res.json();
       })
       .then(result => {
-        console.log(result);
+        // console.log(result);
       })
   };
   const deleteById = (id) => {
@@ -244,6 +242,7 @@ export default AddNewWord = ({ navigation, props }) => {
         }
       )
   };
+  // console.log(`Endpoint data:`, questEndPoint);
 
 
   return (
@@ -267,7 +266,10 @@ export default AddNewWord = ({ navigation, props }) => {
               <Text style={{ fontFamily: 'IBMPlexMono-Bold', fontSize: 16, fontSize: 16, color: 'black' }}>Số từ đã thêm: </Text>
               <Text style={{ fontFamily: 'IBMPlexMono-Bold', fontSize: 16, fontSize: 16, color: 'black' }}>{countWord}</Text>
             </View>
-
+            <View style={{ flexDirection: "row" }}>
+              <Text style={{ fontFamily: 'IBMPlexMono-Bold', fontSize: 16, fontSize: 16, color: 'black' }}>Server: </Text>
+              <Text style={{ fontFamily: 'IBMPlexMono-Bold', fontSize: 16, fontSize: 16, color: 'red' }}>{endpointStatus}</Text>
+            </View>
 
             {/* Black Screen  */}
             <View style={styles.screenContainer}>
@@ -466,7 +468,20 @@ export default AddNewWord = ({ navigation, props }) => {
             style={styles.uploadBtn}
           />
         </View> */}
-
+          <View style={styles.uploadBtn}>
+            <Button
+              title="Render.com"
+              onPress={switchToRender}
+              style={styles.uploadBtn}
+            />
+          </View>
+          <View style={styles.uploadBtn}>
+            <Button
+              title="Localhost"
+              onPress={switchToLocal}
+              style={styles.uploadBtn}
+            />
+          </View>
 
         </View>
       </View>
@@ -591,7 +606,7 @@ const styles = StyleSheet.create({
     color: 'red'
   },
   uploadBtn: {
-    marginTop: 20,
+    marginTop: 10,
     // height: 30,
     // width: 80
   },
@@ -602,7 +617,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     // flexDirection: 'column-reverse',
     width: width - 70,
-    backgroundColor: '#000000', 
+    backgroundColor: '#000000',
     flexDirection: "row",
   },
   listText: {

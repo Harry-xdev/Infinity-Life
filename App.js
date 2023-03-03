@@ -24,7 +24,7 @@ import Counter from './components/screens/Counter/Counter';
 import BottomTabBarMain from './components/screens/TabScreen/BottomTabBarMain';
 import AddNewWord from './components/screens/AddNewWord';
 import VietnameseToEnglish from './components/screens/VietnameseEnglish';
-import WorkingDayCounter from './components/screens/Calendal/WorkingDayCounter';
+import WorkingDayCounter from './components/screens/Calendar/WorkingDayCounter';
 
 
 const Stack = createNativeStackNavigator();
@@ -35,7 +35,7 @@ const App = () => {
   return (
     <ContextProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName='Working Day Counter'>
+        <Stack.Navigator initialRouteName='Splash Screen'>
           <Stack.Screen
             name="Splash Screen"
             component={SplashScreen}

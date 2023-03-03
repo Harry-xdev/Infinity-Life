@@ -26,7 +26,9 @@ export default HeaderTop = (props) => {
         <View>
           <Text style={{ color: 'red', fontSize: 21, fontFamily: 'IBMPlexMono-Bold' }}>{props.score}</Text>
         </View>
-
+        <View>
+          <Text style={{ color: 'red', fontSize: 21, fontFamily: 'IBMPlexMono-Bold' }}>{props.gold}</Text>
+        </View>
       </TouchableOpacity>
 
     </View>

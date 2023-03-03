@@ -1,3 +1,4 @@
+import { set } from "immer/dist/internal";
 import React, { createContext, useState, useEffect } from "react";
 
 const GolobalContext = createContext();
@@ -6,46 +7,31 @@ const ContextProvider = ({ children }) => {
   const questRender = 'https://awsome-project-backend2.onrender.com/engQuest';
   const ansRender = 'https://awsome-project-backend2.onrender.com/vnAnswerList';
   const userRender = 'https://awsome-project-backend2.onrender.com/userAccount';
-
   const userMockApi = 'https://63eddd2f388920150dd47775.mockapi.io/userAccount';
 
-  const questLocal = 'http://172.18.10.231:4000/engQuest';
-  const ansLocal = 'http://172.18.10.231:4000/vnAnswerlist';
-  const userLocal = 'http://172.18.10.231:4000/userAccount';
+  const questLocal = 'http://192.168.168.192:4000/engQuest';
+  const ansLocal = 'http://192.168.168.192:4000/vnAnswerlist';
+  const userLocal = 'http://192.168.168.192:4000/userAccount';
+
+  const monthLocal = 'http://192.168.168.192:4000/march';
+
 
   // const [questEndPoint, setQuestEndPoint] = useState(questRender);
   // const [ansEndPoint, setAnsEndPoint] = useState(ansRender);
   // const [userEndPoint, setUserEndPoint] = useState(userRender);
 
-  const [questEndPoint, setQuestEndPoint] = useState(questRender);
-  const [ansEndPoint, setAnsEndPoint] = useState(ansRender);
+  const [questEndPoint, setQuestEndPoint] = useState(questLocal);
+  const [ansEndPoint, setAnsEndPoint] = useState(ansLocal);
   const [userEndPoint, setUserEndPoint] = useState(userMockApi);
 
-
-  // const switchToA = () => {
-  //   setQuestEndPoint(questRender);
-  //   setAnsEndPoint(ansRender);
-  // };
-  // const switchToB = () => {
-  //   setQuestEndPoint(questLocal);
-  //   setAnsEndPoint(ansLocal);
-  // };
-  // const checkLimitation = () => {
-  //   if(data.length > 99) {
-  //     switchToB();
-  //   };
-  // };
-  // setTimeout(() => {
-  //   checkLimitation();
-  // }, 0);
-
   const [data, setData] = useState([]);
-  const [dataB, setDataB] = useState([]);
   const [vietNamAnswer, setVietNamAnswer] = React.useState([]);
   const [vietNamAnswerB, setVietNamAnswerB] = React.useState([]);
 
   const [userData, setUserData] = useState([]);
   const [isLoading, setLoading] = useState(true);
+
+const [monthData, setMonthData] = useState([]);
 
   const getData = async () => {
     try {
@@ -111,23 +97,36 @@ const ContextProvider = ({ children }) => {
     }
   };
 
+  const getMonthData = async () => {
+    try {
+      const res = await fetch(monthLocal);
+      const json = await res.json();
+      setMonthData(json);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
     setLoading(true);
     getData();
     getRandomAnswerData();
     getUserData();
+    getMonthData();
 
   }, []);
 
 
-  console.log('Data A:', data);
-  console.log('Random answer A:', vietNamAnswer);
-  // console.log('User Data NEW :', userData);
+  // console.log('Data A:', data);
+  // console.log('Random answer A:', vietNamAnswer);
+  console.log('month data:', monthData);
 
   return (
 
     <GolobalContext.Provider
-      value={{ data, vietNamAnswer, userData, questEndPoint, ansEndPoint, userData, userEndPoint }}>
+      value={{ data, vietNamAnswer, questEndPoint, ansEndPoint, userData, userEndPoint, monthData, monthLocal }}>
       {children}
     </GolobalContext.Provider>
   );
