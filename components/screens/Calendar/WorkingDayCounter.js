@@ -1,6 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Text, View, StyleSheet, Dimensions, Button, Touchable, TouchableOpacity } from "react-native";
-import { SelectList } from "react-native-dropdown-select-list";
 
 import HeaderTop from "../../headerTop/HeaderTop";
 import { GolobalContext } from "../../../Global/globalData";
@@ -296,7 +295,6 @@ const april = [
 
 export default WorkingDayCounter = ({ navigation, props }) => {
   const { monthData, monthLocal } = useContext(GolobalContext);
-  console.log('month data children:', monthData);
 
   // console.log(march.length);
   const [currentDate, setCurrentDate] = useState(0);
@@ -329,7 +327,6 @@ export default WorkingDayCounter = ({ navigation, props }) => {
 
   const [totalWorkingHour, setTotalWorkingHour] = useState(0);
   const supportSalary = 4920000 + 5460000;
-  const [overTimeMin, setOverTimeMin] = useState(0);
   const [gold, setGold] = useState((totalWorkingHour / 60) * 67300);
 
 
@@ -429,6 +426,8 @@ export default WorkingDayCounter = ({ navigation, props }) => {
   const handleRec31 = () => {
     setActiveDay(30);
   };
+
+  console.log('month data children:', monthData);
 
   const putOutTime = (id, workingTime) => {
     var dayName = month[id - 1]["name"];
