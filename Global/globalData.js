@@ -9,19 +9,24 @@ const ContextProvider = ({ children }) => {
   const userRender = 'https://awsome-project-backend2.onrender.com/userAccount';
   const userMockApi = 'https://63eddd2f388920150dd47775.mockapi.io/userAccount';
 
-  const questLocal = 'http://172.18.100.142:4000/engQuest';
-  const ansLocal = 'http://172.18.100.142:4000/vnAnswerlist';
-  const userLocal = 'http://172.18.100.142:4000/userAccount';
+  const questLocal = 'http://172.18.10.226:4000/engQuest';
+  const ansLocal = 'http://172.18.10.226:4000/vnAnswerlist';
+  const userLocal = 'http://172.18.10.226:4000/userAccount';
 
-  const monthLocal = 'http://172.18.100.142:4000/march';
+  const monthRender = 'https://awsome-project-backend2.onrender.com/march';
+  const monthLocal = 'http://172.18.10.226:4000/march';
+
+  const monthSumLocal = 'http://172.18.10.226:4000/monthSum';
+  const monthSumRender = 'https://awsome-project-backend2.onrender.com/monthSum';
+
 
 
   // const [questEndPoint, setQuestEndPoint] = useState(questRender);
   // const [ansEndPoint, setAnsEndPoint] = useState(ansRender);
   // const [userEndPoint, setUserEndPoint] = useState(userRender);
 
-  const [questEndPoint, setQuestEndPoint] = useState(questLocal);
-  const [ansEndPoint, setAnsEndPoint] = useState(ansLocal);
+  const [questEndPoint, setQuestEndPoint] = useState(questRender);
+  const [ansEndPoint, setAnsEndPoint] = useState(ansRender);
   const [userEndPoint, setUserEndPoint] = useState(userMockApi);
 
   const [data, setData] = useState([]);
@@ -31,7 +36,10 @@ const ContextProvider = ({ children }) => {
   const [userData, setUserData] = useState([]);
   const [isLoading, setLoading] = useState(true);
 
-const [monthData, setMonthData] = useState([]);
+  const [monthServer, setMonthServer] = useState(monthLocal)
+  const [monthData, setMonthData] = useState([]);
+  const [monthSumData, setMonthSumData] = useState([]);
+  const [monthSumServer, setMonthSumServer] = useState(monthSumLocal);
 
   const getData = async () => {
     try {
@@ -99,7 +107,7 @@ const [monthData, setMonthData] = useState([]);
 
   const getMonthData = async () => {
     try {
-      const res = await fetch(monthLocal);
+      const res = await fetch(monthServer);
       const json = await res.json();
       setMonthData(json);
     } catch (error) {
@@ -109,12 +117,26 @@ const [monthData, setMonthData] = useState([]);
     }
   };
 
+  const getMonthSum = async () => {
+    try {
+      const res = await fetch(monthSumLocal);
+      const json = await res.json();
+      setMonthSumData(json);
+
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   useEffect(() => {
     setLoading(true);
     getData();
     getRandomAnswerData();
     getUserData();
     getMonthData();
+    getMonthSum();
 
   }, []);
 
@@ -122,11 +144,13 @@ const [monthData, setMonthData] = useState([]);
   console.log('Data A:', data);
   console.log('Random answer A:', vietNamAnswer);
   console.log('month data:', monthData);
+  console.log('month SUM data:', monthSumData);
+
 
   return (
 
     <GolobalContext.Provider
-      value={{ data, vietNamAnswer, questEndPoint, ansEndPoint, userData, userEndPoint, monthData, monthLocal }}>
+      value={{ data, vietNamAnswer, questEndPoint, ansEndPoint, userData, userEndPoint, monthData, monthServer, monthSumData }}>
       {children}
     </GolobalContext.Provider>
   );

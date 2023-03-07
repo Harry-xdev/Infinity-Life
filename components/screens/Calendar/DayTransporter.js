@@ -7,7 +7,7 @@ export default DayTransporter = (props) => {
   return (
     
     <Pressable
-      style={props.activeDay === (props.dayid - 1) ? styles.activeBtn : styles.inActiveBtn}
+      style={[{backgroundColor: props.dayName === "SUN" ? 'blue' : 'white'}, props.activeDay === (props.dayid - 1) ? styles.activeBtn : styles.inActiveBtn]}
       onPress={props.onPressed}
       onPressIn={props.onPressIn}
     >
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     width: 50,
     borderRadius: 5,
     margin: 1,
-    backgroundColor: 'white'
+    // backgroundColor: 'white'
 
   },
   activeBtn: {
@@ -37,7 +37,8 @@ const styles = StyleSheet.create({
     width: 50,
     borderRadius: 5,
     margin: 1,
-    backgroundColor: 'green'
+    backgroundColor: color.hackingColor,
+   
 
   },
   passedDay: {
