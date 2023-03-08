@@ -7,17 +7,18 @@ export default DayTransporter = (props) => {
   return (
 
     <Pressable
-      style={[{ backgroundColor: props.dayName === "SUN" ? 'blue' : 'white' }, props.activeDay === (props.dayid - 1) ? styles.activeBtn : styles.inActiveBtn]}
+      style={props.activeDay === (props.dayid - 1) ? styles.activeBtn : styles.inActiveBtn}
       onPress={props.onPressed}
       onPressIn={props.onPressIn}
     >
-      <View style={{justifyContent: "center", alignItems: "center"}}>
-        <Text style={styles.text}>
+      <View style={{ justifyContent: "center", alignItems: "center" }}>
+        <Text style={props.activeDay === (props.dayid - 1) ? styles.textOn : styles.textOff}>
           {props.dayid}
         </Text>
-        <Text style={styles.text}>
+        <Text style={props.activeDay === (props.dayid - 1) ? styles.textOn : styles.textOff}>
           {props.dayName}
         </Text>
+        <Text style={{fontSize: 10, color: 'lightcoral'}}>{props.timeOut}</Text>
       </View>
 
     </Pressable>
@@ -28,34 +29,32 @@ const styles = StyleSheet.create({
   inActiveBtn: {
     // borderWidth: 0.5,
     borderColor: color.white,
-    height: 40,
+    height: 65,
     width: 50,
-    borderRadius: 5,
+    borderRadius: 8,
     margin: 1,
-    backgroundColor: '#eeeeee'
+    backgroundColor: 'transparent'
 
   },
   activeBtn: {
     // borderWidth: 0.5,
-    height: 40,
+    height: 65,
     width: 50,
-    borderRadius: 5,
+    borderRadius: 8,
     margin: 1,
-    backgroundColor: color.hackingColor,
+    backgroundColor: color.white,
 
 
   },
-  passedDay: {
-    borderWidth: 0.5,
-    height: 40,
-    width: 50,
-    borderRadius: 5,
-    margin: 1,
-    backgroundColor: 'grey'
-
+  textOff: {
+    color: color.white,
+    fontFamily: "IBMPlexMono-Regular",
+    fontSize: 14
   },
-  text: {
-    color: color.PrimeBackground
+  textOn: {
+    color: 'lightcoral',
+    fontFamily: "IBMPlexMono-Bold",
+    fontSize: 17
   }
 
 

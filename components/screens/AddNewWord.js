@@ -69,7 +69,6 @@ export default AddNewWord = ({ navigation, props }) => {
   const [ansD, setAnsD] = React.useState("");
   const [correction, setCorrection] = React.useState("");
   const [inputBoxNotify, setBoxNotify] = useState("");
-  const [deleteId, setDeleteId] = React.useState("");
 
   // console.log(`type of id: `, typeof id);
   // const toString = id.toString();
@@ -309,6 +308,7 @@ export default AddNewWord = ({ navigation, props }) => {
                   onChange={handleOnChangeCorrectInput}
                   onChangeText={setCorrection}
                   placeholderTextColor={'gray'}
+                  autoCapitalize="sentences"
 
                 />
                 <View><Text style={styles.boxNotify}>

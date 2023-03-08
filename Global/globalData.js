@@ -139,7 +139,26 @@ const ContextProvider = ({ children }) => {
     getMonthSum();
 
   }, []);
+  
+  const [currentDate, setCurrentDate] = useState();
+  const [hours, setHours] = useState(0);
+  const [current, setCurrent] = useState(0);
 
+  useEffect(() => {
+    var date = new Date().getDate(); //Current Date
+    var month = new Date().getMonth() + 1; //Current Month
+    var year = new Date().getFullYear(); //Current Year
+    var hours = new Date().getHours(); //Current Hours
+    var min = new Date().getMinutes(); //Current Minutes
+    var sec = new Date().getSeconds(); //Current Seconds
+    setCurrentDate(
+      date + '/' + month + '/' + year + '  '
+      + hours + ':' + min
+    );
+    setHours(hours);
+    setCurrent(date - 1)
+
+  }, []);
 
   console.log('Data A:', data);
   console.log('Random answer A:', vietNamAnswer);
@@ -150,7 +169,7 @@ const ContextProvider = ({ children }) => {
   return (
 
     <GolobalContext.Provider
-      value={{ data, vietNamAnswer, questEndPoint, ansEndPoint, userData, userEndPoint, monthData, monthServer, monthSumData }}>
+      value={{ data, vietNamAnswer, questEndPoint, ansEndPoint, userData, userEndPoint, monthData, monthServer, monthSumData, current }}>
       {children}
     </GolobalContext.Provider>
   );

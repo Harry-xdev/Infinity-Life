@@ -2,6 +2,11 @@ import React, { useContext, useState, useEffect } from "react";
 import { Text, View, StyleSheet, Dimensions, Button, TouchableOpacity } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+
+
+
+
 
 import HeaderTop from "../../headerTop/HeaderTop";
 import { GolobalContext } from "../../../Global/globalData";
@@ -296,10 +301,9 @@ const april = [
 ];
 
 export default WorkingDayCounter = ({ navigation, props }) => {
-  const { monthData, monthServer, monthSumData } = useContext(GolobalContext);
+  const { monthData, monthServer, monthSumData, current } = useContext(GolobalContext);
   console.log(monthSumData);
-  const [currentDate, setCurrentDate] = useState(0);
-  const [currentDay, setCurrentDay] = useState(0);
+  const [currentDate, setCurrentDate] = useState();
   const [hours, setHours] = useState(0);
   const hoursToMin = hours * 60;
 
@@ -314,17 +318,36 @@ export default WorkingDayCounter = ({ navigation, props }) => {
       date + '/' + month + '/' + year + '  '
       + hours + ':' + min
     );
-    setCurrentDay(date);
     setHours(hours);
   }, []);
-  console.log(`month SUM:`, monthSumData);
+
   const [month, setMonth] = useState(monthData);
-  const [activeDay, setActiveDay] = useState(0);
+  const [activeDay, setActiveDay] = useState(current);
   const [showGoHomeTime, setShowGoHomeTime] = useState();
 
   const [totalWorkingHour, setTotalWorkingHour] = useState(0);
   const supportSalary = 4920000 + 5460000;
   const [gold, setGold] = useState(monthSumData[2]["salaryTotal"]);
+
+
+  let mon = month.filter((e) => e.name === "MON");
+  let tue = month.filter((e) => e.name === "TUE");
+  let wed = month.filter((e) => e.name === "WED");
+  let thu = month.filter((e) => e.name === "THU");
+  let fri = month.filter((e) => e.name === "FRI");
+  let sat = month.filter((e) => e.name === "SAT");
+  let sun = month.filter((e) => e.name === "SUN");
+
+  console.log(`mon:`, mon);
+  // console.log(`tue:`, tue);
+  console.log(`wed:`, wed);
+  // console.log(`thu:`, thu);
+  // console.log(`fri:`, fri);
+  // console.log(`sat:`, sat);
+  // console.log(`sun:`, sun);
+  let newArrayMonth = month.filter((e) => e.id >= 1);
+  console.log(`new array month:`, newArrayMonth);
+
 
   const handleRec1 = () => {
     setActiveDay(0);
@@ -607,7 +630,9 @@ export default WorkingDayCounter = ({ navigation, props }) => {
   const goldSliced3 = totalGold.toString().slice(5, 8);
   const goldDisplay = goldSliced1 + ',' + goldSliced2 + ',' + goldSliced3
 
-
+  const render = () => {
+    <View><Text style={{ color: 'black' }}>Hallo!</Text></View>
+  }
   return (
     <View style={styles.grandContainer}>
       <HeaderTop
@@ -626,64 +651,62 @@ export default WorkingDayCounter = ({ navigation, props }) => {
 
       </View>
 
-
       <View style={styles.calContainer}>
         <Text>March</Text>
 
-
         <View style={{ flexDirection: "row" }}>
-          <DayTransporter dayid={1} dayName={month[month.length - month.length + 0].name} onPressIn={handleRec1} activeDay={activeDay} />
-          <DayTransporter dayid={2} dayName={month[month.length - month.length + 1].name} onPressIn={handleRec2} activeDay={activeDay} />
-          <DayTransporter dayid={3} dayName={month[month.length - month.length + 2].name} onPressIn={handleRec3} activeDay={activeDay} />
-          <DayTransporter dayid={4} dayName={month[month.length - month.length + 3].name} onPressIn={handleRec4} activeDay={activeDay} />
-          <DayTransporter dayid={5} dayName={month[month.length - month.length + 4].name} onPressIn={handleRec5} activeDay={activeDay} />
-          <DayTransporter dayid={6} dayName={month[month.length - month.length + 5].name} onPressIn={handleRec6} activeDay={activeDay} />
-          <DayTransporter dayid={7} dayName={month[month.length - month.length + 6].name} onPressIn={handleRec7} activeDay={activeDay} />
+          <DayTransporter dayid={1} timeOut={month[month.length - month.length + 0].timeOut}  dayName={month[month.length - month.length + 0].name} onPressIn={handleRec1} activeDay={activeDay} />
+          <DayTransporter dayid={2} timeOut={month[month.length - month.length + 1].timeOut}  dayName={month[month.length - month.length + 1].name} onPressIn={handleRec2} activeDay={activeDay} />
+          <DayTransporter dayid={3} timeOut={month[month.length - month.length + 2].timeOut}  dayName={month[month.length - month.length + 2].name} onPressIn={handleRec3} activeDay={activeDay} />
+          <DayTransporter dayid={4} timeOut={month[month.length - month.length + 3].timeOut}  dayName={month[month.length - month.length + 3].name} onPressIn={handleRec4} activeDay={activeDay} />
+          <DayTransporter dayid={5} timeOut={month[month.length - month.length + 4].timeOut}  dayName={month[month.length - month.length + 4].name} onPressIn={handleRec5} activeDay={activeDay} />
+          <DayTransporter dayid={6} timeOut={month[month.length - month.length + 5].timeOut}  dayName={month[month.length - month.length + 5].name} onPressIn={handleRec6} activeDay={activeDay} />
+          <DayTransporter dayid={7} timeOut={month[month.length - month.length + 6].timeOut}  dayName={month[month.length - month.length + 6].name} onPressIn={handleRec7} activeDay={activeDay} />
         </View>
         <View style={{ flexDirection: "row" }}>
-          <DayTransporter dayid={8} dayName={month[month.length - month.length + 7].name} onPressIn={handleRec8} activeDay={activeDay} />
-          <DayTransporter dayid={9} dayName={month[month.length - month.length + 8].name} onPressIn={handleRec9} activeDay={activeDay} />
-          <DayTransporter dayid={10} dayName={month[month.length - month.length + 9].name} onPressIn={handleRec10} activeDay={activeDay} />
-          <DayTransporter dayid={11} dayName={month[month.length - month.length + 10].name} onPressIn={handleRec11} activeDay={activeDay} />
-          <DayTransporter dayid={12} dayName={month[month.length - month.length + 11].name} onPressIn={handleRec12} activeDay={activeDay} />
-          <DayTransporter dayid={13} dayName={month[month.length - month.length + 12].name} onPressIn={handleRec13} activeDay={activeDay} />
-          <DayTransporter dayid={14} dayName={month[month.length - month.length + 13].name} onPressIn={handleRec14} activeDay={activeDay} />
+          <DayTransporter dayid={8} timeOut={month[month.length - month.length + 7].timeOut}  dayName={month[month.length - month.length + 7].name} onPressIn={handleRec8} activeDay={activeDay} />
+          <DayTransporter dayid={9} timeOut={month[month.length - month.length + 8].timeOut}  dayName={month[month.length - month.length + 8].name} onPressIn={handleRec9} activeDay={activeDay} />
+          <DayTransporter dayid={10} timeOut={month[month.length - month.length + 9].timeOut}  dayName={month[month.length - month.length + 9].name} onPressIn={handleRec10} activeDay={activeDay} />
+          <DayTransporter dayid={11} timeOut={month[month.length - month.length + 10].timeOut} dayName={month[month.length - month.length + 10].name} onPressIn={handleRec11} activeDay={activeDay} />
+          <DayTransporter dayid={12} timeOut={month[month.length - month.length + 11].timeOut} dayName={month[month.length - month.length + 11].name} onPressIn={handleRec12} activeDay={activeDay} />
+          <DayTransporter dayid={13} timeOut={month[month.length - month.length + 12].timeOut} dayName={month[month.length - month.length + 12].name} onPressIn={handleRec13} activeDay={activeDay} />
+          <DayTransporter dayid={14} timeOut={month[month.length - month.length + 13].timeOut} dayName={month[month.length - month.length + 13].name} onPressIn={handleRec14} activeDay={activeDay} />
         </View>
         <View style={{ flexDirection: "row" }}>
-          <DayTransporter dayid={15} dayName={month[month.length - month.length + 14].name} onPressIn={handleRec15} activeDay={activeDay} />
-          <DayTransporter dayid={16} dayName={month[month.length - month.length + 15].name} onPressIn={handleRec16} activeDay={activeDay} />
-          <DayTransporter dayid={17} dayName={month[month.length - month.length + 16].name} onPressIn={handleRec17} activeDay={activeDay} />
-          <DayTransporter dayid={18} dayName={month[month.length - month.length + 17].name} onPressIn={handleRec18} activeDay={activeDay} />
-          <DayTransporter dayid={19} dayName={month[month.length - month.length + 18].name} onPressIn={handleRec19} activeDay={activeDay} />
-          <DayTransporter dayid={20} dayName={month[month.length - month.length + 19].name} onPressIn={handleRec20} activeDay={activeDay} />
-          <DayTransporter dayid={21} dayName={month[month.length - month.length + 20].name} onPressIn={handleRec21} activeDay={activeDay} />
+          <DayTransporter dayid={15} timeOut={month[month.length - month.length + 14].timeOut} dayName={month[month.length - month.length + 14].name} onPressIn={handleRec15} activeDay={activeDay} />
+          <DayTransporter dayid={16} timeOut={month[month.length - month.length + 15].timeOut} dayName={month[month.length - month.length + 15].name} onPressIn={handleRec16} activeDay={activeDay} />
+          <DayTransporter dayid={17} timeOut={month[month.length - month.length + 16].timeOut} dayName={month[month.length - month.length + 16].name} onPressIn={handleRec17} activeDay={activeDay} />
+          <DayTransporter dayid={18} timeOut={month[month.length - month.length + 17].timeOut} dayName={month[month.length - month.length + 17].name} onPressIn={handleRec18} activeDay={activeDay} />
+          <DayTransporter dayid={19} timeOut={month[month.length - month.length + 18].timeOut} dayName={month[month.length - month.length + 18].name} onPressIn={handleRec19} activeDay={activeDay} />
+          <DayTransporter dayid={20} timeOut={month[month.length - month.length + 19].timeOut} dayName={month[month.length - month.length + 19].name} onPressIn={handleRec20} activeDay={activeDay} />
+          <DayTransporter dayid={21} timeOut={month[month.length - month.length + 20].timeOut} dayName={month[month.length - month.length + 20].name} onPressIn={handleRec21} activeDay={activeDay} />
         </View>
         <View style={{ flexDirection: "row" }}>
-          <DayTransporter dayid={22} dayName={month[month.length - month.length + 21].name} onPressIn={handleRec22} activeDay={activeDay} />
-          <DayTransporter dayid={23} dayName={month[month.length - month.length + 22].name} onPressIn={handleRec23} activeDay={activeDay} />
-          <DayTransporter dayid={24} dayName={month[month.length - month.length + 23].name} onPressIn={handleRec24} activeDay={activeDay} />
-          <DayTransporter dayid={25} dayName={month[month.length - month.length + 24].name} onPressIn={handleRec25} activeDay={activeDay} />
-          <DayTransporter dayid={26} dayName={month[month.length - month.length + 25].name} onPressIn={handleRec26} activeDay={activeDay} />
-          <DayTransporter dayid={27} dayName={month[month.length - month.length + 26].name} onPressIn={handleRec27} activeDay={activeDay} />
-          <DayTransporter dayid={28} dayName={month[month.length - month.length + 27].name} onPressIn={handleRec28} activeDay={activeDay} />
+          <DayTransporter dayid={22} timeOut={month[month.length - month.length + 21].timeOut} dayName={month[month.length - month.length + 21].name} onPressIn={handleRec22} activeDay={activeDay} />
+          <DayTransporter dayid={23} timeOut={month[month.length - month.length + 22].timeOut} dayName={month[month.length - month.length + 22].name} onPressIn={handleRec23} activeDay={activeDay} />
+          <DayTransporter dayid={24} timeOut={month[month.length - month.length + 23].timeOut} dayName={month[month.length - month.length + 23].name} onPressIn={handleRec24} activeDay={activeDay} />
+          <DayTransporter dayid={25} timeOut={month[month.length - month.length + 24].timeOut} dayName={month[month.length - month.length + 24].name} onPressIn={handleRec25} activeDay={activeDay} />
+          <DayTransporter dayid={26} timeOut={month[month.length - month.length + 25].timeOut} dayName={month[month.length - month.length + 25].name} onPressIn={handleRec26} activeDay={activeDay} />
+          <DayTransporter dayid={27} timeOut={month[month.length - month.length + 26].timeOut} dayName={month[month.length - month.length + 26].name} onPressIn={handleRec27} activeDay={activeDay} />
+          <DayTransporter dayid={28} timeOut={month[month.length - month.length + 27].timeOut} dayName={month[month.length - month.length + 27].name} onPressIn={handleRec28} activeDay={activeDay} />
         </View>
         <View style={{ flexDirection: "row" }}>
           {
             month.length > 28 ?
-              <DayTransporter dayid={29} dayName={month[month.length - month.length + 28].name} onPressIn={handleRec29} activeDay={activeDay} />
+              <DayTransporter dayid={29} timeOut={month[month.length - month.length + 28].timeOut} dayName={month[month.length - month.length + 28].name} onPressIn={handleRec29} activeDay={activeDay} />
               : <View></View>
 
           }
           {
             month.length >= 30 ?
-              <DayTransporter dayid={30} dayName={month[month.length - month.length + 29].name} onPressIn={handleRec30} activeDay={activeDay} />
+              <DayTransporter dayid={30} timeOut={month[month.length - month.length + 29].timeOut} dayName={month[month.length - month.length + 29].name} onPressIn={handleRec30} activeDay={activeDay} />
               : <View></View>
 
           }
 
           {
             month.length >= 31 ?
-              <DayTransporter dayid={31} dayName={month[month.length - month.length + 30].name} onPressIn={handleRec31} activeDay={activeDay} /> :
+              <DayTransporter dayid={31} timeOut={month[month.length - month.length + 30].timeOut} dayName={month[month.length - month.length + 30].name} onPressIn={handleRec31} activeDay={activeDay} /> :
               <View></View>
           }
 
@@ -693,10 +716,11 @@ export default WorkingDayCounter = ({ navigation, props }) => {
       <View>
 
         <TouchableOpacity
-          style={{ width: 80, borderWidth: 1, backgroundColor: 'pink', borderRadius: 3 }}
+          style={styles.fingerprint}
           onPress={setOutTime1630}
+          onPressOut={() => handleUpdateTotalSalary(3, totalWorkingHour)}
         >
-          <Text>16:30 PM</Text>
+          <MaterialIcons name="fingerprint" size={55} color={color.hackingColor} />
         </TouchableOpacity>
 
         {
@@ -766,6 +790,7 @@ const styles = StyleSheet.create({
     // backgroundColor: color.PrimeBackground,
     backgroundColor: color.SecoundBackground,
     height: height,
+    alignItems: "center"
   },
   headerTitle: {
     color: color.homeHeaderTitle,
@@ -774,13 +799,18 @@ const styles = StyleSheet.create({
   },
   calContainer: {
     borderWidth: 1,
-    height: 250,
-    width: width,
-    backgroundColor: color.PrimeBackground
+    height: 350,
+    width: width - 40,
+    backgroundColor: color.PrimeBackground,
+    justifyContent: "center",
+    paddingLeft: 12,
+    borderRadius: 20,
+
   },
   displayInfo: {
     borderWidth: 1,
     height: 180,
+    width: width
     // backgroundColor: color.black
   },
   activeBtn: {
@@ -789,5 +819,15 @@ const styles = StyleSheet.create({
     width: 50,
     borderRadius: 5,
     margin: 1
+  },
+  fingerprint: {
+    width: 60,
+    height: 70,
+    // borderWidth: 1,
+    backgroundColor: color.PrimeBackground,
+    borderRadius: 15,
+    margin: 20,
+    justifyContent: "center",
+    alignItems: "center"
   }
 });
