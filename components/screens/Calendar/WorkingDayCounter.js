@@ -1,5 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Text, View, StyleSheet, Dimensions, Button, Touchable, TouchableOpacity } from "react-native";
+import { Text, View, StyleSheet, Dimensions, Button, TouchableOpacity } from "react-native";
+import LinearGradient from "react-native-linear-gradient";
+
 
 import HeaderTop from "../../headerTop/HeaderTop";
 import { GolobalContext } from "../../../Global/globalData";
@@ -573,7 +575,7 @@ export default WorkingDayCounter = ({ navigation, props }) => {
 
   const handleUpdateTotalSalary = (id, totalWorkingHour) => {
 
-    fetch(`http://172.18.10.226:4000/monthSum/${id}`, {
+    fetch(`http://192.168.168.192:4000/monthSum/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -615,15 +617,12 @@ export default WorkingDayCounter = ({ navigation, props }) => {
       <Text>{currentDate}</Text>
 
       <View style={styles.displayInfo}>
-        <Text>Go home at: {month[activeDay].timeOut}</Text>
         <Text>Set go home time: {showGoHomeTime}</Text>
-        <Text>Working hours: {month[activeDay].workingTime / 60}</Text>
-        <Text>Total working hour in month: {totalWorkingHour / 60}</Text>
-        <Text>Salary/Day: {(month[activeDay].workingTime / 60) * 67300}</Text>
-        <Text>Salary/Month: {(totalWorkingHour / 60) * 67300 + supportSalary}</Text>
+        <Text>Leaving time: {month[activeDay].timeOut}</Text>
+        <Text>Hours/day: {month[activeDay].workingTime / 60}</Text>
+        <Text>Hours/month: {totalWorkingHour / 60}</Text>
+        <Text>Salary/day: {(month[activeDay].workingTime / 60) * 67300}</Text>
         <Text>Total: {goldDisplay} </Text>
-
-
 
       </View>
 
@@ -743,19 +742,15 @@ export default WorkingDayCounter = ({ navigation, props }) => {
       </View>
 
 
-      <Button
+      {/* <Button
         title="TOTAL"
         onPress={sumFunc}
-      />
+      /> */}
       <Button
         title="Clear"
         onPress={handleClear}
       />
 
-      <Button
-        title="Test"
-        onPress={() => putOutTime(id, workingTime)}
-      />
       <Button
         title="Update"
         onPress={() => handleUpdateTotalSalary(3, totalWorkingHour)}
@@ -780,7 +775,8 @@ const styles = StyleSheet.create({
   calContainer: {
     borderWidth: 1,
     height: 250,
-    width: width
+    width: width,
+    backgroundColor: color.PrimeBackground
   },
   displayInfo: {
     borderWidth: 1,
