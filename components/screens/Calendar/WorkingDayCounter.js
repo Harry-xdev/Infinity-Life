@@ -1,12 +1,8 @@
 import React, { useContext, useState, useEffect } from "react";
-import { Text, View, StyleSheet, Dimensions, Button, TouchableOpacity } from "react-native";
+import { Text, View, StyleSheet, Dimensions, Button, TouchableOpacity, Pressable, Modal, Alert } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-
-
-
-
 
 import HeaderTop from "../../headerTop/HeaderTop";
 import { GolobalContext } from "../../../Global/globalData";
@@ -303,6 +299,8 @@ const april = [
 export default WorkingDayCounter = ({ navigation, props }) => {
   const { monthData, monthServer, monthSumData, current } = useContext(GolobalContext);
   console.log(monthSumData);
+  // currentMon + 1 is current month of year
+  const [currentMon, setCurrentMon] = useState(2);
   const [currentDate, setCurrentDate] = useState();
   const [hours, setHours] = useState(0);
   const hoursToMin = hours * 60;
@@ -323,183 +321,173 @@ export default WorkingDayCounter = ({ navigation, props }) => {
 
   const [month, setMonth] = useState(monthData);
   const [activeDay, setActiveDay] = useState(current);
-  const [showGoHomeTime, setShowGoHomeTime] = useState();
 
   const [totalWorkingHour, setTotalWorkingHour] = useState(0);
-  const supportSalary = 4920000 + 5460000;
-  const [gold, setGold] = useState(monthSumData[2]["salaryTotal"]);
+  const [gold, setGold] = useState(monthSumData[2]["sumTotal"]);
+  const [goldLocal, setGoldLocal] = useState(0);
 
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalNotify, setModalNotify] = useState('Save data?');
 
-  let mon = month.filter((e) => e.name === "MON");
-  let tue = month.filter((e) => e.name === "TUE");
-  let wed = month.filter((e) => e.name === "WED");
-  let thu = month.filter((e) => e.name === "THU");
-  let fri = month.filter((e) => e.name === "FRI");
-  let sat = month.filter((e) => e.name === "SAT");
-  let sun = month.filter((e) => e.name === "SUN");
-
-  console.log(`mon:`, mon);
-  // console.log(`tue:`, tue);
-  console.log(`wed:`, wed);
-  // console.log(`thu:`, thu);
-  // console.log(`fri:`, fri);
-  // console.log(`sat:`, sat);
-  // console.log(`sun:`, sun);
-  let newArrayMonth = month.filter((e) => e.id >= 1);
-  console.log(`new array month:`, newArrayMonth);
-
+  const [isSaved, setIsSaved] = useState(false);
 
   const handleRec1 = () => {
     setActiveDay(0);
-    setShowGoHomeTime("");
+    
   };
   const handleRec2 = () => {
     setActiveDay(1);
-    setShowGoHomeTime("");
+    
 
   };
   const handleRec3 = () => {
     setActiveDay(2);
-    setShowGoHomeTime("");
+    
 
   };
   const handleRec4 = () => {
     setActiveDay(3);
-    setShowGoHomeTime("");
+    
   };
   const handleRec5 = () => {
     setActiveDay(4);
-    setShowGoHomeTime("");
+    
   };
   const handleRec6 = () => {
     setActiveDay(5);
-    setShowGoHomeTime("");
+    
   };
   const handleRec7 = () => {
     setActiveDay(6);
-    setShowGoHomeTime("");
+    
   };
   const handleRec8 = () => {
     setActiveDay(7);
-    setShowGoHomeTime("");
+    
   };
   const handleRec9 = () => {
     setActiveDay(8);
 
-    setShowGoHomeTime("");
+    
   };
   const handleRec10 = () => {
     setActiveDay(9);
 
-    setShowGoHomeTime("");
+    
   };
   const handleRec11 = () => {
     setActiveDay(10);
-    setShowGoHomeTime("");
+    
 
   };
   const handleRec12 = () => {
     setActiveDay(11);
-    setShowGoHomeTime("");
+    
 
   };
   const handleRec13 = () => {
     setActiveDay(12);
-    setShowGoHomeTime("");
+    
 
   };
   const handleRec14 = () => {
     setActiveDay(13);
-    setShowGoHomeTime("");
+    
 
   };
   const handleRec15 = () => {
     setActiveDay(14);
-    setShowGoHomeTime("");
+    
 
   };
   const handleRec16 = () => {
     setActiveDay(15);
-    setShowGoHomeTime("");
+    
 
   };
   const handleRec17 = () => {
     setActiveDay(16);
-    setShowGoHomeTime("");
+    
 
   };
   const handleRec18 = () => {
     setActiveDay(17);
-    setShowGoHomeTime("");
+    
 
   };
   const handleRec19 = () => {
     setActiveDay(18);
-    setShowGoHomeTime("");
+    
 
   };
   const handleRec20 = () => {
     setActiveDay(19);
-    setShowGoHomeTime("");
+    
 
   };
   const handleRec21 = () => {
     setActiveDay(20);
-    setShowGoHomeTime("");
+    
 
   };
   const handleRec22 = () => {
     setActiveDay(21);
-    setShowGoHomeTime("");
+    
 
   };
   const handleRec23 = () => {
     setActiveDay(22);
-    setShowGoHomeTime("");
+    
 
   };
   const handleRec24 = () => {
     setActiveDay(23);
-    setShowGoHomeTime("");
+    
 
   };
   const handleRec25 = () => {
     setActiveDay(24);
-    setShowGoHomeTime("");
+    
 
   };
   const handleRec26 = () => {
     setActiveDay(25);
-    setShowGoHomeTime("");
+    
 
   };
   const handleRec27 = () => {
     setActiveDay(26);
-    setShowGoHomeTime("");
+    
 
   };
   const handleRec28 = () => {
     setActiveDay(27);
-    setShowGoHomeTime("");
+    
 
   };
   const handleRec29 = () => {
     setActiveDay(28);
-    setShowGoHomeTime("");
+    
 
   };
   const handleRec30 = () => {
     setActiveDay(29);
-    setShowGoHomeTime("");
+    
 
   };
   const handleRec31 = () => {
     setActiveDay(30);
-    setShowGoHomeTime("");
+    
 
   };
   console.log(`active day main:`, activeDay);
   console.log('month data children:', monthData);
+
+  const multipleFunc = () => {
+    goldLocal === 0 ? navigation.navigate("Bottom Tab Main") : setModalVisible(true)
+
+  };
+
 
   const putOutTime = (id, timeOut, workingTime) => {
     var dayName = month[activeDay]["name"];
@@ -517,6 +505,7 @@ export default WorkingDayCounter = ({ navigation, props }) => {
 
     });
   };
+
   const handleClearOnline = (id) => {
     var dayName = month[activeDay]["name"];
     fetch(`${monthServer}/${id}`, {
@@ -540,17 +529,16 @@ export default WorkingDayCounter = ({ navigation, props }) => {
     var workingTime = 480;
     month[activeDay].timeOut = "16:30";
     month[activeDay].workingTime = 480;
-    setShowGoHomeTime('16:30');
     putOutTime(id, timeOut, workingTime);
     sumFunc();
+    setGoldLocal(goldLocal + 8 * 67300)
 
   };
-
+  console.log(`gold local:`, goldLocal);
   const setOutTime1700 = () => {
     month[activeDay].timeOut = '17:00';
     month[activeDay].workingTime = 525;
     // month[activeDay].overTime = 45;
-    setShowGoHomeTime('17:00');
     sumFunc();
 
 
@@ -559,7 +547,6 @@ export default WorkingDayCounter = ({ navigation, props }) => {
     month[activeDay].timeOut = '17:30';
     month[activeDay].workingTime = 570;
     // month[activeDay].overTime = 90;
-    setShowGoHomeTime('17:30');
     sumFunc();
 
 
@@ -568,7 +555,6 @@ export default WorkingDayCounter = ({ navigation, props }) => {
     month[activeDay].timeOut = '18:00';
     month[activeDay].workingTime = 615;
     // month[activeDay].overTime = 135;
-    setShowGoHomeTime('18:00');
     sumFunc();
 
 
@@ -577,7 +563,6 @@ export default WorkingDayCounter = ({ navigation, props }) => {
     month[activeDay].timeOut = '18:30';
     month[activeDay].workingTime = 660;
     // month[activeDay].overTime = 180;
-    setShowGoHomeTime('18:30');
     sumFunc();
 
   };
@@ -585,10 +570,21 @@ export default WorkingDayCounter = ({ navigation, props }) => {
     month[activeDay].workingTime = 0;
     month[activeDay].timeOut = '';
     var id = activeDay + 1;
-    setShowGoHomeTime('');
+    
     sumFunc();
     handleClearOnline(id);
+    setGoldLocal(goldLocal - 8 * 67300);
   };
+
+  const handlePressYES = () => {
+    handleUpdateTotalSalary(3, totalWorkingHour);
+    setModalVisible(false);
+    setTimeout(() => {
+      navigation.navigate("Bottom Tab Main");
+
+    }, 800)
+
+  }
 
   // console.log(`working min:`, month[activeDay].workingTime / 60);
   // console.log(`display: `, showGoHomeTime);
@@ -597,8 +593,7 @@ export default WorkingDayCounter = ({ navigation, props }) => {
 
 
   const handleUpdateTotalSalary = (id, totalWorkingHour) => {
-
-    fetch(`http://192.168.168.192:4000/monthSum/${id}`, {
+    fetch(`http://172.18.101.70:4000/monthSum/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -608,8 +603,9 @@ export default WorkingDayCounter = ({ navigation, props }) => {
         name: "MAR",
         totalHour: 0,
         supportSalary: 1038000,
-        salaryTotal: ((totalWorkingHour / 60) * 67300)
-      })
+        salaryTotal: ((totalWorkingHour / 60) * 67300),
+        sumTotal: ((totalWorkingHour / 60) * 67300) + 10380000
+      })  
     });
   };
   const sumFunc = () => {
@@ -619,35 +615,30 @@ export default WorkingDayCounter = ({ navigation, props }) => {
       total += arrTime[i]
     }
     setTotalWorkingHour(total);
-    console.log(total);
-    setGold(total / 60 * 67300);
+
   };
 
-  // console.log(`active day newwwwww: `, activeDay);
-  var totalGold = gold + supportSalary;
+  console.log(`sumTotal: `, monthSumData[2]["sumTotal"]);
+  var totalGold = gold + goldLocal
   const goldSliced1 = totalGold.toString().slice(0, 2);
   const goldSliced2 = totalGold.toString().slice(2, 5);
   const goldSliced3 = totalGold.toString().slice(5, 8);
   const goldDisplay = goldSliced1 + ',' + goldSliced2 + ',' + goldSliced3
 
-  const render = () => {
-    <View><Text style={{ color: 'black' }}>Hallo!</Text></View>
-  }
+
   return (
     <View style={styles.grandContainer}>
       <HeaderTop
-        backTo={() => navigation.navigate("Bottom Tab Main")}
+        backTo={multipleFunc}
         gold={goldDisplay}
       />
       <Text>{currentDate}</Text>
 
       <View style={styles.displayInfo}>
-        <Text>Set go home time: {showGoHomeTime}</Text>
         <Text>Leaving time: {month[activeDay].timeOut}</Text>
         <Text>Hours/day: {month[activeDay].workingTime / 60}</Text>
         <Text>Hours/month: {totalWorkingHour / 60}</Text>
         <Text>Salary/day: {(month[activeDay].workingTime / 60) * 67300}</Text>
-        <Text>Total: {goldDisplay} </Text>
 
       </View>
 
@@ -655,18 +646,18 @@ export default WorkingDayCounter = ({ navigation, props }) => {
         <Text>March</Text>
 
         <View style={{ flexDirection: "row" }}>
-          <DayTransporter dayid={1} timeOut={month[month.length - month.length + 0].timeOut}  dayName={month[month.length - month.length + 0].name} onPressIn={handleRec1} activeDay={activeDay} />
-          <DayTransporter dayid={2} timeOut={month[month.length - month.length + 1].timeOut}  dayName={month[month.length - month.length + 1].name} onPressIn={handleRec2} activeDay={activeDay} />
-          <DayTransporter dayid={3} timeOut={month[month.length - month.length + 2].timeOut}  dayName={month[month.length - month.length + 2].name} onPressIn={handleRec3} activeDay={activeDay} />
-          <DayTransporter dayid={4} timeOut={month[month.length - month.length + 3].timeOut}  dayName={month[month.length - month.length + 3].name} onPressIn={handleRec4} activeDay={activeDay} />
-          <DayTransporter dayid={5} timeOut={month[month.length - month.length + 4].timeOut}  dayName={month[month.length - month.length + 4].name} onPressIn={handleRec5} activeDay={activeDay} />
-          <DayTransporter dayid={6} timeOut={month[month.length - month.length + 5].timeOut}  dayName={month[month.length - month.length + 5].name} onPressIn={handleRec6} activeDay={activeDay} />
-          <DayTransporter dayid={7} timeOut={month[month.length - month.length + 6].timeOut}  dayName={month[month.length - month.length + 6].name} onPressIn={handleRec7} activeDay={activeDay} />
+          <DayTransporter dayid={1} timeOut={month[month.length - month.length + 0].timeOut} dayName={month[month.length - month.length + 0].name} onPressIn={handleRec1} activeDay={activeDay} />
+          <DayTransporter dayid={2} timeOut={month[month.length - month.length + 1].timeOut} dayName={month[month.length - month.length + 1].name} onPressIn={handleRec2} activeDay={activeDay} />
+          <DayTransporter dayid={3} timeOut={month[month.length - month.length + 2].timeOut} dayName={month[month.length - month.length + 2].name} onPressIn={handleRec3} activeDay={activeDay} />
+          <DayTransporter dayid={4} timeOut={month[month.length - month.length + 3].timeOut} dayName={month[month.length - month.length + 3].name} onPressIn={handleRec4} activeDay={activeDay} />
+          <DayTransporter dayid={5} timeOut={month[month.length - month.length + 4].timeOut} dayName={month[month.length - month.length + 4].name} onPressIn={handleRec5} activeDay={activeDay} />
+          <DayTransporter dayid={6} timeOut={month[month.length - month.length + 5].timeOut} dayName={month[month.length - month.length + 5].name} onPressIn={handleRec6} activeDay={activeDay} />
+          <DayTransporter dayid={7} timeOut={month[month.length - month.length + 6].timeOut} dayName={month[month.length - month.length + 6].name} onPressIn={handleRec7} activeDay={activeDay} />
         </View>
         <View style={{ flexDirection: "row" }}>
-          <DayTransporter dayid={8} timeOut={month[month.length - month.length + 7].timeOut}  dayName={month[month.length - month.length + 7].name} onPressIn={handleRec8} activeDay={activeDay} />
-          <DayTransporter dayid={9} timeOut={month[month.length - month.length + 8].timeOut}  dayName={month[month.length - month.length + 8].name} onPressIn={handleRec9} activeDay={activeDay} />
-          <DayTransporter dayid={10} timeOut={month[month.length - month.length + 9].timeOut}  dayName={month[month.length - month.length + 9].name} onPressIn={handleRec10} activeDay={activeDay} />
+          <DayTransporter dayid={8} timeOut={month[month.length - month.length + 7].timeOut} dayName={month[month.length - month.length + 7].name} onPressIn={handleRec8} activeDay={activeDay} />
+          <DayTransporter dayid={9} timeOut={month[month.length - month.length + 8].timeOut} dayName={month[month.length - month.length + 8].name} onPressIn={handleRec9} activeDay={activeDay} />
+          <DayTransporter dayid={10} timeOut={month[month.length - month.length + 9].timeOut} dayName={month[month.length - month.length + 9].name} onPressIn={handleRec10} activeDay={activeDay} />
           <DayTransporter dayid={11} timeOut={month[month.length - month.length + 10].timeOut} dayName={month[month.length - month.length + 10].name} onPressIn={handleRec11} activeDay={activeDay} />
           <DayTransporter dayid={12} timeOut={month[month.length - month.length + 11].timeOut} dayName={month[month.length - month.length + 11].name} onPressIn={handleRec12} activeDay={activeDay} />
           <DayTransporter dayid={13} timeOut={month[month.length - month.length + 12].timeOut} dayName={month[month.length - month.length + 12].name} onPressIn={handleRec13} activeDay={activeDay} />
@@ -713,15 +704,43 @@ export default WorkingDayCounter = ({ navigation, props }) => {
         </View>
 
       </View>
-      <View>
 
-        <TouchableOpacity
-          style={styles.fingerprint}
-          onPress={setOutTime1630}
-          onPressOut={() => handleUpdateTotalSalary(3, totalWorkingHour)}
-        >
-          <MaterialIcons name="fingerprint" size={55} color={color.hackingColor} />
-        </TouchableOpacity>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert('Modal has been closed.');
+          setModalVisible(!modalVisible);
+        }}>
+        <View style={styles.modalView}>
+          <Text style={styles.modalText}>{modalNotify}</Text>
+          <View style={{ flexDirection: "row" }}>
+            <TouchableOpacity onPress={handlePressYES} >
+              <Text>Yes</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => setModalVisible(!modalVisible)}>
+              <Text>No</Text>
+            </TouchableOpacity>
+          </View>
+
+        </View>
+
+      </Modal>
+
+
+      <View>
+        {
+          (month[activeDay]["timeOut"] !== "" && month[activeDay]["timeOut"] !== undefined) ? <View style={styles.fingerprint} /> :
+            <Pressable
+              style={styles.fingerprint}
+              onPress={setOutTime1630}
+              onPressOut={() => handleUpdateTotalSalary(3, totalWorkingHour)}
+            >
+              <MaterialIcons name="fingerprint" size={55} color={color.hackingColor} />
+            </Pressable>
+        }
+
 
         {
           (990 <= hoursToMin && hoursToMin < 1020) ?
@@ -765,20 +784,23 @@ export default WorkingDayCounter = ({ navigation, props }) => {
 
       </View>
 
+      {
+        (month[activeDay]["timeOut"] === "" || month[activeDay]["timeOut"] === undefined) ? <View /> :
+          <Button
+            title="Clear"
+            onPress={handleClear}
+          />
 
-      {/* <Button
-        title="TOTAL"
-        onPress={sumFunc}
-      /> */}
-      <Button
-        title="Clear"
-        onPress={handleClear}
-      />
+      }
 
-      <Button
-        title="Update"
-        onPress={() => handleUpdateTotalSalary(3, totalWorkingHour)}
-      />
+      {
+        goldLocal === 0 ? <View /> :
+          <Button
+            title="Update"
+            onPress={() => handleUpdateTotalSalary(3, totalWorkingHour)}
+          />
+      }
+
 
 
     </View>
@@ -828,6 +850,23 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     margin: 20,
     justifyContent: "center",
-    alignItems: "center"
-  }
+    alignItems: "center",
+
+  },
+  modalView: {
+    marginTop: 390,
+    marginHorizontal: 60,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
 });

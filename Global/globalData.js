@@ -9,14 +9,14 @@ const ContextProvider = ({ children }) => {
   const userRender = 'https://awsome-project-backend2.onrender.com/userAccount';
   const userMockApi = 'https://63eddd2f388920150dd47775.mockapi.io/userAccount';
 
-  const questLocal = 'http://192.168.168.192:4000/engQuest';
-  const ansLocal = 'http://192.168.168.192:4000/vnAnswerlist';
-  const userLocal = 'http://192.168.168.192:4000/userAccount';
+  const questLocal = 'http://172.18.101.70:4000/engQuest';
+  const ansLocal = 'http://172.18.101.70:4000/vnAnswerlist';
+  const userLocal = 'http://172.18.101.70:4000/userAccount';
 
   const monthRender = 'https://awsome-project-backend2.onrender.com/march';
-  const monthLocal = 'http://192.168.168.192:4000/march';
+  const monthLocal = 'http://172.18.101.70:4000/march';
 
-  const monthSumLocal = 'http://192.168.168.192:4000/monthSum';
+  const monthSumLocal = 'http://172.18.101.70:4000/monthSum';
   const monthSumRender = 'https://awsome-project-backend2.onrender.com/monthSum';
 
 
@@ -66,32 +66,6 @@ const ContextProvider = ({ children }) => {
     }
   };
 
-  // const getDataB = async () => {
-  //   try {
-  //     const response = await fetch('https://63eddd2f388920150dd47775.mockapi.io/newQuest');
-  //     const json = await response.json();
-  //     setDataB(json);
-  //   } catch (error) {
-  //     console.error(error);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
-
-  // const getRandomAnswerDataB = async () => {
-  //   try {
-  //     const response = await fetch('https://63eedb395e9f1583bdc850f3.mockapi.io/api/v1/userList');
-  //     const json = await response.json();
-  //     setVietNamAnswerB(json);
-  //   } catch (error) {
-  //     console.error(error);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
-
 
   const getUserData = async () => {
     try {
@@ -119,7 +93,7 @@ const ContextProvider = ({ children }) => {
 
   const getMonthSum = async () => {
     try {
-      const res = await fetch(monthSumLocal);
+      const res = await fetch(monthSumServer);
       const json = await res.json();
       setMonthSumData(json);
 
