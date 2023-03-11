@@ -17,8 +17,6 @@ const scoreStore = {
 
 };
 
-
-
 export default LearningScreen = ({ navigation }) => {
 
   const { data, dataB } = useContext(GolobalContext);
@@ -32,8 +30,18 @@ export default LearningScreen = ({ navigation }) => {
   const [statusColor, setStatusColor] = useState(color.white);
 
 
-  const random = Math.floor(Math.random() * data.length) + 1;
+  const [dt, setDt] = useState(new Date().toLocaleString());
 
+  useEffect(() => {
+    let secTimer = setInterval(() => {
+      setDt(new Date().toLocaleString());
+    }, 1000)
+
+    return () => clearInterval(secTimer);
+  }, []);
+  // console.log(`timer:`, dt);
+
+  const random = Math.floor(Math.random() * data.length) + 1;
   const [questNum, setQuestNum] = useState(random);
   const activeBtnText = 'Hoàn tất và nhận';
   const inactiveBtnText = 'Đã bỏ vàng vào túi';
@@ -48,7 +56,6 @@ export default LearningScreen = ({ navigation }) => {
   const handleRandom = () => {
     const random2 = Math.floor(Math.random() * data.length) + 1;
 
-    // const random2 = Math.floor(Math.random() * 3);
     setQuestNum(random2);
     setIsSaved(false);
     setTimeout(() => {
@@ -81,19 +88,21 @@ export default LearningScreen = ({ navigation }) => {
 
   const newScore = oldTotalScore + dailyScore;
   const saveScore = () => {
-    updateScore("1", newScore);
+    updateScore("1", newScore, dt);
     setDailyScore(0);
     ;
 
   };
-  const updateScore = (id, score) => {
+  const updateScore = (id, newScore, dt) => {
+
     fetch(`https://63eddd2f388920150dd47775.mockapi.io/userAccount/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        score: newScore
+        score: newScore,
+        finishTime: dt
       })
     })
       .then(res => {
@@ -337,13 +346,13 @@ export default LearningScreen = ({ navigation }) => {
 
           <View style={{ paddingHorizontal: 18 }}>
             {
-              dailyScore >= 20 ?
+              dailyScore >= 2 ?
                 <TouchableOpacity
                   style={[isSaved === true ? styles.inactiveBtn : styles.activeBtn]}
                   onPressOut={saveScore}
                   onPressIn={handlePressSaving}
                 >
-                  <View style={{flexDirection: "row"}}>
+                  <View style={{ flexDirection: "row" }}>
 
                     <Text style={isSaved === true ? styles.inactiveText : styles.activeText} >
                       {isSaved === false ? (activeBtnText + ' ' + dailyScore) : inactiveBtnText}

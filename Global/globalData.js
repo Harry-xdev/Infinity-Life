@@ -102,7 +102,7 @@ const ContextProvider = ({ children }) => {
     } finally {
       setLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -118,6 +118,16 @@ const ContextProvider = ({ children }) => {
   const [hours, setHours] = useState(0);
   const [current, setCurrent] = useState(0);
 
+  // const [dt, setDt] = useState(new Date().toLocaleString());
+  // useEffect (() => {
+  //   let secTimer = setInterval(() => {
+  //     setDt(new Date().toLocaleString());
+  //     setCurrent(new Date().getDate() - 1);
+  //   }, 21600);
+
+  //   return () => clearInterval(secTimer);
+  // }, []);
+
   useEffect(() => {
     var date = new Date().getDate(); //Current Date
     var month = new Date().getMonth() + 1; //Current Month
@@ -130,10 +140,9 @@ const ContextProvider = ({ children }) => {
       + hours + ':' + min
     );
     setHours(hours);
-    setCurrent(date - 1)
+    setCurrent(date - 1);
 
   }, []);
-
   console.log('Data A:', data);
   console.log('Random answer A:', vietNamAnswer);
   console.log('month data:', monthData);

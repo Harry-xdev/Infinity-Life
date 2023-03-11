@@ -11,292 +11,166 @@ import DayTransporter from "./DayTransporter"
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
-const march =
-  [
-    {
-      "id": 1,
-      "name": "WED",
-      "workingTime": 0
-    },
-    {
-      "id": 2,
-      "name": "THU",
-      "workingTime": 0
-    },
-    {
-      "id": 3,
-      "name": "FRI",
-      "workingTime": 0
-    },
-    {
-      "id": 4,
-      "name": "SAT",
-      "workingTime": 0
-    },
-    {
-      "id": 5,
-      "name": "SUN",
-      "workingTime": 0
-    },
-    {
-      "id": 6,
-      "name": "MON",
-      "workingTime": 0
-    },
-    {
-      "id": 7,
-      "name": "TUE",
-      "workingTime": 0
-    },
-    {
-      "id": 8,
-      "name": "WED",
-      "workingTime": 0
-    },
-    {
-      "id": 9,
-      "name": "THU",
-      "workingTime": 0
-    },
-    {
-      "id": 10,
-      "name": "FRI",
-      "workingTime": 0
-    },
-    {
-      "id": 11,
-      "name": "SAT",
-      "workingTime": 0
-    },
-    {
-      "id": 12,
-      "name": "SUN",
-      "workingTime": 0
-    },
-    {
-      "id": 13,
-      "name": "MON",
-      "workingTime": 0
-    },
-    {
-      "id": 14,
-      "name": "TUE",
-      "workingTime": 0
-    },
-    {
-      "id": 15,
-      "name": "WED",
-      "workingTime": 0
-    },
-    {
-      "id": 16,
-      "name": "THU",
-      "workingTime": 0
-    },
-    {
-      "id": 17,
-      "name": "FRI",
-      "workingTime": 0
-    },
-    {
-      "id": 18,
-      "name": "SAT",
-      "workingTime": 0
-    },
-    {
-      "id": 19,
-      "name": "SUN",
-      "workingTime": 0
-    },
-    {
-      "id": 20,
-      "name": "MON",
-      "workingTime": 0
-    },
-    {
-      "id": 21,
-      "name": "TUE",
-      "workingTime": 0
-    },
-    {
-      "id": 22,
-      "name": "WED",
-      "workingTime": 0
-    },
-    {
-      "id": 23,
-      "name": "THU",
-      "workingTime": 0
-    },
-    {
-      "id": 24,
-      "name": "FRI",
-      "workingTime": 0
-    },
-    {
-      "id": 25,
-      "name": "SAT",
-      "workingTime": 0
-    },
-    {
-      "id": 26,
-      "name": "SUN",
-      "workingTime": 0
-    },
-    {
-      "id": 27,
-      "name": "MON",
-      "workingTime": 0
-    },
-    {
-      "id": 28,
-      "name": "TUE",
-      "workingTime": 0
-    },
-    {
-      "id": 29,
-      "name": "WED",
-      "workingTime": 0
-    },
-    {
-      "id": 30,
-      "name": "THU",
-      "workingTime": 0
-    },
-    {
-      "id": 31,
-      "name": "FRI",
-      "workingTime": 0
-    }
-  ];
-const april = [
-  {
-    'id': 1,
-    'name': 'WED'
-  },
-  {
-    'id': 2,
-    'name': 'THU'
-  },
-  {
-    'id': 3,
-    'name': 'FRI'
-  },
-  {
-    'id': 4,
-    'name': 'SAT'
-  },
-  {
-    'id': 5,
-    'name': 'SUN'
-  },
-  {
-    'id': 6,
-    'name': 'MON'
-  },
-  {
-    'id': 7,
-    'name': 'TUE'
-  },
-  {
-    'id': 8,
-    'name': 'WED'
-  },
-  {
-    'id': 9,
-    'name': 'THU'
-  },
-  {
-    'id': 10,
-    'name': 'FRI'
-  },
-  {
-    'id': 11,
-    'name': 'SAT'
-  },
-  {
-    'id': 12,
-    'name': 'SUN'
-  },
-  {
-    'id': 13,
-    'name': 'MON'
-  },
-  {
-    'id': 14,
-    'name': 'TUE'
-  },
-  {
-    'id': 15,
-    'name': 'WED'
-  },
-  {
-    'id': 16,
-    'name': 'THU'
-  },
-  {
-    'id': 17,
-    'name': 'FRI'
-  },
-  {
-    'id': 18,
-    'name': 'SAT'
-  },
-  {
-    'id': 19,
-    'name': 'SUN'
-  },
-  {
-    'id': 20,
-    'name': 'MON'
-  },
-  {
-    'id': 21,
-    'name': 'TUE'
-  },
-  {
-    'id': 22,
-    'name': 'WED'
-  },
-  {
-    'id': 23,
-    'name': 'THU'
-  },
-  {
-    'id': 24,
-    'name': 'FRI'
-  },
-  {
-    'id': 25,
-    'name': 'SAT'
-  },
-  {
-    'id': 26,
-    'name': 'SUN'
-  },
-  {
-    'id': 27,
-    'name': 'MON'
-  },
-  {
-    'id': 28,
-    'name': 'TUE'
-  },
-  {
-    'id': 29,
-    'name': 'WED'
-  },
-  {
-    'id': 30,
-    'name': 'THU'
-  },
-  {
-    'id': 31,
-    'name': 'FRI'
-  }
-];
 
 export default WorkingDayCounter = ({ navigation, props }) => {
+  const march =
+    [
+      {
+        "id": 1,
+        "name": "WED",
+        "workingTime": 0
+      },
+      {
+        "id": 2,
+        "name": "THU",
+        "workingTime": 0
+      },
+      {
+        "id": 3,
+        "name": "FRI",
+        "workingTime": 0
+      },
+      {
+        "id": 4,
+        "name": "SAT",
+        "workingTime": 0
+      },
+      {
+        "id": 5,
+        "name": "SUN",
+        "workingTime": 0
+      },
+      {
+        "id": 6,
+        "name": "MON",
+        "workingTime": 0
+      },
+      {
+        "id": 7,
+        "name": "TUE",
+        "workingTime": 0
+      },
+      {
+        "id": 8,
+        "name": "WED",
+        "workingTime": 0
+      },
+      {
+        "id": 9,
+        "name": "THU",
+        "workingTime": 0
+      },
+      {
+        "id": 10,
+        "name": "FRI",
+        "workingTime": 0
+      },
+      {
+        "id": 11,
+        "name": "SAT",
+        "workingTime": 0
+      },
+      {
+        "id": 12,
+        "name": "SUN",
+        "workingTime": 0
+      },
+      {
+        "id": 13,
+        "name": "MON",
+        "workingTime": 0
+      },
+      {
+        "id": 14,
+        "name": "TUE",
+        "workingTime": 0
+      },
+      {
+        "id": 15,
+        "name": "WED",
+        "workingTime": 0
+      },
+      {
+        "id": 16,
+        "name": "THU",
+        "workingTime": 0
+      },
+      {
+        "id": 17,
+        "name": "FRI",
+        "workingTime": 0
+      },
+      {
+        "id": 18,
+        "name": "SAT",
+        "workingTime": 0
+      },
+      {
+        "id": 19,
+        "name": "SUN",
+        "workingTime": 0
+      },
+      {
+        "id": 20,
+        "name": "MON",
+        "workingTime": 0
+      },
+      {
+        "id": 21,
+        "name": "TUE",
+        "workingTime": 0
+      },
+      {
+        "id": 22,
+        "name": "WED",
+        "workingTime": 0
+      },
+      {
+        "id": 23,
+        "name": "THU",
+        "workingTime": 0
+      },
+      {
+        "id": 24,
+        "name": "FRI",
+        "workingTime": 0
+      },
+      {
+        "id": 25,
+        "name": "SAT",
+        "workingTime": 0
+      },
+      {
+        "id": 26,
+        "name": "SUN",
+        "workingTime": 0
+      },
+      {
+        "id": 27,
+        "name": "MON",
+        "workingTime": 0
+      },
+      {
+        "id": 28,
+        "name": "TUE",
+        "workingTime": 0
+      },
+      {
+        "id": 29,
+        "name": "WED",
+        "workingTime": 0
+      },
+      {
+        "id": 30,
+        "name": "THU",
+        "workingTime": 0
+      },
+      {
+        "id": 31,
+        "name": "FRI",
+        "workingTime": 0
+      }
+    ];
   const { monthData, monthServer, monthSumData, current } = useContext(GolobalContext);
   console.log(monthSumData);
   // currentMon + 1 is current month of year
@@ -313,11 +187,22 @@ export default WorkingDayCounter = ({ navigation, props }) => {
     var min = new Date().getMinutes(); //Current Minutes
     var sec = new Date().getSeconds(); //Current Seconds
     setCurrentDate(
-      date + '/' + month + '/' + year + '  '
-      + hours + ':' + min
+      date + '/' + month + '/' + year
     );
     setHours(hours);
   }, []);
+
+  const [hour, setHour] = useState(new Date().getHours());
+  const [mins, setMins] = useState(new Date().getMinutes());
+
+  useEffect(() => {
+    let secTimer = setInterval(() => {
+      setHour(new Date().getHours());
+      setMins(new Date().getMinutes());
+    }, 1000);
+    return () => clearInterval(secTimer);
+  }, []);
+
 
   const [month, setMonth] = useState(monthData);
   const [activeDay, setActiveDay] = useState(current);
@@ -329,155 +214,155 @@ export default WorkingDayCounter = ({ navigation, props }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalNotify, setModalNotify] = useState('Save data?');
 
-  const [isSaved, setIsSaved] = useState(false);
+  const [isSaved, setIsSaved] = useState(true);
 
   const handleRec1 = () => {
     setActiveDay(0);
-    
+
   };
   const handleRec2 = () => {
     setActiveDay(1);
-    
+
 
   };
   const handleRec3 = () => {
     setActiveDay(2);
-    
+
 
   };
   const handleRec4 = () => {
     setActiveDay(3);
-    
+
   };
   const handleRec5 = () => {
     setActiveDay(4);
-    
+
   };
   const handleRec6 = () => {
     setActiveDay(5);
-    
+
   };
   const handleRec7 = () => {
     setActiveDay(6);
-    
+
   };
   const handleRec8 = () => {
     setActiveDay(7);
-    
+
   };
   const handleRec9 = () => {
     setActiveDay(8);
 
-    
+
   };
   const handleRec10 = () => {
     setActiveDay(9);
 
-    
+
   };
   const handleRec11 = () => {
     setActiveDay(10);
-    
+
 
   };
   const handleRec12 = () => {
     setActiveDay(11);
-    
+
 
   };
   const handleRec13 = () => {
     setActiveDay(12);
-    
+
 
   };
   const handleRec14 = () => {
     setActiveDay(13);
-    
+
 
   };
   const handleRec15 = () => {
     setActiveDay(14);
-    
+
 
   };
   const handleRec16 = () => {
     setActiveDay(15);
-    
+
 
   };
   const handleRec17 = () => {
     setActiveDay(16);
-    
+
 
   };
   const handleRec18 = () => {
     setActiveDay(17);
-    
+
 
   };
   const handleRec19 = () => {
     setActiveDay(18);
-    
+
 
   };
   const handleRec20 = () => {
     setActiveDay(19);
-    
+
 
   };
   const handleRec21 = () => {
     setActiveDay(20);
-    
+
 
   };
   const handleRec22 = () => {
     setActiveDay(21);
-    
+
 
   };
   const handleRec23 = () => {
     setActiveDay(22);
-    
+
 
   };
   const handleRec24 = () => {
     setActiveDay(23);
-    
+
 
   };
   const handleRec25 = () => {
     setActiveDay(24);
-    
+
 
   };
   const handleRec26 = () => {
     setActiveDay(25);
-    
+
 
   };
   const handleRec27 = () => {
     setActiveDay(26);
-    
+
 
   };
   const handleRec28 = () => {
     setActiveDay(27);
-    
+
 
   };
   const handleRec29 = () => {
     setActiveDay(28);
-    
+
 
   };
   const handleRec30 = () => {
     setActiveDay(29);
-    
+
 
   };
   const handleRec31 = () => {
     setActiveDay(30);
-    
+
 
   };
   console.log(`active day main:`, activeDay);
@@ -523,15 +408,99 @@ export default WorkingDayCounter = ({ navigation, props }) => {
     });
   };
 
+  const [workingMinPerDay, setWorkingMinPerDay] = useState(0);
+  const calculateWorkingPerDay = () => {
+    var workingTime = 0;
+    var overTime = workingMinPerDay - 480;
+    if (overTime > 0) {
+      workingTime = 480 + overTime * 1.5;
+      setWorkingMinPerDay(workingTime);
+
+    } else {
+      workingTime = workingMinPerDay;
+      setWorkingMinPerDay(workingTime);
+    }
+  };
+  // use workingMinPerDay to calculate salary
+  console.log('Min per day:', workingMinPerDay);
+
+  const [time, setTime] = useState("");
+  const [work, setWork] = useState(0);
+
+  let leavingTimeMark = hour * 60 + mins;
+  console.log(`leaving time mark:`, leavingTimeMark);
+  const setLeavingTimeFunc = () => {
+
+    if (990 <= leavingTimeMark && leavingTimeMark < 1020) {
+      // month[activeDay].timeOut = "16:30";
+      setTime("16:30");
+      // month[activeDay].workingTime = 480;
+      setWork(480);
+
+    } else if (1020 <= leavingTimeMark && leavingTimeMark < 1050) {
+      // month[activeDay].timeOut = "17:00";
+      setTime("17:00");
+      // month[activeDay].workingTime = 525;
+      setWork(525);
+
+    } else if (1050 <= leavingTimeMark && leavingTimeMark < 1080) {
+      // month[activeDay].timeOut = "17:30";
+      setTime("17:30");
+      // month[activeDay].workingTime = 570;
+      setWork(570);
+
+    } else if (1080 <= leavingTimeMark && leavingTimeMark < 1110) {
+      // month[activeDay].timeOut = "18:00";
+      setTime("18:00");
+      // month[activeDay].workingTime = 615;
+      setWork(615);
+
+    } else if (1110 <= leavingTimeMark && leavingTimeMark < 1140) {
+      // month[activeDay].timeOut = "18:30";
+      setTime("18:30");
+      // month[activeDay].workingTime = 660;
+      setWork(660);
+
+    } else if (1170 <= leavingTimeMark && leavingTimeMark < 1200) {
+      // month[activeDay].timeOut = "19:00";
+      setTime("19:00");
+      // month[activeDay].workingTime = 705;
+      setWork(705);
+
+    } else {
+      setTime("test");
+      setWork(999);
+      month[activeDay].timeOut = "test";
+
+
+    };
+
+    let id = activeDay + 1;
+    putOutTime(id, time, work);
+    sumFunc();
+    setGoldLocal(goldLocal + 8 * 67300);
+    setIsSaved(false);
+
+
+    console.log(`march on calendar: `, month);
+    console.log(`leaving time mark:`, leavingTimeMark);
+
+  };
+  console.log(`time out:`, time);
+  console.log(`woring time:`, work);
+
+
   const setOutTime1630 = () => {
-    var id = activeDay + 1;
-    var timeOut = '16:30';
+
+    let id = activeDay + 1;
+    let timeOut = "16:30";
     var workingTime = 480;
     month[activeDay].timeOut = "16:30";
     month[activeDay].workingTime = 480;
     putOutTime(id, timeOut, workingTime);
     sumFunc();
-    setGoldLocal(goldLocal + 8 * 67300)
+    setGoldLocal(goldLocal + 8 * 67300);
+    setIsSaved(false);
 
   };
   console.log(`gold local:`, goldLocal);
@@ -570,10 +539,11 @@ export default WorkingDayCounter = ({ navigation, props }) => {
     month[activeDay].workingTime = 0;
     month[activeDay].timeOut = '';
     var id = activeDay + 1;
-    
+
     sumFunc();
     handleClearOnline(id);
     setGoldLocal(goldLocal - 8 * 67300);
+    setIsSaved(false);
   };
 
   const handlePressYES = () => {
@@ -593,6 +563,7 @@ export default WorkingDayCounter = ({ navigation, props }) => {
 
 
   const handleUpdateTotalSalary = (id, totalWorkingHour) => {
+    setIsSaved(true);
     fetch(`http://172.18.101.70:4000/monthSum/${id}`, {
       method: 'PUT',
       headers: {
@@ -605,7 +576,7 @@ export default WorkingDayCounter = ({ navigation, props }) => {
         supportSalary: 1038000,
         salaryTotal: ((totalWorkingHour / 60) * 67300),
         sumTotal: ((totalWorkingHour / 60) * 67300) + 10380000
-      })  
+      })
     });
   };
   const sumFunc = () => {
@@ -632,7 +603,7 @@ export default WorkingDayCounter = ({ navigation, props }) => {
         backTo={multipleFunc}
         gold={goldDisplay}
       />
-      <Text>{currentDate}</Text>
+      {/* <Text>{currentDate + " " + hour + ":" + mins}</Text> */}
 
       <View style={styles.displayInfo}>
         <Text>Leaving time: {month[activeDay].timeOut}</Text>
@@ -734,6 +705,16 @@ export default WorkingDayCounter = ({ navigation, props }) => {
           (month[activeDay]["timeOut"] !== "" && month[activeDay]["timeOut"] !== undefined) ? <View style={styles.fingerprint} /> :
             <Pressable
               style={styles.fingerprint}
+              onPress={setLeavingTimeFunc}
+              onPressOut={() => handleUpdateTotalSalary(3, totalWorkingHour)}
+            >
+              <MaterialIcons name="fingerprint" size={55} color={color.hackingColor} />
+            </Pressable>
+        }
+        {
+          (month[activeDay]["timeOut"] !== "" && month[activeDay]["timeOut"] !== undefined) ? <View style={styles.fingerprint} /> :
+            <Pressable
+              style={styles.fingerprint}
               onPress={setOutTime1630}
               onPressOut={() => handleUpdateTotalSalary(3, totalWorkingHour)}
             >
@@ -785,21 +766,34 @@ export default WorkingDayCounter = ({ navigation, props }) => {
       </View>
 
       {
-        (month[activeDay]["timeOut"] === "" || month[activeDay]["timeOut"] === undefined) ? <View /> :
-          <Button
-            title="Clear"
+        (month[activeDay]["timeOut"] === "" || month[activeDay]["timeOut"] === undefined) ?
+          <View
+            style={styles.inActiveBtn}
+          ><Text style={styles.inActiveBtn.text}>Clear</Text>
+          </View> :
+          <TouchableOpacity
+            style={styles.activeBtn}
             onPress={handleClear}
-          />
+          ><Text style={styles.activeBtn.text}>Clear</Text>
+          </TouchableOpacity>
 
       }
 
       {
-        goldLocal === 0 ? <View /> :
-          <Button
-            title="Update"
+        (isSaved === true || goldLocal === 0) ?
+          <View
+            style={styles.inActiveBtn}
+          ><Text style={styles.inActiveBtn.text}>Updated</Text>
+          </View>
+          :
+          <TouchableOpacity
+            style={styles.activeBtn}
             onPress={() => handleUpdateTotalSalary(3, totalWorkingHour)}
-          />
+          ><Text style={styles.activeBtn.text}>Update</Text>
+          </TouchableOpacity>
+
       }
+      <Button title="Calculate" onPress={calculateWorkingPerDay} />
 
 
 
@@ -827,11 +821,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingLeft: 12,
     borderRadius: 20,
+    marginBottom: 20,
 
   },
   displayInfo: {
     borderWidth: 1,
-    height: 180,
+    height: 100,
     width: width
     // backgroundColor: color.black
   },
@@ -869,4 +864,18 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
+  activeBtn: {
+    text: {
+      color: 'blue',
+      fontFamily: "IBMPlexMono-Bold",
+      fontSize: 20
+    }
+  },
+  inActiveBtn: {
+    text: {
+      color: 'grey',
+      fontFamily: "IBMPlexMono-Bold",
+      fontSize: 20
+    }
+  }
 });
