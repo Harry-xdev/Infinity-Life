@@ -25,6 +25,7 @@ import BottomTabBarMain from './components/screens/TabScreen/BottomTabBarMain';
 import AddNewWord from './components/screens/AddNewWord';
 import VietnameseToEnglish from './components/screens/VietnameseEnglish';
 import WorkingDayCounter from './components/screens/Calendar/WorkingDayCounter';
+import Calendar from "./components/screens/Calendar/WorkingDayUpgrade";
 
 
 const Stack = createNativeStackNavigator();
@@ -35,7 +36,7 @@ const App = () => {
   return (
     <ContextProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName='Splash Screen'>
+        <Stack.Navigator initialRouteName='Calendar'>
           <Stack.Screen
             name="Splash Screen"
             component={SplashScreen}
@@ -83,6 +84,13 @@ const App = () => {
             options={{ headerShown: false }}
 
           />
+          <Stack.Screen 
+            name="Calendar"
+            component={Calendar}
+            options={{headerShown: false}}
+          
+          />
+
 
 
         </Stack.Navigator>

@@ -3,7 +3,6 @@ import { Text, View, StyleSheet, Dimensions, Button, TouchableOpacity, Pressable
 import LinearGradient from "react-native-linear-gradient";
 
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import WorkingDayCounter2 from './WorkingDayUpgrade';
 
 import HeaderTop from "../../headerTop/HeaderTop";
 import { GolobalContext } from "../../../Global/globalData";
@@ -350,7 +349,7 @@ export default WorkingDayCounter = ({ navigation, props }) => {
 
   const handleUpdateTotalSalary = (id, totalWorkingHour, totalHour) => {
     setIsSaved(true);
-    fetch(`http://172.18.10.235:4000/monthSum/${id}`, {
+    fetch(`http://172.18.100.116:4000/monthSum/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -426,8 +425,8 @@ export default WorkingDayCounter = ({ navigation, props }) => {
 
 
 
-      <TouchableOpacity onPress={() => navigation.navigate("WDU")}>
-        <Text>Working Day Upgrade</Text>
+      <TouchableOpacity onPress={() => navigation.navigate("Calendar")}>
+        <Text>Calendar</Text>
       </TouchableOpacity>
 
       <Modal
@@ -473,27 +472,27 @@ export default WorkingDayCounter = ({ navigation, props }) => {
       {
         (month[activeDay]["timeOut"] === "" || month[activeDay]["timeOut"] === undefined) ?
           <View
-            style={styles.inActiveBtn}
-          ><Text style={styles.inActiveBtn.text}>Clear</Text>
+            style={styles.inactiveBtnUpClear}
+          ><Text style={styles.inactiveBtnUpClear.text}>Clear</Text>
           </View> :
           <TouchableOpacity
-            style={styles.activeBtn}
+            style={styles.activeBtnUpClear}
             onPress={handleClear}
-          ><Text style={styles.activeBtn.text}>Clear</Text>
+          ><Text style={styles.activeBtnUpClear.text}>Clear</Text>
           </TouchableOpacity>
       }
 
       {
         (isSaved === true || goldLocal === 0) ?
           <View
-            style={styles.inActiveBtn}
-          ><Text style={styles.inActiveBtn.text}>Updated</Text>
+            style={styles.inactiveBtnUpClear}
+          ><Text style={styles.inactiveBtnUpClear.text}>Updated</Text>
           </View>
           :
           <TouchableOpacity
-            style={styles.activeBtn}
+            style={styles.activeBtnUpClear}
             onPress={() => handleUpdateTotalSalary(3, totalWorkingHour, totalHour)}
-          ><Text style={styles.activeBtn.text}>Update</Text>
+          ><Text style={styles.activeBtnUpClear.text}>Update</Text>
           </TouchableOpacity>
       }
 
@@ -520,7 +519,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     borderWidth: 1,
-    height: 430,
+    height: 390,
     width: width - 40,
     backgroundColor: color.PrimeBackground,
     // justifyContent: "center",
@@ -577,14 +576,14 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
-  activeBtn: {
+  activeBtnUpClear: {
     text: {
       color: 'blue',
       fontFamily: "IBMPlexMono-Bold",
       fontSize: 20
     }
   },
-  inActiveBtn: {
+  inactiveBtnUpClear: {
     text: {
       color: 'grey',
       fontFamily: "IBMPlexMono-Bold",

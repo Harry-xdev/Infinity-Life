@@ -9,14 +9,14 @@ const ContextProvider = ({ children }) => {
   const userRender = 'https://awsome-project-backend2.onrender.com/userAccount';
   const userMockApi = 'https://63eddd2f388920150dd47775.mockapi.io/userAccount';
 
-  const questLocal = 'http://192.168.168.192:4000/engQuest';
-  const ansLocal = 'http://192.168.168.192:4000/vnAnswerlist';
-  const userLocal = 'http://192.168.168.192:4000/userAccount';
+  const questLocal = 'http://172.18.100.116:4000/engQuest';
+  const ansLocal = 'http://172.18.100.116:4000/vnAnswerlist';
+  const userLocal = 'http://172.18.100.116:4000/userAccount';
 
   const monthRender = 'https://awsome-project-backend2.onrender.com/march';
-  const monthLocal = 'http://192.168.168.192:4000/march';
+  const monthLocal = 'http://172.18.100.116:4000/march';
 
-  const monthSumLocal = 'http://192.168.168.192:4000/monthSum';
+  const monthSumLocal = 'http://172.18.100.116:4000/monthSum';
   const monthSumRender = 'https://awsome-project-backend2.onrender.com/monthSum';
 
 
