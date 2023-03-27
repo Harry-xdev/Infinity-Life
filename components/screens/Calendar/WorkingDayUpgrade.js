@@ -4,7 +4,7 @@ import moment from 'moment';
 
 const Calendar = ({ onDateSelect, selectedDate, minDate, maxDate, locale }) => {
   const [currentDate, setCurrentDate] = useState(moment());
- console.log(`current date from moment:`,currentDate);
+  // console.log(`current date from moment:`, currentDate);
   const handlePreviousMonth = () => {
     setCurrentDate(currentDate.clone().subtract(1, 'month'));
   };
@@ -42,6 +42,8 @@ const Calendar = ({ onDateSelect, selectedDate, minDate, maxDate, locale }) => {
       </View>
     );
   };
+
+
 
   const renderDays = () => {
     const monthStart = currentDate.clone().startOf('month');
@@ -81,6 +83,9 @@ const Calendar = ({ onDateSelect, selectedDate, minDate, maxDate, locale }) => {
 
     return <View style={styles.daysContainer}>{days}</View>;
   };
+
+  console.log(`startOf:`,currentDate.clone().startOf('month'));
+  console.log(`endof:`,currentDate.clone().endOf('month'));
 
   return (
     <View style={styles.container}>
