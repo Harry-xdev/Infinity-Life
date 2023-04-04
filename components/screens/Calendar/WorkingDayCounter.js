@@ -349,7 +349,7 @@ export default WorkingDayCounter = ({ navigation, props }) => {
 
   const handleUpdateTotalSalary = (id, totalWorkingHour, totalHour) => {
     setIsSaved(true);
-    fetch(`http://172.18.100.116:4000/monthSum/${id}`, {
+    fetch(`http://192.168.2.7:4000/monthSum/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'

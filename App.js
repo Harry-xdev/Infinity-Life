@@ -26,6 +26,7 @@ import AddNewWord from './components/screens/AddNewWord';
 import VietnameseToEnglish from './components/screens/VietnameseEnglish';
 import WorkingDayCounter from './components/screens/Calendar/WorkingDayCounter';
 import Calendar from "./components/screens/Calendar/WorkingDayUpgrade";
+import Excel from "./components/screens/Excel";
 
 
 const Stack = createNativeStackNavigator();
@@ -36,7 +37,7 @@ const App = () => {
   return (
     <ContextProvider>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName='Calendar'>
+        <Stack.Navigator initialRouteName='Splash Screen'>
           <Stack.Screen
             name="Splash Screen"
             component={SplashScreen}
@@ -89,6 +90,12 @@ const App = () => {
             component={Calendar}
             options={{headerShown: false}}
           
+          />
+
+          <Stack.Screen 
+           name="Excel"
+           component={Excel}
+           options={{headerShown: false}}
           />
 
 

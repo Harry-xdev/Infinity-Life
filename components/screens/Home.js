@@ -52,10 +52,10 @@ export default Home = ({ navigation }) => {
           itemContent={'Working Day Counter'}
           navigation={() => navigation.navigate('Working Day Counter')}
         />
-        {/* <ItemBar
-          itemContent={'Test'}
-          navigation={() => navigation.navigate('Test')}
-        /> */}
+        <ItemBar
+          itemContent={'New function'}
+          navigation={() => navigation.navigate('Excel')}
+        />
 
 
       </View>
